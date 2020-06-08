@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="mPOS.Views.Login"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical"
+                     Padding="5,5,5,5">
+            <Image Source="poslogo.png"
+                   Margin="0,130,0,0"
+                   WidthRequest="300"/>
+            <StackLayout Orientation="Vertical"
+                         Margin="10,0,10,0">
+                <Entry x:Name="UserName" 
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       Placeholder="Username"/>
+                <Entry x:Name="Password" 
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       Placeholder="Password"
+                       IsPassword="True"/>
+            </StackLayout>
+            <Button x:Name="CmdLogin"
+                    Text="Login"
+                    Margin="50,50,50,0"
+                    HeightRequest="50"
+                    BackgroundColor="#6C8CA4"
+                    TextColor="White"
+                    Clicked="CmdLogin_Clicked"/>
+
+            <Label x:Name="LoginText" 
+                   HorizontalTextAlignment="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

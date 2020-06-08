@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
+             mc:Ignorable="d"
+             x:Class="mPOS.Views.Start.CustomerDetailView"
+             Title="{Binding Title, Mode=TwoWay}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:CurrencyConverter x:Key="currencyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdDelete"
+                     Text="Delete"
+                     IconImageSource="delete.png"
+                     Command="{Binding Delete}"></ToolbarItem>
+        <ToolbarItem x:Name="CmdSave"
+                     Text="Save"
+                     IconImageSource="save.png"
+                     Command="{Binding Save}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout x:Name="LayoutRoot">
+            <ScrollView>
+                <StackLayout x:Name="MainStackLayout" 
+                         Margin="10">
+                    <StackLayout HorizontalOptions="Center">
+                        <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
+                                           IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
+                                           HeightRequest="50"/> 
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Id:" />
+                        <Entry Text="{Binding SelectedCustomerId}" 
+                               IsEnabled="False" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Customer:"/>
+                        <Entry Text="{Binding SelectedCustomer.Customer, Mode=TwoWay}" 
+                               TextChanged="InputView_OnTextChanged"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Address:"/>
+                        <Entry Text="{Binding SelectedCustomer.Address, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Contact:"/>
+                        <Entry Text="{Binding SelectedCustomer.ContactPerson, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Contact #:"/>
+                        <Entry Text="{Binding SelectedCustomer.ContactNumber, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Credit Limit:"/>
+                        <Entry Text="{Binding SelectedCustomer.CreditLimit, Mode=TwoWay, Converter={StaticResource currencyConverter}}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="TIN: "/>
+                        <Entry Text="{Binding SelectedCustomer.TIN, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="With Reward:"/>
+                        <Switch IsToggled="{Binding SelectedCustomer.WithReward, Mode=TwoWay}"
+                                HorizontalOptions="Start"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Reward Number: "/>
+                        <Entry Text="{Binding SelectedCustomer.RewardNumber, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Locked: "/>
+                        <CheckBox IsChecked="{Binding SelectedCustomer.IsLocked, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <!--<Button x:Name="CmdSave"
+                            Text="Save"
+                            BackgroundColor="Blue"
+                            Command="{Binding Save}"></Button>
+
+                    <Button x:Name="CmdDelete"
+                            Text="Delete"
+                            BackgroundColor="Red"
+                            Command="{Binding Delete}"></Button>-->
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

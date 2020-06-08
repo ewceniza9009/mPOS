@@ -1,0 +1,915 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="pos" Class="posDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=EWCENIZA\SQLSERV17;Initial Catalog=pos;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="posConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.[__MigrationHistory]" Member="__MigrationHistories">
+    <Type Name="__MigrationHistory">
+      <Column Name="MigrationId" Type="System.String" DbType="NVarChar(150) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ContextKey" Type="System.String" DbType="NVarChar(300) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Model" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="ProductVersion" Type="System.String" DbType="NVarChar(32) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnStockOutLine" Member="TrnStockOutLines">
+    <Type Name="TrnStockOutLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StockOutId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="AssetAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MstAccount_TrnStockOutLine" Member="MstAccount" ThisKey="AssetAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstItem_TrnStockOutLine" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" />
+      <Association Name="MstUnit_TrnStockOutLine" Member="MstUnit" ThisKey="UnitId" OtherKey="Id" Type="MstUnit" IsForeignKey="true" />
+      <Association Name="TrnStockOut_TrnStockOutLine" Member="TrnStockOut" ThisKey="StockOutId" OtherKey="Id" Type="TrnStockOut" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetRoles" Member="AspNetRoles">
+    <Type Name="AspNetRole">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetRole_AspNetUserRole" Member="AspNetUserRoles" ThisKey="Id" OtherKey="RoleId" Type="AspNetUserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserClaims" Member="AspNetUserClaims">
+    <Type Name="AspNetUserClaim">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="ClaimType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ClaimValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="AspNetUser_AspNetUserClaim" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserLogins" Member="AspNetUserLogins">
+    <Type Name="AspNetUserLogin">
+      <Column Name="LoginProvider" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProviderKey" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AspNetUser_AspNetUserLogin" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserRoles" Member="AspNetUserRoles">
+    <Type Name="AspNetUserRole">
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AspNetRole_AspNetUserRole" Member="AspNetRole" ThisKey="RoleId" OtherKey="Id" Type="AspNetRole" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="AspNetUser_AspNetUserRole" Member="AspNetUser" ThisKey="UserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
+    <Type Name="AspNetUser">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="EmailConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordHash" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SecurityStamp" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumberConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TwoFactorEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LockoutEndDateUtc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUser_AspNetUserClaim" Member="AspNetUserClaims" ThisKey="Id" OtherKey="UserId" Type="AspNetUserClaim" />
+      <Association Name="AspNetUser_AspNetUserLogin" Member="AspNetUserLogins" ThisKey="Id" OtherKey="UserId" Type="AspNetUserLogin" />
+      <Association Name="AspNetUser_AspNetUserRole" Member="AspNetUserRoles" ThisKey="Id" OtherKey="UserId" Type="AspNetUserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstAccount" Member="MstAccounts">
+    <Type Name="MstAccount">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Account" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AccountType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="MstAccount_TrnStockOutLine" Member="TrnStockOutLines" ThisKey="Id" OtherKey="AssetAccountId" Type="TrnStockOutLine" />
+      <Association Name="MstAccount_MstCustomer" Member="MstCustomers" ThisKey="Id" OtherKey="AccountId" Type="MstCustomer" />
+      <Association Name="MstAccount_MstItem" Member="MstItems" ThisKey="Id" OtherKey="CostAccountId" Type="MstItem" />
+      <Association Name="MstAccount_MstItem1" Member="MstItems1" ThisKey="Id" OtherKey="SalesAccountId" Type="MstItem" />
+      <Association Name="MstAccount_MstItem2" Member="MstItems2" ThisKey="Id" OtherKey="AssetAccountId" Type="MstItem" />
+      <Association Name="MstAccount_MstPayType" Member="MstPayTypes" ThisKey="Id" OtherKey="AccountId" Type="MstPayType" />
+      <Association Name="MstAccount_MstSupplier" Member="MstSuppliers" ThisKey="Id" OtherKey="AccountId" Type="MstSupplier" />
+      <Association Name="MstAccount_MstTax" Member="MstTaxes" ThisKey="Id" OtherKey="AccountId" Type="MstTax" />
+      <Association Name="MstAccount_TrnCollectionLine" Member="TrnCollectionLines" ThisKey="Id" OtherKey="AccountId" Type="TrnCollectionLine" />
+      <Association Name="MstAccount_TrnDebitCreditMemoLine" Member="TrnDebitCreditMemoLines" ThisKey="Id" OtherKey="AccountId" Type="TrnDebitCreditMemoLine" />
+      <Association Name="MstAccount_TrnDisbursement" Member="TrnDisbursements" ThisKey="Id" OtherKey="AccountId" Type="TrnDisbursement" />
+      <Association Name="MstAccount_TrnJournal" Member="TrnJournals" ThisKey="Id" OtherKey="AccountId" Type="TrnJournal" />
+      <Association Name="MstAccount_TrnSalesLine" Member="TrnSalesLines" ThisKey="Id" OtherKey="SalesAccountId" Type="TrnSalesLine" />
+      <Association Name="MstAccount_TrnSalesLine1" Member="TrnSalesLines1" ThisKey="Id" OtherKey="AssetAccountId" Type="TrnSalesLine" />
+      <Association Name="MstAccount_TrnSalesLine2" Member="TrnSalesLines2" ThisKey="Id" OtherKey="CostAccountId" Type="TrnSalesLine" />
+      <Association Name="MstAccount_TrnSalesLine3" Member="TrnSalesLines3" ThisKey="Id" OtherKey="TaxAccountId" Type="TrnSalesLine" />
+      <Association Name="MstAccount_TrnStockInLine" Member="TrnStockInLines" ThisKey="Id" OtherKey="AssetAccountId" Type="TrnStockInLine" />
+      <Association Name="MstAccount_TrnStockOut" Member="TrnStockOuts" ThisKey="Id" OtherKey="AccountId" Type="TrnStockOut" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstCustomer" Member="MstCustomers">
+    <Type Name="MstCustomer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Customer" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ContactPerson" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ContactNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreditLimit" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="TermId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TIN" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="WithReward" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="RewardNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RewardConversion" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstCustomer_TrnCollection" Member="TrnCollections" ThisKey="Id" OtherKey="CustomerId" Type="TrnCollection" />
+      <Association Name="MstCustomer_TrnSale" Member="TrnSales" ThisKey="Id" OtherKey="CustomerId" Type="TrnSale" />
+      <Association Name="MstAccount_MstCustomer" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstTerm_MstCustomer" Member="MstTerm" ThisKey="TermId" OtherKey="Id" Type="MstTerm" IsForeignKey="true" />
+      <Association Name="MstUser_MstCustomer" Member="MstUser" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_MstCustomer1" Member="MstUser1" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstDiscount" Member="MstDiscounts">
+    <Type Name="MstDiscount">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Discount" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountRate" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="IsVatExempt" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsDateScheduled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DateStart" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateEnd" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsTimeScheduled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TimeStart" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TimeEnd" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IsDayScheduled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DayMon" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DayTue" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DayWed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DayThu" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DayFri" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DaySat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DaySun" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstDiscount_MstDiscountItem" Member="MstDiscountItems" ThisKey="Id" OtherKey="DiscountId" Type="MstDiscountItem" />
+      <Association Name="MstDiscount_TrnSale" Member="TrnSales" ThisKey="Id" OtherKey="DiscountId" Type="TrnSale" />
+      <Association Name="MstDiscount_TrnSalesLine" Member="TrnSalesLines" ThisKey="Id" OtherKey="DiscountId" Type="TrnSalesLine" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstDiscountItem" Member="MstDiscountItems">
+    <Type Name="MstDiscountItem">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DiscountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MstDiscount_MstDiscountItem" Member="MstDiscount" ThisKey="DiscountId" OtherKey="Id" Type="MstDiscount" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="MstItem_MstDiscountItem" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstItem" Member="MstItems">
+    <Type Name="MstItem">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="BarCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ItemDescription" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Alias" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="GenericName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Category" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="SalesAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AssetAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InTaxId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OutTaxId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultSupplierId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="MarkUp" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="ImagePath" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ReorderQuantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="OnhandQuantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="IsInventory" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ExpiryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LotNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultKitchenReport" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsPackage" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstItem_TrnStockOutLine" Member="TrnStockOutLines" ThisKey="Id" OtherKey="ItemId" Type="TrnStockOutLine" />
+      <Association Name="MstItem_MstDiscountItem" Member="MstDiscountItems" ThisKey="Id" OtherKey="ItemId" Type="MstDiscountItem" />
+      <Association Name="MstItem_MstItemComponent" Member="MstItemComponents" ThisKey="Id" OtherKey="ItemId" Type="MstItemComponent" />
+      <Association Name="MstItem_MstItemComponent1" Member="MstItemComponents1" ThisKey="Id" OtherKey="ComponentItemId" Type="MstItemComponent" />
+      <Association Name="MstItem_MstItemGroupItem" Member="MstItemGroupItems" ThisKey="Id" OtherKey="ItemId" Type="MstItemGroupItem" />
+      <Association Name="MstItem_MstItemInventory" Member="MstItemInventories" ThisKey="Id" OtherKey="ItemId" Type="MstItemInventory" />
+      <Association Name="MstItem_MstItemPackage" Member="MstItemPackages" ThisKey="Id" OtherKey="ItemId" Type="MstItemPackage" />
+      <Association Name="MstItem_MstItemPackage1" Member="MstItemPackages1" ThisKey="Id" OtherKey="PackageItemId" Type="MstItemPackage" />
+      <Association Name="MstItem_MstItemPrice" Member="MstItemPrices" ThisKey="Id" OtherKey="ItemId" Type="MstItemPrice" />
+      <Association Name="MstItem_TrnSalesLine" Member="TrnSalesLines" ThisKey="Id" OtherKey="ItemId" Type="TrnSalesLine" />
+      <Association Name="MstItem_TrnStockCountLine" Member="TrnStockCountLines" ThisKey="Id" OtherKey="ItemId" Type="TrnStockCountLine" />
+      <Association Name="MstItem_TrnStockInLine" Member="TrnStockInLines" ThisKey="Id" OtherKey="ItemId" Type="TrnStockInLine" />
+      <Association Name="MstAccount_MstItem" Member="MstAccount" ThisKey="CostAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstAccount_MstItem1" Member="MstAccount1" ThisKey="SalesAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstAccount_MstItem2" Member="MstAccount2" ThisKey="AssetAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstSupplier_MstItem" Member="MstSupplier" ThisKey="DefaultSupplierId" OtherKey="Id" Type="MstSupplier" IsForeignKey="true" />
+      <Association Name="MstTax_MstItem" Member="MstTax" ThisKey="InTaxId" OtherKey="Id" Type="MstTax" IsForeignKey="true" />
+      <Association Name="MstUnit_MstItem" Member="MstUnit" ThisKey="UnitId" OtherKey="Id" Type="MstUnit" IsForeignKey="true" />
+      <Association Name="MstUser_MstItem" Member="MstUser" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_MstItem1" Member="MstUser1" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstItemComponent" Member="MstItemComponents">
+    <Type Name="MstItemComponent">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ComponentItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPrinted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstItem_MstItemComponent" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="MstItem_MstItemComponent1" Member="MstItem1" ThisKey="ComponentItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" />
+      <Association Name="MstUnit_MstItemComponent" Member="MstUnit" ThisKey="UnitId" OtherKey="Id" Type="MstUnit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstItemGroup" Member="MstItemGroups">
+    <Type Name="MstItemGroup">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemGroup" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ImagePath" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="KitchenReport" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstItemGroup_MstItemGroupItem" Member="MstItemGroupItems" ThisKey="Id" OtherKey="ItemGroupId" Type="MstItemGroupItem" />
+      <Association Name="MstUser_MstItemGroup" Member="MstUser" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_MstItemGroup1" Member="MstUser1" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstItemGroupItem" Member="MstItemGroupItems">
+    <Type Name="MstItemGroupItem">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemGroupId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MstItem_MstItemGroupItem" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="MstItemGroup_MstItemGroupItem" Member="MstItemGroup" ThisKey="ItemGroupId" OtherKey="Id" Type="MstItemGroup" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstItemInventory" Member="MstItemInventories">
+    <Type Name="MstItemInventory">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InventoryDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Association Name="MstItem_MstItemInventory" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstItemPackage" Member="MstItemPackages">
+    <Type Name="MstItemPackage">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PackageItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="IsOptional" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstItem_MstItemPackage" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="MstItem_MstItemPackage1" Member="MstItem1" ThisKey="PackageItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" />
+      <Association Name="MstUnit_MstItemPackage" Member="MstUnit" ThisKey="UnitId" OtherKey="Id" Type="MstUnit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstItemPrice" Member="MstItemPrices">
+    <Type Name="MstItemPrice">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PriceDescription" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="TriggerQuantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Association Name="MstItem_MstItemPrice" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstPayType" Member="MstPayTypes">
+    <Type Name="MstPayType">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PayType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="MstPayType_TrnCollectionLine" Member="TrnCollectionLines" ThisKey="Id" OtherKey="PayTypeId" Type="TrnCollectionLine" />
+      <Association Name="MstPayType_TrnDisbursement" Member="TrnDisbursements" ThisKey="Id" OtherKey="PayTypeId" Type="TrnDisbursement" />
+      <Association Name="MstAccount_MstPayType" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstPeriod" Member="MstPeriods">
+    <Type Name="MstPeriod">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Period" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="MstPeriod_TrnCollection" Member="TrnCollections" ThisKey="Id" OtherKey="PeriodId" Type="TrnCollection" />
+      <Association Name="MstPeriod_TrnDebitCreditMemo" Member="TrnDebitCreditMemos" ThisKey="Id" OtherKey="PeriodId" Type="TrnDebitCreditMemo" />
+      <Association Name="MstPeriod_TrnDisbursement" Member="TrnDisbursements" ThisKey="Id" OtherKey="PeriodId" Type="TrnDisbursement" />
+      <Association Name="MstPeriod_TrnPurchaseOrder" Member="TrnPurchaseOrders" ThisKey="Id" OtherKey="PeriodId" Type="TrnPurchaseOrder" />
+      <Association Name="MstPeriod_TrnSale" Member="TrnSales" ThisKey="Id" OtherKey="PeriodId" Type="TrnSale" />
+      <Association Name="MstPeriod_TrnStockCount" Member="TrnStockCounts" ThisKey="Id" OtherKey="PeriodId" Type="TrnStockCount" />
+      <Association Name="MstPeriod_TrnStockOut" Member="TrnStockOuts" ThisKey="Id" OtherKey="PeriodId" Type="TrnStockOut" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstSupplier" Member="MstSuppliers">
+    <Type Name="MstSupplier">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Supplier" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="TelephoneNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CellphoneNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FaxNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TermId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TIN" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstSupplier_MstItem" Member="MstItems" ThisKey="Id" OtherKey="DefaultSupplierId" Type="MstItem" />
+      <Association Name="MstSupplier_TrnPurchaseOrder" Member="TrnPurchaseOrders" ThisKey="Id" OtherKey="SupplierId" Type="TrnPurchaseOrder" />
+      <Association Name="MstAccount_MstSupplier" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstTerm_MstSupplier" Member="MstTerm" ThisKey="TermId" OtherKey="Id" Type="MstTerm" IsForeignKey="true" />
+      <Association Name="MstUser_MstSupplier" Member="MstUser" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_MstSupplier1" Member="MstUser1" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstTable" Member="MstTables">
+    <Type Name="MstTable">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TableCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TableGroupId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TopLocation" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LeftLocation" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="MstTable_TrnSale" Member="TrnSales" ThisKey="Id" OtherKey="TableId" Type="TrnSale" />
+      <Association Name="MstTableGroup_MstTable" Member="MstTableGroup" ThisKey="TableGroupId" OtherKey="Id" Type="MstTableGroup" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstTableGroup" Member="MstTableGroups">
+    <Type Name="MstTableGroup">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TableGroup" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstTableGroup_MstTable" Member="MstTables" ThisKey="Id" OtherKey="TableGroupId" Type="MstTable" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstTax" Member="MstTaxes">
+    <Type Name="MstTax">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Tax" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Rate" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MstTax_MstItem" Member="MstItems" ThisKey="Id" OtherKey="InTaxId" Type="MstItem" />
+      <Association Name="MstTax_TrnSalesLine" Member="TrnSalesLines" ThisKey="Id" OtherKey="TaxId" Type="TrnSalesLine" />
+      <Association Name="MstAccount_MstTax" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstTerm" Member="MstTerms">
+    <Type Name="MstTerm">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Term" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NumberOfDays" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Association Name="MstTerm_MstCustomer" Member="MstCustomers" ThisKey="Id" OtherKey="TermId" Type="MstCustomer" />
+      <Association Name="MstTerm_MstSupplier" Member="MstSuppliers" ThisKey="Id" OtherKey="TermId" Type="MstSupplier" />
+      <Association Name="MstTerm_TrnSale" Member="TrnSales" ThisKey="Id" OtherKey="TermId" Type="TrnSale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstTerminal" Member="MstTerminals">
+    <Type Name="MstTerminal">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Terminal" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="MstTerminal_TrnCollection" Member="TrnCollections" ThisKey="Id" OtherKey="TerminalId" Type="TrnCollection" />
+      <Association Name="MstTerminal_TrnSale" Member="TrnSales" ThisKey="Id" OtherKey="TerminalId" Type="TrnSale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstUnit" Member="MstUnits">
+    <Type Name="MstUnit">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Unit" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="MstUnit_TrnStockOutLine" Member="TrnStockOutLines" ThisKey="Id" OtherKey="UnitId" Type="TrnStockOutLine" />
+      <Association Name="MstUnit_MstItem" Member="MstItems" ThisKey="Id" OtherKey="UnitId" Type="MstItem" />
+      <Association Name="MstUnit_MstItemComponent" Member="MstItemComponents" ThisKey="Id" OtherKey="UnitId" Type="MstItemComponent" />
+      <Association Name="MstUnit_MstItemPackage" Member="MstItemPackages" ThisKey="Id" OtherKey="UnitId" Type="MstItemPackage" />
+      <Association Name="MstUnit_TrnSalesLine" Member="TrnSalesLines" ThisKey="Id" OtherKey="UnitId" Type="TrnSalesLine" />
+      <Association Name="MstUnit_TrnStockCountLine" Member="TrnStockCountLines" ThisKey="Id" OtherKey="UnitId" Type="TrnStockCountLine" />
+      <Association Name="MstUnit_TrnStockInLine" Member="TrnStockInLines" ThisKey="Id" OtherKey="UnitId" Type="TrnStockInLine" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstUser" Member="MstUsers">
+    <Type Name="MstUser">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="UserCardNumber" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstUser_MstCustomer" Member="MstCustomers" ThisKey="Id" OtherKey="EntryUserId" Type="MstCustomer" />
+      <Association Name="MstUser_MstCustomer1" Member="MstCustomers1" ThisKey="Id" OtherKey="UpdateUserId" Type="MstCustomer" />
+      <Association Name="MstUser_MstItem" Member="MstItems" ThisKey="Id" OtherKey="EntryUserId" Type="MstItem" />
+      <Association Name="MstUser_MstItem1" Member="MstItems1" ThisKey="Id" OtherKey="UpdateUserId" Type="MstItem" />
+      <Association Name="MstUser_MstItemGroup" Member="MstItemGroups" ThisKey="Id" OtherKey="EntryUserId" Type="MstItemGroup" />
+      <Association Name="MstUser_MstItemGroup1" Member="MstItemGroups1" ThisKey="Id" OtherKey="UpdateUserId" Type="MstItemGroup" />
+      <Association Name="MstUser_MstSupplier" Member="MstSuppliers" ThisKey="Id" OtherKey="EntryUserId" Type="MstSupplier" />
+      <Association Name="MstUser_MstSupplier1" Member="MstSuppliers1" ThisKey="Id" OtherKey="UpdateUserId" Type="MstSupplier" />
+      <Association Name="MstUser_MstUserForm" Member="MstUserForms" ThisKey="Id" OtherKey="UserId" Type="MstUserForm" />
+      <Association Name="MstUser_SysAuditTrail" Member="SysAuditTrails" ThisKey="Id" OtherKey="UserId" Type="SysAuditTrail" />
+      <Association Name="MstUser_SysSalesLocked" Member="SysSalesLockeds" ThisKey="Id" OtherKey="UserId" Type="SysSalesLocked" />
+      <Association Name="MstUser_TrnCollection" Member="TrnCollections" ThisKey="Id" OtherKey="PreparedBy" Type="TrnCollection" />
+      <Association Name="MstUser_TrnCollection1" Member="TrnCollections1" ThisKey="Id" OtherKey="CheckedBy" Type="TrnCollection" />
+      <Association Name="MstUser_TrnCollection2" Member="TrnCollections2" ThisKey="Id" OtherKey="ApprovedBy" Type="TrnCollection" />
+      <Association Name="MstUser_TrnCollection3" Member="TrnCollections3" ThisKey="Id" OtherKey="EntryUserId" Type="TrnCollection" />
+      <Association Name="MstUser_TrnCollection4" Member="TrnCollections4" ThisKey="Id" OtherKey="UpdateUserId" Type="TrnCollection" />
+      <Association Name="MstUser_TrnDebitCreditMemo" Member="TrnDebitCreditMemos" ThisKey="Id" OtherKey="PreparedBy" Type="TrnDebitCreditMemo" />
+      <Association Name="MstUser_TrnDebitCreditMemo1" Member="TrnDebitCreditMemos1" ThisKey="Id" OtherKey="CheckedBy" Type="TrnDebitCreditMemo" />
+      <Association Name="MstUser_TrnDebitCreditMemo2" Member="TrnDebitCreditMemos2" ThisKey="Id" OtherKey="ApprovedBy" Type="TrnDebitCreditMemo" />
+      <Association Name="MstUser_TrnDebitCreditMemo3" Member="TrnDebitCreditMemos3" ThisKey="Id" OtherKey="EntryUserId" Type="TrnDebitCreditMemo" />
+      <Association Name="MstUser_TrnDebitCreditMemo4" Member="TrnDebitCreditMemos4" ThisKey="Id" OtherKey="UpdateUserId" Type="TrnDebitCreditMemo" />
+      <Association Name="MstUser_TrnDisbursement" Member="TrnDisbursements" ThisKey="Id" OtherKey="PreparedBy" Type="TrnDisbursement" />
+      <Association Name="MstUser_TrnDisbursement1" Member="TrnDisbursements1" ThisKey="Id" OtherKey="CheckedBy" Type="TrnDisbursement" />
+      <Association Name="MstUser_TrnDisbursement2" Member="TrnDisbursements2" ThisKey="Id" OtherKey="ApprovedBy" Type="TrnDisbursement" />
+      <Association Name="MstUser_TrnDisbursement3" Member="TrnDisbursements3" ThisKey="Id" OtherKey="EntryUserId" Type="TrnDisbursement" />
+      <Association Name="MstUser_TrnDisbursement4" Member="TrnDisbursements4" ThisKey="Id" OtherKey="UpdateUserId" Type="TrnDisbursement" />
+      <Association Name="MstUser_TrnPurchaseOrder" Member="TrnPurchaseOrders" ThisKey="Id" OtherKey="PreparedBy" Type="TrnPurchaseOrder" />
+      <Association Name="MstUser_TrnPurchaseOrder1" Member="TrnPurchaseOrders1" ThisKey="Id" OtherKey="CheckedBy" Type="TrnPurchaseOrder" />
+      <Association Name="MstUser_TrnPurchaseOrder2" Member="TrnPurchaseOrders2" ThisKey="Id" OtherKey="ApprovedBy" Type="TrnPurchaseOrder" />
+      <Association Name="MstUser_TrnPurchaseOrder3" Member="TrnPurchaseOrders3" ThisKey="Id" OtherKey="EntryUserId" Type="TrnPurchaseOrder" />
+      <Association Name="MstUser_TrnPurchaseOrder4" Member="TrnPurchaseOrders4" ThisKey="Id" OtherKey="UpdateUserId" Type="TrnPurchaseOrder" />
+      <Association Name="MstUser_TrnSale" Member="TrnSales" ThisKey="Id" OtherKey="PreparedBy" Type="TrnSale" />
+      <Association Name="MstUser_TrnSale1" Member="TrnSales1" ThisKey="Id" OtherKey="CheckedBy" Type="TrnSale" />
+      <Association Name="MstUser_TrnSale2" Member="TrnSales2" ThisKey="Id" OtherKey="ApprovedBy" Type="TrnSale" />
+      <Association Name="MstUser_TrnSale3" Member="TrnSales3" ThisKey="Id" OtherKey="EntryUserId" Type="TrnSale" />
+      <Association Name="MstUser_TrnSale4" Member="TrnSales4" ThisKey="Id" OtherKey="UpdateUserId" Type="TrnSale" />
+      <Association Name="MstUser_TrnSalesLine" Member="TrnSalesLines" ThisKey="Id" OtherKey="UserId" Type="TrnSalesLine" />
+      <Association Name="MstUser_TrnStockOut" Member="TrnStockOuts" ThisKey="Id" OtherKey="PreparedBy" Type="TrnStockOut" />
+      <Association Name="MstUser_TrnStockOut1" Member="TrnStockOuts1" ThisKey="Id" OtherKey="CheckedBy" Type="TrnStockOut" />
+      <Association Name="MstUser_TrnStockOut2" Member="TrnStockOuts2" ThisKey="Id" OtherKey="ApprovedBy" Type="TrnStockOut" />
+      <Association Name="MstUser_TrnStockOut3" Member="TrnStockOuts3" ThisKey="Id" OtherKey="EntryUserId" Type="TrnStockOut" />
+      <Association Name="MstUser_TrnStockOut4" Member="TrnStockOuts4" ThisKey="Id" OtherKey="UpdateUserId" Type="TrnStockOut" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MstUserForm" Member="MstUserForms">
+    <Type Name="MstUserForm">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FormId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CanDelete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanAdd" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanLock" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanUnlock" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanPrint" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanPreview" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanEdit" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanTender" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanDiscount" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanView" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanSplit" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanCancel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CanReturn" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="MstUser_MstUserForm" Member="MstUser" ThisKey="UserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SysAuditTrail" Member="SysAuditTrails">
+    <Type Name="SysAuditTrail">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AuditDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TableInformation" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="RecordInformation" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FormInformation" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="ActionInformation" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="MstUser_SysAuditTrail" Member="MstUser" ThisKey="UserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SysForm" Member="SysForms">
+    <Type Name="SysForm">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Form" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FormDescription" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SysSalesLocked" Member="SysSalesLockeds">
+    <Type Name="SysSalesLocked">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SalesId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MstUser_SysSalesLocked" Member="MstUser" ThisKey="UserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="TrnSale_SysSalesLocked" Member="TrnSale" ThisKey="SalesId" OtherKey="Id" Type="TrnSale" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnCollection" Member="TrnCollections">
+    <Type Name="TrnCollection">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CollectionDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CollectionNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TerminalId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ManualORNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SalesId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SalesBalanceAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="TenderAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="ChangeAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsCancelled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="TrnCollection_TrnCollectionLine" Member="TrnCollectionLines" ThisKey="Id" OtherKey="CollectionId" Type="TrnCollectionLine" />
+      <Association Name="TrnCollection_TrnJournal" Member="TrnJournals" ThisKey="Id" OtherKey="CollectionId" Type="TrnJournal" />
+      <Association Name="TrnCollection_TrnStockIn" Member="TrnStockIns" ThisKey="Id" OtherKey="CollectionId" Type="TrnStockIn" />
+      <Association Name="MstCustomer_TrnCollection" Member="MstCustomer" ThisKey="CustomerId" OtherKey="Id" Type="MstCustomer" IsForeignKey="true" />
+      <Association Name="MstPeriod_TrnCollection" Member="MstPeriod" ThisKey="PeriodId" OtherKey="Id" Type="MstPeriod" IsForeignKey="true" />
+      <Association Name="MstTerminal_TrnCollection" Member="MstTerminal" ThisKey="TerminalId" OtherKey="Id" Type="MstTerminal" IsForeignKey="true" />
+      <Association Name="MstUser_TrnCollection" Member="MstUser" ThisKey="PreparedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnCollection1" Member="MstUser1" ThisKey="CheckedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnCollection2" Member="MstUser2" ThisKey="ApprovedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnCollection3" Member="MstUser3" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnCollection4" Member="MstUser4" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="TrnSale_TrnCollection" Member="TrnSale" ThisKey="SalesId" OtherKey="Id" Type="TrnSale" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnCollectionLine" Member="TrnCollectionLines">
+    <Type Name="TrnCollectionLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CollectionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="PayTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CheckDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CheckBank" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreditCardVerificationCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreditCardNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreditCardType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CreditCardBank" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GiftCertificateNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="OtherInformation" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="StockInId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MstAccount_TrnCollectionLine" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstPayType_TrnCollectionLine" Member="MstPayType" ThisKey="PayTypeId" OtherKey="Id" Type="MstPayType" IsForeignKey="true" />
+      <Association Name="TrnCollection_TrnCollectionLine" Member="TrnCollection" ThisKey="CollectionId" OtherKey="Id" Type="TrnCollection" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="TrnStockIn_TrnCollectionLine" Member="TrnStockIn" ThisKey="StockInId" OtherKey="Id" Type="TrnStockIn" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnDebitCreditMemo" Member="TrnDebitCreditMemos">
+    <Type Name="TrnDebitCreditMemo">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DCMemoNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DCMemoDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Particulars" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="TrnDebitCreditMemo_TrnDebitCreditMemoLine" Member="TrnDebitCreditMemoLines" ThisKey="Id" OtherKey="DCMemoId" Type="TrnDebitCreditMemoLine" />
+      <Association Name="TrnDebitCreditMemo_TrnJournal" Member="TrnJournals" ThisKey="Id" OtherKey="DCMemoId" Type="TrnJournal" />
+      <Association Name="MstPeriod_TrnDebitCreditMemo" Member="MstPeriod" ThisKey="PeriodId" OtherKey="Id" Type="MstPeriod" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDebitCreditMemo" Member="MstUser" ThisKey="PreparedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDebitCreditMemo1" Member="MstUser1" ThisKey="CheckedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDebitCreditMemo2" Member="MstUser2" ThisKey="ApprovedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDebitCreditMemo3" Member="MstUser3" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDebitCreditMemo4" Member="MstUser4" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnDebitCreditMemoLine" Member="TrnDebitCreditMemoLines">
+    <Type Name="TrnDebitCreditMemoLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DCMemoId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SalesId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Particulars" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="DebitAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="CreditAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Association Name="MstAccount_TrnDebitCreditMemoLine" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="TrnDebitCreditMemo_TrnDebitCreditMemoLine" Member="TrnDebitCreditMemo" ThisKey="DCMemoId" OtherKey="Id" Type="TrnDebitCreditMemo" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="TrnSale_TrnDebitCreditMemoLine" Member="TrnSale" ThisKey="SalesId" OtherKey="Id" Type="TrnSale" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnDisbursement" Member="TrnDisbursements">
+    <Type Name="TrnDisbursement">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DisbursementDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DisbursementNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DisbursementType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="PayTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TerminalId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="IsReturn" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="StockInId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Amount1000" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount500" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount200" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount100" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount50" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount20" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount10" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount5" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount1" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount025" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount010" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount005" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="Amount001" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Association Name="TrnDisbursement_TrnJournal" Member="TrnJournals" ThisKey="Id" OtherKey="DisbursementId" Type="TrnJournal" />
+      <Association Name="MstAccount_TrnDisbursement" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstPayType_TrnDisbursement" Member="MstPayType" ThisKey="PayTypeId" OtherKey="Id" Type="MstPayType" IsForeignKey="true" />
+      <Association Name="MstPeriod_TrnDisbursement" Member="MstPeriod" ThisKey="PeriodId" OtherKey="Id" Type="MstPeriod" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDisbursement" Member="MstUser" ThisKey="PreparedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDisbursement1" Member="MstUser1" ThisKey="CheckedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDisbursement2" Member="MstUser2" ThisKey="ApprovedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDisbursement3" Member="MstUser3" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnDisbursement4" Member="MstUser4" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="TrnStockIn_TrnDisbursement" Member="TrnStockIn" ThisKey="StockInId" OtherKey="Id" Type="TrnStockIn" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnJournal" Member="TrnJournals">
+    <Type Name="TrnJournal">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="JournalDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="JournalRefDocument" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DebitAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="CreditAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="SalesId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StockInId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StockOutId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CollectionId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DCMemoId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DisbursementId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="MstAccount_TrnJournal" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="TrnCollection_TrnJournal" Member="TrnCollection" ThisKey="CollectionId" OtherKey="Id" Type="TrnCollection" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="TrnDebitCreditMemo_TrnJournal" Member="TrnDebitCreditMemo" ThisKey="DCMemoId" OtherKey="Id" Type="TrnDebitCreditMemo" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="TrnDisbursement_TrnJournal" Member="TrnDisbursement" ThisKey="DisbursementId" OtherKey="Id" Type="TrnDisbursement" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="TrnSale_TrnJournal" Member="TrnSale" ThisKey="SalesId" OtherKey="Id" Type="TrnSale" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="TrnStockIn_TrnJournal" Member="TrnStockIn" ThisKey="StockInId" OtherKey="Id" Type="TrnStockIn" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="TrnStockOut_TrnJournal" Member="TrnStockOut" ThisKey="StockOutId" OtherKey="Id" Type="TrnStockOut" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnPurchaseOrder" Member="TrnPurchaseOrders">
+    <Type Name="TrnPurchaseOrder">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="PurchaseOrderNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="SupplierId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="TrnPurchaseOrder_TrnPurchaseOrderLine" Member="TrnPurchaseOrderLines" ThisKey="Id" OtherKey="PurchaseOrderId" Type="TrnPurchaseOrderLine" />
+      <Association Name="MstPeriod_TrnPurchaseOrder" Member="MstPeriod" ThisKey="PeriodId" OtherKey="Id" Type="MstPeriod" IsForeignKey="true" />
+      <Association Name="MstSupplier_TrnPurchaseOrder" Member="MstSupplier" ThisKey="SupplierId" OtherKey="Id" Type="MstSupplier" IsForeignKey="true" />
+      <Association Name="MstUser_TrnPurchaseOrder" Member="MstUser" ThisKey="PreparedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnPurchaseOrder1" Member="MstUser1" ThisKey="CheckedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnPurchaseOrder2" Member="MstUser2" ThisKey="ApprovedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnPurchaseOrder3" Member="MstUser3" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnPurchaseOrder4" Member="MstUser4" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnPurchaseOrderLine" Member="TrnPurchaseOrderLines">
+    <Type Name="TrnPurchaseOrderLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PurchaseOrderId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Association Name="TrnPurchaseOrder_TrnPurchaseOrderLine" Member="TrnPurchaseOrder" ThisKey="PurchaseOrderId" OtherKey="Id" Type="TrnPurchaseOrder" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnSales" Member="TrnSales">
+    <Type Name="TrnSale">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SalesDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="SalesNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ManualInvoiceNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="TableId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CustomerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TermId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SeniorCitizenId" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SeniorCitizenName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SeniorCitizenAge" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SalesAgent" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TerminalId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsCancelled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PaidAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="CreditAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="DebitAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="BalanceAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Pax" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TrnSale_SysSalesLocked" Member="SysSalesLockeds" ThisKey="Id" OtherKey="SalesId" Type="SysSalesLocked" />
+      <Association Name="TrnSale_TrnCollection" Member="TrnCollections" ThisKey="Id" OtherKey="SalesId" Type="TrnCollection" />
+      <Association Name="TrnSale_TrnDebitCreditMemoLine" Member="TrnDebitCreditMemoLines" ThisKey="Id" OtherKey="SalesId" Type="TrnDebitCreditMemoLine" />
+      <Association Name="TrnSale_TrnJournal" Member="TrnJournals" ThisKey="Id" OtherKey="SalesId" Type="TrnJournal" />
+      <Association Name="TrnSale_TrnSalesLine" Member="TrnSalesLines" ThisKey="Id" OtherKey="SalesId" Type="TrnSalesLine" />
+      <Association Name="MstCustomer_TrnSale" Member="MstCustomer" ThisKey="CustomerId" OtherKey="Id" Type="MstCustomer" IsForeignKey="true" />
+      <Association Name="MstPeriod_TrnSale" Member="MstPeriod" ThisKey="PeriodId" OtherKey="Id" Type="MstPeriod" IsForeignKey="true" />
+      <Association Name="MstTable_TrnSale" Member="MstTable" ThisKey="TableId" OtherKey="Id" Type="MstTable" IsForeignKey="true" />
+      <Association Name="MstTerm_TrnSale" Member="MstTerm" ThisKey="TermId" OtherKey="Id" Type="MstTerm" IsForeignKey="true" />
+      <Association Name="MstTerminal_TrnSale" Member="MstTerminal" ThisKey="TerminalId" OtherKey="Id" Type="MstTerminal" IsForeignKey="true" />
+      <Association Name="MstUser_TrnSale" Member="MstUser" ThisKey="PreparedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnSale1" Member="MstUser1" ThisKey="CheckedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnSale2" Member="MstUser2" ThisKey="ApprovedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnSale3" Member="MstUser3" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnSale4" Member="MstUser4" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstDiscount_TrnSale" Member="MstDiscount" ThisKey="DiscountId" OtherKey="Id" Type="MstDiscount" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnSalesLine" Member="TrnSalesLines">
+    <Type Name="TrnSalesLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SalesId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountRate" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="NetPrice" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="TaxId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TaxRate" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="TaxAmount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="SalesAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AssetAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CostAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TaxAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SalesLineTimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Preparation" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="MstAccount_TrnSalesLine" Member="MstAccount" ThisKey="SalesAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstAccount_TrnSalesLine1" Member="MstAccount1" ThisKey="AssetAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstAccount_TrnSalesLine2" Member="MstAccount2" ThisKey="CostAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstAccount_TrnSalesLine3" Member="MstAccount3" ThisKey="TaxAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstDiscount_TrnSalesLine" Member="MstDiscount" ThisKey="DiscountId" OtherKey="Id" Type="MstDiscount" IsForeignKey="true" />
+      <Association Name="MstItem_TrnSalesLine" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" />
+      <Association Name="MstTax_TrnSalesLine" Member="MstTax" ThisKey="TaxId" OtherKey="Id" Type="MstTax" IsForeignKey="true" />
+      <Association Name="MstUnit_TrnSalesLine" Member="MstUnit" ThisKey="UnitId" OtherKey="Id" Type="MstUnit" IsForeignKey="true" />
+      <Association Name="MstUser_TrnSalesLine" Member="MstUser" ThisKey="UserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="TrnSale_TrnSalesLine" Member="TrnSale" ThisKey="SalesId" OtherKey="Id" Type="TrnSale" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnStockCount" Member="TrnStockCounts">
+    <Type Name="TrnStockCount">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StockCountDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StockCountNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="TrnStockCount_TrnStockCountLine" Member="TrnStockCountLines" ThisKey="Id" OtherKey="StockCountId" Type="TrnStockCountLine" />
+      <Association Name="MstPeriod_TrnStockCount" Member="MstPeriod" ThisKey="PeriodId" OtherKey="Id" Type="MstPeriod" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnStockCountLine" Member="TrnStockCountLines">
+    <Type Name="TrnStockCountLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StockCountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Association Name="MstItem_TrnStockCountLine" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" />
+      <Association Name="MstUnit_TrnStockCountLine" Member="MstUnit" ThisKey="UnitId" OtherKey="Id" Type="MstUnit" IsForeignKey="true" />
+      <Association Name="TrnStockCount_TrnStockCountLine" Member="TrnStockCount" ThisKey="StockCountId" OtherKey="Id" Type="TrnStockCount" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnStockIn" Member="TrnStockIns">
+    <Type Name="TrnStockIn">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StockInDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StockInNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SupplierId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="IsReturn" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CollectionId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PurchaseOrderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="TrnStockIn_TrnCollectionLine" Member="TrnCollectionLines" ThisKey="Id" OtherKey="StockInId" Type="TrnCollectionLine" />
+      <Association Name="TrnStockIn_TrnDisbursement" Member="TrnDisbursements" ThisKey="Id" OtherKey="StockInId" Type="TrnDisbursement" />
+      <Association Name="TrnStockIn_TrnJournal" Member="TrnJournals" ThisKey="Id" OtherKey="StockInId" Type="TrnJournal" />
+      <Association Name="TrnStockIn_TrnStockInLine" Member="TrnStockInLines" ThisKey="Id" OtherKey="StockInId" Type="TrnStockInLine" />
+      <Association Name="TrnCollection_TrnStockIn" Member="TrnCollection" ThisKey="CollectionId" OtherKey="Id" Type="TrnCollection" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnStockInLine" Member="TrnStockInLines">
+    <Type Name="TrnStockInLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StockInId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(18,5) NOT NULL" CanBeNull="false" />
+      <Column Name="ExpiryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LotNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AssetAccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MstAccount_TrnStockInLine" Member="MstAccount" ThisKey="AssetAccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstItem_TrnStockInLine" Member="MstItem" ThisKey="ItemId" OtherKey="Id" Type="MstItem" IsForeignKey="true" />
+      <Association Name="MstUnit_TrnStockInLine" Member="MstUnit" ThisKey="UnitId" OtherKey="Id" Type="MstUnit" IsForeignKey="true" />
+      <Association Name="TrnStockIn_TrnStockInLine" Member="TrnStockIn" ThisKey="StockInId" OtherKey="Id" Type="TrnStockIn" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrnStockOut" Member="TrnStockOuts">
+    <Type Name="TrnStockOut">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PeriodId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StockOutDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StockOutNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PreparedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CheckedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ApprovedBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsLocked" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EntryUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EntryDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="TrnStockOut_TrnStockOutLine" Member="TrnStockOutLines" ThisKey="Id" OtherKey="StockOutId" Type="TrnStockOutLine" />
+      <Association Name="TrnStockOut_TrnJournal" Member="TrnJournals" ThisKey="Id" OtherKey="StockOutId" Type="TrnJournal" />
+      <Association Name="MstAccount_TrnStockOut" Member="MstAccount" ThisKey="AccountId" OtherKey="Id" Type="MstAccount" IsForeignKey="true" />
+      <Association Name="MstPeriod_TrnStockOut" Member="MstPeriod" ThisKey="PeriodId" OtherKey="Id" Type="MstPeriod" IsForeignKey="true" />
+      <Association Name="MstUser_TrnStockOut" Member="MstUser" ThisKey="PreparedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnStockOut1" Member="MstUser1" ThisKey="CheckedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnStockOut2" Member="MstUser2" ThisKey="ApprovedBy" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnStockOut3" Member="MstUser3" ThisKey="EntryUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+      <Association Name="MstUser_TrnStockOut4" Member="MstUser4" ThisKey="UpdateUserId" OtherKey="Id" Type="MstUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
