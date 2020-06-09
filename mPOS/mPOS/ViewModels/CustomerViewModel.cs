@@ -137,7 +137,6 @@ namespace mPOS.ViewModels
 
         public Command Save
         {
-
             get => _Save ?? (_Save = new Command(ExecuteSave, () => true));
             set => SetProperty(ref _Save, value);
         }
@@ -145,7 +144,6 @@ namespace mPOS.ViewModels
 
         public Command Delete
         {
-
             get => _Delete ?? (_Delete = new Command(ExecuteDelete, () => true));
             set => SetProperty(ref _Delete, value);
         }
