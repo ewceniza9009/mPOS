@@ -4,12 +4,14 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
+             xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
              mc:Ignorable="d"
              x:Class="mPOS.Views.Start.CustomerDetailView"
              Title="{Binding Title, Mode=TwoWay}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:CurrencyConverter x:Key="currencyConverter" />
+            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
@@ -41,33 +43,56 @@
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Customer:"/>
-                        <Entry Text="{Binding SelectedCustomer.Customer, Mode=TwoWay}" 
-                               TextChanged="InputView_OnTextChanged"/>
+                        <Entry Text="{Binding SelectedCustomer.Customer, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedCustomer}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Address:"/>
-                        <Entry Text="{Binding SelectedCustomer.Address, Mode=TwoWay}" />
+                        <Entry Text="{Binding SelectedCustomer.Address, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedCustomer}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Contact:"/>
-                        <Entry Text="{Binding SelectedCustomer.ContactPerson, Mode=TwoWay}" />
+                        <Entry Text="{Binding SelectedCustomer.ContactPerson, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedCustomer}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Contact #:"/>
-                        <Entry Text="{Binding SelectedCustomer.ContactNumber, Mode=TwoWay}" />
+                        <Entry Text="{Binding SelectedCustomer.ContactNumber, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedCustomer}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Credit Limit:"/>
-                        <Entry Text="{Binding SelectedCustomer.CreditLimit, Mode=TwoWay, Converter={StaticResource currencyConverter}}" />
+                        <Entry Text="{Binding SelectedCustomer.CreditLimit, Mode=TwoWay, Converter={StaticResource currencyConverter}}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedCustomer}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="TIN: "/>
-                        <Entry Text="{Binding SelectedCustomer.TIN, Mode=TwoWay}" />
+                        <Entry Text="{Binding SelectedCustomer.TIN, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedCustomer}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
@@ -78,23 +103,17 @@
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Reward Number: "/>
-                        <Entry Text="{Binding SelectedCustomer.RewardNumber, Mode=TwoWay}" />
+                        <Entry Text="{Binding SelectedCustomer.RewardNumber, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedCustomer}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Locked: "/>
                         <CheckBox IsChecked="{Binding SelectedCustomer.IsLocked, Mode=TwoWay}" />
                     </StackLayout>
-
-                    <!--<Button x:Name="CmdSave"
-                            Text="Save"
-                            BackgroundColor="Blue"
-                            Command="{Binding Save}"></Button>
-
-                    <Button x:Name="CmdDelete"
-                            Text="Delete"
-                            BackgroundColor="Red"
-                            Command="{Binding Delete}"></Button>-->
                 </StackLayout>
             </ScrollView>
         </StackLayout>

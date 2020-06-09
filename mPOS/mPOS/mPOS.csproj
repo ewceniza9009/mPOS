@@ -56,8 +56,4 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Command\" />
-  </ItemGroup>
 </Project>
