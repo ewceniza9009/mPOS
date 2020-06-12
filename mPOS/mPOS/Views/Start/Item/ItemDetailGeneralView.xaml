@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
+             xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
+             mc:Ignorable="d"
+             x:Class="mPOS.Views.Start.ItemDetailGeneralView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:CurrencyConverter x:Key="currencyConverter" />
+            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout x:Name="LayoutRoot">
+            <ScrollView>
+                <StackLayout x:Name="MainStackLayout" 
+                             Margin="10">
+                    <StackLayout HorizontalOptions="Center">
+                        <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
+                                           IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
+                                           HeightRequest="50"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Id:" />
+                        <Entry Text="{Binding SelectedItemId}" 
+                               IsEnabled="False" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Item Code:"/>
+                        <Entry Text="{Binding SelectedItem.ItemCode, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Barcode:"/>
+                        <Entry Text="{Binding SelectedItem.BarCode, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Description:"/>
+                        <Entry Text="{Binding SelectedItem.ItemDescription, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Alias:"/>
+                        <Entry Text="{Binding SelectedItem.Alias, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Generic Name:"/>
+                        <Entry Text="{Binding SelectedItem.GenericName, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Category:"/>
+                        <Entry Text="{Binding SelectedItem.Category, Mode=TwoWay}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Price:"/>
+                        <Entry Text="{Binding SelectedItem.Price, Mode=TwoWay, Converter={StaticResource currencyConverter}}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Inventory:"/>
+                        <Switch IsToggled="{Binding SelectedItem.IsInventory, Mode=TwoWay}"
+                                HorizontalOptions="Start"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Locked:"/>
+                        <CheckBox IsChecked="{Binding SelectedItem.IsLocked, Mode=TwoWay}" />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 
 namespace mPOS.Services
 {
-    public class ApiRequest<T, TResult> where T: class 
+    public class ApiRequest<T, TResult> where T: class
     {
-        //private static readonly string UriBase = "http://10.0.2.2/posserver";
-        private static readonly string UriBase = "http://192.168.1.8/posserver";
+
+        private static readonly string UriBase = GlobalVariables.UriBase;
 
         public static async Task<TResult> Read(string route, long id)
         {

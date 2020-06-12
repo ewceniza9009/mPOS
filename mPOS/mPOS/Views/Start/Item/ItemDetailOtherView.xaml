@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
+             xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
+             mc:Ignorable="d"
+             x:Class="mPOS.Views.Start.ItemDetailOtherView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DecimalConverter x:Key="decimalConverter" />
+            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
+            <converters:SelectedIndexChangedArgsConverter x:Key="PropertyChangedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout x:Name="LayoutRoot">
+            <ScrollView>
+                <StackLayout x:Name="MainStackLayout" 
+                             Margin="10">
+                    <StackLayout HorizontalOptions="Center">
+                        <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
+                                           IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
+                                           HeightRequest="50"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Unit:" />
+                        <Picker ItemsSource="{Binding ItemUnits}"
+                                SelectedItem="{Binding SelectedUnit}"
+                                ItemDisplayBinding="{Binding Unit}">
+                            <Picker.Behaviors>
+                                <commands:EventToCommandBehavior EventName="PropertyChanged" 
+                                                                 Command="{Binding SelectUnit}" 
+                                                                 EventArgsConverter="{StaticResource PropertyChangedConverter}"/>
+                            </Picker.Behaviors>
+                        </Picker>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Cost:"/>
+                        <Entry Text="{Binding SelectedItem.Cost, Mode=TwoWay, Converter={StaticResource decimalConverter}}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Mark Up(%):"/>
+                        <Entry Text="{Binding SelectedItem.MarkUp, Mode=TwoWay, Converter={StaticResource decimalConverter}}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Stock Level Qty:"/>
+                        <Entry Text="{Binding SelectedItem.ReorderQuantity, Mode=TwoWay, Converter={StaticResource decimalConverter}}" >
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Remarks:"/>
+                        <Editor Text="{Binding SelectedItem.Remarks, Mode=TwoWay}" 
+                                HeightRequest="350">
+                            <Editor.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Editor.Behaviors>
+                        </Editor>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

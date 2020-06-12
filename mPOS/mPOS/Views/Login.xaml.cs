@@ -28,6 +28,7 @@ namespace mPOS.Views
 
             if (await canLogin)
             {
+                await Navigation.PopAsync();
                 await Navigation.PushAsync(new PosNavigation());
             }
             else

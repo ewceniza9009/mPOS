@@ -22,15 +22,15 @@ namespace mPOS.Views.Start
         public CustomerView()
         {
             InitializeComponent();
+
+            vm = new CustomerViewModel();
+            BindingContext = vm;
         }
         #endregion
 
         #region Events
         private void HomePage_OnAppearing(object sender, EventArgs e)
         {
-            vm = new CustomerViewModel();
-            BindingContext = vm;
-
             vm.Load();
         }
         #endregion

@@ -52,4 +52,39 @@ namespace mPOS.POCO
         public DateTime UpdateDateTime { get; set; }
         public bool IsLocked { get; set; }
     }
+
+    public class MstItemFilter : BaseFilter 
+    {
+        public int Id { get; set; }
+        public string ItemCode { get; set; }
+        public string BarCode { get; set; }
+        public string ItemDescription { get; set; }
+        public string Alias { get; set; }
+        public string GenericName { get; set; }
+        public string Category { get; set; }
+        public int SalesAccountId { get; set; }
+        public int AssetAccountId { get; set; }
+        public int CostAccountId { get; set; }
+        public int InTaxId { get; set; }
+        public int OutTaxId { get; set; }
+        public int UnitId { get; set; }
+        public int DefaultSupplierId { get; set; }
+        public decimal Cost { get; set; }
+        public decimal MarkUp { get; set; }
+        public decimal Price { get; set; }
+        public string ImagePath { get; set; }
+        public decimal ReorderQuantity { get; set; }
+        public decimal OnhandQuantity { get; set; }
+        public bool IsInventory { get; set; }
+        public DateTime? ExpiryDate { get; set; }
+        public string LotNumber { get; set; }
+        public string Remarks { get; set; }
+        public int EntryUserId { get; set; }
+        public DateTime EntryDateTime { get; set; }
+        public int UpdateUserId { get; set; }
+        public DateTime UpdateDateTime { get; set; }
+        public bool IsLocked { get; set; }
+        public string DefaultKitchenReport { get; set; }
+        public bool IsPackage { get; set; }
+    }
 }

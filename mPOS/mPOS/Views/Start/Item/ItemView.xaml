@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
+             xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
+             mc:Ignorable="d"
+             x:Class="mPOS.Views.Start.ItemView"
+             Title="Items"
+             Appearing="ItemView_OnAppearing">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdAdd"
+                     Text="Add"
+                     IconImageSource="plus_math.png"
+                     Command="{Binding Add}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout x:Name="MainStackLayout"
+                     Margin="5">
+            <StackLayout x:Name="SearchStackLayout"
+                         Orientation="Horizontal">
+                <Entry x:Name="SearchItem"
+                       Placeholder="Search Item"
+                       WidthRequest="320"
+                       Text="{Binding SearchItemEntry}"/>
+                <Button x:Name="CmdSearch"
+                        ImageSource="search.png"
+                        HeightRequest="10"
+                        WidthRequest="60"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Center"
+                        Command="{Binding Search}"/>
+            </StackLayout>
+            <StackLayout x:Name="ItemListStackLayout"
+                         Orientation="Vertical"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
+                <ListView x:Name="ItemListView"
+                          ItemsSource="{Binding Items}"
+                          SelectedItem="{Binding SelectedItem}"
+                          RefreshCommand="{Binding RefreshItems}"
+                          IsPullToRefreshEnabled="True"
+                          IsRefreshing="{Binding IsBusy}">
+                    <ListView.Behaviors>
+                        <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectItem}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout x:Name="ItemImagePlaceHolder"
+                                                     Orientation="Vertical">
+                                            <Image Source="product.png"></Image>
+                                        </StackLayout>
+                                        <StackLayout x:Name="ItemInfo"
+                                                     Orientation="Vertical">
+                                            <Label Text="{Binding ItemDescription}"
+                                                   TextColor="Black"
+                                                   FontSize="15"
+                                                   HeightRequest="20"
+                                                   WidthRequest="230"
+                                                   FontAttributes="Bold"
+                                                   Margin="0,0,0,-5"/>
+                                            <Label Text="{Binding ItemCode}"
+                                                   TextColor="Blue"
+                                                   FontSize="12"/>
+                                        </StackLayout>
+                                        <StackLayout x:Name="ItemPrice"
+                                                     Orientation="Vertical">
+                                            <Label Text="{Binding Price, StringFormat='₱{0:N2}'}"
+                                                   TextColor="Red"
+                                                   FontSize="20"
+                                                   HorizontalTextAlignment="End"
+                                                   FontAttributes="Bold"></Label>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

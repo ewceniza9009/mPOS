@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FilterMethods.cs" />
-    <Compile Include="MstCustomerExt.cs" />
+    <Compile Include="Extensions\MstCustomerExt.cs" />
     <Compile Include="OperationEnums.cs" />
     <Compile Include="FilterWrappers.cs" />
     <Compile Include="Wrappers.cs" />

@@ -189,6 +189,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MstAccountController.cs" />
     <Compile Include="Controllers\MstCustomerController.cs" />
+    <Compile Include="Controllers\MstItemController.cs" />
     <Compile Include="Controllers\MstUserController.cs" />
     <Compile Include="Data\pos.designer.cs">
       <AutoGen>True</AutoGen>
@@ -213,6 +214,7 @@
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\MstAccount.cs" />
     <Compile Include="Repository\MstCustomer.cs" />
+    <Compile Include="Repository\MstItem.cs" />
     <Compile Include="Repository\MstUser.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\ExpressionBuilder.cs" />
@@ -284,6 +286,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\MstCustomer\" />
+    <Folder Include="Views\MstItem\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="mPOS.Views.PosNavigation"
              xmlns:pages="clr-namespace:mPOS.Views"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             Disappearing="PosNavigation_OnDisappearing">
     <MasterDetailPage.ToolbarItems>
         <!--<ToolbarItem x:Name="CmdHome"
                      Text="Home"

@@ -18,10 +18,11 @@ namespace mPOS.Views
 
             MenuList = new List<MenuItems.MenuPageItem>
             {
-                new MenuItems.MenuPageItem { Title = "Home", Icon = "home.png", TargetType = typeof(Start.CustomerView) },
+                new MenuItems.MenuPageItem { Title = "Customer", Icon = "home.png", TargetType = typeof(Start.CustomerView) },
+                new MenuItems.MenuPageItem { Title = "Item", Icon = "product.png", TargetType = typeof(Start.ItemView) },
                 new MenuItems.MenuPageItem { Title = "Setting", Icon = "setting.png", TargetType = typeof(Start.Setting) },
                 new MenuItems.MenuPageItem { Title = "Help", Icon = "help.png", TargetType = typeof(Start.HelpPage) },
-                new MenuItems.MenuPageItem { Title = "LogOut", Icon = "logout.png", TargetType = typeof(Start.LogoutPage) }
+                new MenuItems.MenuPageItem { Title = "Logout", Icon = "logout.png", TargetType = typeof(Start.LogoutPage) }
             };
 
             NavigationDrawerList.ItemsSource = MenuList;
@@ -48,6 +49,11 @@ namespace mPOS.Views
         private void CmdHome_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new PosNavigation());
+        }
+
+        private void PosNavigation_OnDisappearing(object sender, EventArgs e)
+        {
+            Disappearing -= PosNavigation_OnDisappearing;
         }
     }
 }
