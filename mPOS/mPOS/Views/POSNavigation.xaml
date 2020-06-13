@@ -67,8 +67,7 @@
         </ContentPage>
     </MasterDetailPage.Master>
 
-    <MasterDetailPage.Detail
-        HasNavigationBar ="False">                                                                                                                                        
+    <MasterDetailPage.Detail HasNavigationBar ="False">                                                                                                                                        
         <NavigationPage HasNavigationBar="False"
                         HasBackButton="False">
           
