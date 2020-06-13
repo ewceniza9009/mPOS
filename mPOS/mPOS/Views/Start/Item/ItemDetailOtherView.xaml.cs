@@ -29,17 +29,17 @@ namespace mPOS.Views.Start
             vm = BindingContext as ItemViewModel;
         }
 
-        private void MarkUpEntry_OnCompleted(object sender, EventArgs e)
+        private void MarkUpEntry_Unfocused(object sender, FocusEventArgs e)
         {
             CalculatePrice();
         }
 
-        private void CostEntry_Completed(object sender, EventArgs e)
+        private void CostEntry_Unfocused(object sender, FocusEventArgs e)
         {
             CalculatePrice();
         }
         #endregion
-        
+
         #region Methods
         private void CalculatePrice()
         {
@@ -52,7 +52,9 @@ namespace mPOS.Views.Start
 
                 vm.ExecuteRefreshSelectedItem(new object());
             }
-        } 
+        }
         #endregion
+
+        
     }
 }

@@ -42,7 +42,7 @@
                     <StackLayout Orientation="Vertical">
                         <Label Text="Cost:"/>
                         <Entry Text="{Binding SelectedItem.Cost, Mode=TwoWay, Converter={StaticResource decimalConverter}}" 
-                               Completed="CostEntry_Completed">
+                               Unfocused="CostEntry_Unfocused">
                             <Entry.Behaviors>
                                 <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
                             </Entry.Behaviors>
@@ -52,7 +52,7 @@
                     <StackLayout Orientation="Vertical">
                         <Label Text="Mark Up(%):"/>
                         <Entry Text="{Binding SelectedItem.MarkUp, Mode=TwoWay, Converter={StaticResource decimalConverter}}" 
-                               Completed="MarkUpEntry_OnCompleted">
+                               Unfocused="MarkUpEntry_Unfocused">
                             <Entry.Behaviors>
                                 <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
                             </Entry.Behaviors>
