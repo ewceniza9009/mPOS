@@ -38,6 +38,11 @@ namespace mPOS.Views.Start
         {
             CalculatePrice();
         }
+
+        private void StockLevelQtyStepper_OnValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            vm?.ExecuteRefreshSelectedItem(new object());
+        }
         #endregion
 
         #region Methods
@@ -55,6 +60,5 @@ namespace mPOS.Views.Start
         }
         #endregion
 
-        
     }
 }
