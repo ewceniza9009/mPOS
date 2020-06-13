@@ -62,7 +62,7 @@
                     <StackLayout Orientation="Vertical">
                         <Label Text="Stock Level Qty:"/>
                         <StackLayout Orientation="Horizontal">
-                            <Entry Text="{Binding SelectedItem.ReorderQuantity, Mode=TwoWay}"
+                            <Entry Text="{Binding SelectedItem.ReorderQuantity, Mode=TwoWay, StringFormat='{0:N0}'}"
                                    Keyboard="Numeric"
                                    WidthRequest="190">
                                 <Entry.Behaviors>
@@ -71,7 +71,7 @@
                             </Entry>
                             <Stepper x:Name="StockLevelQtyStepper" Value="{Binding SelectedItem.ReorderQuantity}" 
                                      Increment="1"
-                                     Maximum="10000"
+                                     Maximum="100000"
                                      ValueChanged="StockLevelQtyStepper_OnValueChanged"></Stepper>
                         </StackLayout>
                     </StackLayout>
