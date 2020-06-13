@@ -25,5 +25,10 @@ namespace mPOS.Services
 
             return result;
         }
+
+        public static async Task<ObservableCollection<string>> GetCategories()
+        {
+            return null;
+        }
     }
 }

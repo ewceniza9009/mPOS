@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using mPOS.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace mPOS.Views.Start
@@ -19,10 +20,10 @@ namespace mPOS.Views.Start
 
             BindingContext = this.vm = vm;
 
-            foreach (var child in Children)
+            Children.ForEach(child =>
             {
                 child.BindingContext = this.vm;
-            }
+            });
         }
     }
 }
