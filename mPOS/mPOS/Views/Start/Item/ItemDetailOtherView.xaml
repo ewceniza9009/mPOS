@@ -62,7 +62,8 @@
                     <StackLayout Orientation="Vertical">
                         <Label Text="Stock Level Qty:"/>
                         <StackLayout Orientation="Horizontal">
-                            <Entry Text="{Binding SelectedItem.ReorderQuantity, Mode=TwoWay, Converter={StaticResource decimalConverter}}" 
+                            <Entry Text="{Binding SelectedItem.ReorderQuantity, Mode=TwoWay}"
+                                   Keyboard="Numeric"
                                    WidthRequest="190">
                                 <Entry.Behaviors>
                                     <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
@@ -70,6 +71,7 @@
                             </Entry>
                             <Stepper x:Name="StockLevelQtyStepper" Value="{Binding SelectedItem.ReorderQuantity}" 
                                      Increment="1"
+                                     Maximum="10000"
                                      ValueChanged="StockLevelQtyStepper_OnValueChanged"></Stepper>
                         </StackLayout>
                     </StackLayout>
