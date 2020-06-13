@@ -86,8 +86,7 @@ namespace mPOS.ViewModels
         public MstCustomer SelectedCustomer
         {
             get => _SelectedCustomer;
-            set => SetProperty(ref _SelectedCustomer, value);
-
+            set => _SelectedCustomer = value;
         }
         private MstCustomer _SelectedCustomer;
 
