@@ -14,16 +14,21 @@ namespace mPOS.Views.Start
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemDetailGeneralView : ContentPage
     {
+        #region Properties
         public ItemViewModel vm;
         ZXingScannerPage scanPage;
+        #endregion
 
-        public ItemDetailGeneralView() : base()
+        #region ctor
+        public ItemDetailGeneralView()
         {
             InitializeComponent();
 
             CmdScanBarcode.Clicked += CmdScanBarcode_Clicked;
         }
+        #endregion
 
+        #region Events
         private void ItemDetailGeneralView_OnAppearing(object sender, EventArgs e)
         {
             vm = BindingContext as ItemViewModel;
@@ -43,8 +48,7 @@ namespace mPOS.Views.Start
             };
 
             await Navigation.PushModalAsync(scanPage);
-        }
-
-        
+        } 
+        #endregion
     }
 }
