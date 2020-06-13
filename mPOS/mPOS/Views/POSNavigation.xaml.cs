@@ -18,7 +18,7 @@ namespace mPOS.Views
 
             MenuList = new List<MenuItems.MenuPageItem>
             {
-                new MenuItems.MenuPageItem { Title = "Customer", Icon = "home.png", TargetType = typeof(Start.CustomerView) },
+                new MenuItems.MenuPageItem { Title = "Customer", Icon = "customer.png", TargetType = typeof(Start.CustomerView) },
                 new MenuItems.MenuPageItem { Title = "Item", Icon = "product.png", TargetType = typeof(Start.ItemView) },
                 new MenuItems.MenuPageItem { Title = "Setting", Icon = "setting.png", TargetType = typeof(Start.Setting) },
                 new MenuItems.MenuPageItem { Title = "Help", Icon = "help.png", TargetType = typeof(Start.HelpPage) },

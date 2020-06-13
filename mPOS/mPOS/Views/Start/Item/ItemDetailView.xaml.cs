@@ -18,6 +18,11 @@ namespace mPOS.Views.Start
             InitializeComponent();
 
             BindingContext = this.vm = vm;
+
+            foreach (var child in Children)
+            {
+                child.BindingContext = this.vm;
+            }
         }
     }
 }

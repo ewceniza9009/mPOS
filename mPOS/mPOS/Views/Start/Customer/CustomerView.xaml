@@ -26,29 +26,26 @@
                      Margin="5">
             <StackLayout x:Name="SearchStackLayout"
                          Orientation="Horizontal">
-                <Entry x:Name="SearchCustomer"
-                       Placeholder="Search customer"
-                       WidthRequest="320"
-                       Text="{Binding SearchCustomerEntry}"/>
-                <Button x:Name="CmdSearch"
-                        ImageSource="search.png"
-                        HeightRequest="10"
-                        WidthRequest="60"
-                        BackgroundColor="Transparent"
-                        HorizontalOptions="Center"
-                        Command="{Binding Search}"/>
+
+                <Grid x:Name="SearchGrid">
+                    <Entry Grid.Column="0" x:Name="SearchItem"
+                           Placeholder="Search Item"
+                           WidthRequest="380"
+                           Text="{Binding SearchCustomerEntry}"/>
+                    <Button Grid.Column="0" x:Name="CmdSearch"
+                            ImageSource="search.png"
+                            HeightRequest="10"
+                            WidthRequest="60"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="End"
+                            Margin="0,-8,-15,0"
+                            Command="{Binding Search}"/>
+                </Grid>
             </StackLayout>
             <StackLayout x:Name="CustomerListStackLayout"
                          Orientation="Vertical"
                          HorizontalOptions="Center"
                          VerticalOptions="Center">
-                <!--<Button x:Name="CmdLoad" 
-                        Text="Refresh"
-                        Clicked="CmdLoad_OnClicked"></Button>
-
-                <ActivityIndicator IsRunning="{Binding IsBusy, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}" 
-                                   IsVisible="{Binding IsBusy, Mode=TwoWay, UpdateSourceEventName=PropertyChanged}"
-                                   HeightRequest="50"/>-->                                                                   
 
                 <ListView x:Name="CustomerListView"
                           ItemsSource="{Binding Customers}"

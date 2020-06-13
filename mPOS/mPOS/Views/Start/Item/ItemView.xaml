@@ -26,17 +26,22 @@
                      Margin="5">
             <StackLayout x:Name="SearchStackLayout"
                          Orientation="Horizontal">
-                <Entry x:Name="SearchItem"
-                       Placeholder="Search Item"
-                       WidthRequest="320"
-                       Text="{Binding SearchItemEntry}"/>
-                <Button x:Name="CmdSearch"
-                        ImageSource="search.png"
-                        HeightRequest="10"
-                        WidthRequest="60"
-                        BackgroundColor="Transparent"
-                        HorizontalOptions="Center"
-                        Command="{Binding Search}"/>
+
+                <Grid x:Name="SearchGrid">
+                    <Entry Grid.Column="0" x:Name="SearchItem"
+                           Placeholder="Search Item"
+                           WidthRequest="380"
+                           Text="{Binding SearchItemEntry}"/>
+                    <Button Grid.Column="0" x:Name="CmdSearch"
+                            ImageSource="search.png"
+                            HeightRequest="10"
+                            WidthRequest="60"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="End"
+                            Margin="0,-8,-15,0"
+                            Command="{Binding Search}"/>
+                </Grid>
+                
             </StackLayout>
             <StackLayout x:Name="ItemListStackLayout"
                          Orientation="Vertical"
@@ -66,7 +71,7 @@
                                                    TextColor="Black"
                                                    FontSize="15"
                                                    HeightRequest="20"
-                                                   WidthRequest="230"
+                                                   WidthRequest="210"
                                                    FontAttributes="Bold"
                                                    Margin="0,0,0,-5"/>
                                             <Label Text="{Binding ItemCode}"
@@ -74,12 +79,14 @@
                                                    FontSize="12"/>
                                         </StackLayout>
                                         <StackLayout x:Name="ItemPrice"
-                                                     Orientation="Vertical">
+                                                     Orientation="Horizontal"
+                                                     HorizontalOptions="End">
                                             <Label Text="{Binding Price, StringFormat='₱{0:N2}'}"
                                                    TextColor="Red"
-                                                   FontSize="20"
+                                                   FontSize="15"
+                                                   Margin="0,10,0,0"
                                                    HorizontalTextAlignment="End"
-                                                   FontAttributes="Bold"></Label>
+                                                   FontAttributes="Bold"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>

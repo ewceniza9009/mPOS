@@ -124,7 +124,7 @@ namespace mPOS.ViewModels
 
         public Command RefreshSelectedItem
         {
-            get => _RefreshSelectedItem ?? (_RefreshSelectedItem = new Command(ExecuteRefreshSelectedItem, () => true));
+            get => _RefreshSelectedItem ?? (_RefreshSelectedItem = new Command(ExecuteRefreshSelectedItem, (x) => true));
             set => SetProperty(ref _RefreshSelectedItem, value);
         }
         private Command _RefreshSelectedItem;
@@ -173,7 +173,7 @@ namespace mPOS.ViewModels
         #endregion
 
         #region Methods
-        private void ExecuteRefreshSelectedItem()
+        public void ExecuteRefreshSelectedItem(object sender)
         {
             OnPropertyChanged(nameof(SelectedItem));
             OnPropertyChanged(nameof(Title));

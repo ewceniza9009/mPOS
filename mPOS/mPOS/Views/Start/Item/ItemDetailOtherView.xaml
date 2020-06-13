@@ -6,7 +6,8 @@
              xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
              xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
              mc:Ignorable="d"
-             x:Class="mPOS.Views.Start.ItemDetailOtherView">
+             x:Class="mPOS.Views.Start.ItemDetailOtherView"
+             Appearing="ItemDetailOtherView_OnAppearing">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:DecimalConverter x:Key="decimalConverter" />
@@ -40,7 +41,8 @@
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Cost:"/>
-                        <Entry Text="{Binding SelectedItem.Cost, Mode=TwoWay, Converter={StaticResource decimalConverter}}" >
+                        <Entry Text="{Binding SelectedItem.Cost, Mode=TwoWay, Converter={StaticResource decimalConverter}}" 
+                               Completed="CostEntry_Completed">
                             <Entry.Behaviors>
                                 <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
                             </Entry.Behaviors>
@@ -49,7 +51,8 @@
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Mark Up(%):"/>
-                        <Entry Text="{Binding SelectedItem.MarkUp, Mode=TwoWay, Converter={StaticResource decimalConverter}}" >
+                        <Entry Text="{Binding SelectedItem.MarkUp, Mode=TwoWay, Converter={StaticResource decimalConverter}}" 
+                               Completed="MarkUpEntry_OnCompleted">
                             <Entry.Behaviors>
                                 <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
                             </Entry.Behaviors>

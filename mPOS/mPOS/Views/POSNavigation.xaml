@@ -33,7 +33,6 @@
                     <ListView x:Name="NavigationDrawerList"
                               RowHeight="60"
                               SeparatorVisibility="None"
-                              BackgroundColor="#e8e8e8"
                               ItemSelected="ListView_ItemSelected">
 
                         <ListView.ItemTemplate>

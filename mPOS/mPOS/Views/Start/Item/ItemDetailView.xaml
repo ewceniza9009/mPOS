@@ -18,6 +18,6 @@
                      Command="{Binding Save}"></ToolbarItem>
     </TabbedPage.ToolbarItems>
 
-    <start:ItemDetailGeneralView Title="General"/>
-    <start:ItemDetailOtherView Title="Other"/>
+    <start:ItemDetailGeneralView Title="General" IconImageSource="info.png"/>
+    <start:ItemDetailOtherView Title="Other" IconImageSource="item_others.png"/>
 </TabbedPage>
