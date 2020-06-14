@@ -192,6 +192,7 @@
     <Compile Include="Controllers\MstCustomerController.cs" />
     <Compile Include="Controllers\MstItemController.cs" />
     <Compile Include="Controllers\MstUserController.cs" />
+    <Compile Include="Controllers\TrnSalesController.cs" />
     <Compile Include="Data\pos.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -201,6 +202,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\MappingProfile.cs" />
+    <Compile Include="Mapping\MappingProfileForTrnSales.cs" />
     <Compile Include="Migrations\202005160647101_asp-membership-migration.cs" />
     <Compile Include="Migrations\202005160647101_asp-membership-migration.Designer.cs">
       <DependentUpon>202005160647101_asp-membership-migration.cs</DependentUpon>
@@ -217,6 +219,7 @@
     <Compile Include="Repository\MstCustomer.cs" />
     <Compile Include="Repository\MstItem.cs" />
     <Compile Include="Repository\MstUser.cs" />
+    <Compile Include="Repository\TrnSales.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\ExpressionBuilder.cs" />
     <Compile Include="Utilities\Filterer.cs" />
@@ -288,6 +291,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\MstCustomer\" />
     <Folder Include="Views\MstItem\" />
+    <Folder Include="Views\TrnSales\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
