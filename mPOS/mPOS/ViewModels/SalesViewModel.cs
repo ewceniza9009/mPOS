@@ -267,6 +267,7 @@ namespace mPOS.ViewModels
             {
                 IsChanged = false;
                 SelectedSale = selectedSale;
+                SelectedCustomer = Customers.SingleOrDefault(y => y.Id == SelectedSale.CustomerId);
 
                 LoadSalesLine();
 
