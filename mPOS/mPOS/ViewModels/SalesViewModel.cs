@@ -60,6 +60,24 @@ namespace mPOS.ViewModels
                 IsBusy = false;
             });
         }
+
+        public void LoadSalesLine()
+        {
+            Task.Run(async () =>
+            {
+                Items = await APISalesRequest.GetItems();
+
+                if (SelectedSale != null)
+                {
+                    SelectedSale.TrnSalesLines.ForEach(y =>
+                    {
+                        y.ItemDescription = Items.SingleOrDefault(z => z.Id == y.ItemId)?.ItemDescription;
+                        y.BarCode = Items.SingleOrDefault(z => z.Id == y.ItemId)?.BarCode;
+                    }); ;
+                }
+            });
+        }
+
         #endregion
 
         #region Properties
@@ -118,12 +136,33 @@ namespace mPOS.ViewModels
         }
         private ObservableCollection<POCO.MstUnit> _SaleUnits;
 
+        public POCO.MstCustomer SelectedCustomer
+        {
+            get => _SelectedCustomer;
+            set => SetProperty(ref _SelectedCustomer, value);
+        }
+        private POCO.MstCustomer _SelectedCustomer;
+
         public ObservableCollection<POCO.MstCustomer> Customers
         {
             get => _Customers;
             set => SetProperty(ref _Customers, value);
         }
         private ObservableCollection<POCO.MstCustomer> _Customers;
+
+        public POCO.MstItem SelectedItem
+        {
+            get => _SelectedItem;
+            set => SetProperty(ref _SelectedItem, value);
+        }
+        private POCO.MstItem _SelectedItem;
+
+        public ObservableCollection<POCO.MstItem> Items
+        {
+            get => _Items;
+            set => SetProperty(ref _Items, value);
+        }
+        private ObservableCollection<POCO.MstItem> _Items;
 
         public POCO.TrnSales SelectedSale
         {
@@ -155,6 +194,13 @@ namespace mPOS.ViewModels
             set => SetProperty(ref _RefreshSelectedSale, value);
         }
         private Command _RefreshSelectedSale;
+
+        public Command SelectCustomer
+        {
+            get => _SelectCustomer ?? (_SelectCustomer = new Command(ExecuteSelectCustomer, (x) => true));
+            set => SetProperty(ref _SelectCustomer, value);
+        }
+        private Command _SelectCustomer;
 
         public Command Add
         {
@@ -201,10 +247,11 @@ namespace mPOS.ViewModels
 
         private void ExecuteAdd(object sender)
         {
-            var newItem = new POCO.TrnSales();
+            var newSale = new POCO.TrnSales();
+            newSale.TrnSalesLines = new System.Collections.Generic.List<TrnSalesLine>();
 
-            Sales.Add(newItem);
-            SelectedSale = newItem;
+            Sales.Add(newSale);
+            SelectedSale = newSale;
 
             Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
         }
@@ -221,7 +268,17 @@ namespace mPOS.ViewModels
                 IsChanged = false;
                 SelectedSale = selectedSale;
 
+                LoadSalesLine();
+
                 Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
+            }
+        }
+
+        private void ExecuteSelectCustomer(object obj)
+        {
+            if (SelectedCustomer != null)
+            {
+                SelectedSale.CustomerId = SelectedCustomer.Id;
             }
         }
 

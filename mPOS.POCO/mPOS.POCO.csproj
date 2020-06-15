@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\TrnSalesExt.cs" />
+    <Compile Include="Extensions\TrnSalesLineExt.cs" />
     <Compile Include="FilterMethods.cs" />
     <Compile Include="Extensions\MstCustomerExt.cs" />
     <Compile Include="OperationEnums.cs" />

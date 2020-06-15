@@ -14,6 +14,13 @@
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdAdd"
+                     Text="Add"
+                     IconImageSource="plus_math.png"
+                     Command="{Binding Add}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout x:Name="MainStackLayout"
                      Margin="5">
@@ -26,12 +33,11 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <Entry Grid.Column="0" Grid.Row="0" x:Name="SearchSale"
-                           Placeholder="Search Sale"
-                           WidthRequest="380"
-                           Text="{Binding SearchSaleEntry}"/>
-                    <Button Grid.Column="0" Grid.Row="0"  x:Name="CmdSearch"
-                            ImageSource="search.png"
+                    <DatePicker Grid.Row="0"
+                                Date="{Binding SearchSaleDate}"
+                                Margin="0,-5,0,0"/>
+                    <Button Grid.Row="0" 
+                            ImageSource="calendar.png"
                             HeightRequest="10"
                             WidthRequest="60"
                             BackgroundColor="Transparent"
@@ -39,10 +45,12 @@
                             Margin="0,-13,-10,0"
                             Command="{Binding Search}"/>
 
-                    <DatePicker Grid.Row="1"
-                                Date="{Binding SearchSaleDate}"/>
-                    <Button Grid.Row="1" 
-                            ImageSource="calendar.png"
+                    <Entry Grid.Column="0" Grid.Row="1" x:Name="SearchSale"
+                           Placeholder="Search Sale"
+                           WidthRequest="380"
+                           Text="{Binding SearchSaleEntry}"/>
+                    <Button Grid.Column="0" Grid.Row="1"  x:Name="CmdSearch"
+                            ImageSource="search.png"
                             HeightRequest="10"
                             WidthRequest="60"
                             BackgroundColor="Transparent"
@@ -82,8 +90,7 @@
                                                    TextColor="Black"
                                                    FontSize="15"
                                                    WidthRequest="80"
-                                                   HorizontalTextAlignment="End"
-                                                   FontAttributes="Bold"/>
+                                                   HorizontalTextAlignment="End"/>
                                         </StackLayout>
 
                                         <StackLayout x:Name="ItemInfo"

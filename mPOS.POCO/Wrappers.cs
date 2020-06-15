@@ -554,7 +554,7 @@ namespace mPOS.POCO
         public IEnumerable<TrnSalesLine> TrnSalesLines { get; set; }
     }
 
-    public class TrnSalesLine
+    public partial class TrnSalesLine
     {
         public int Id { get; set; }
         public int SalesId { get; set; }
