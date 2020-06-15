@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
+             xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
+             mc:Ignorable="d"
+             x:Class="mPOS.Views.Activities.Sales.SalesDetailView"
+             Title="{Binding Title, Mode=TwoWay}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:CurrencyConverter x:Key="currencyConverter" />
+            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdDelete"
+                     Text="Delete"
+                     IconImageSource="delete.png"
+                     Command="{Binding Delete}"></ToolbarItem>
+        <ToolbarItem x:Name="CmdSave"
+                     Text="Save"
+                     IconImageSource="save.png"
+                     Command="{Binding Save}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout x:Name="MainStackLayout" 
+                     Margin="10">
+            <StackLayout HorizontalOptions="Center">
+                <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
+                                   IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
+                                   HeightRequest="50"/>
+            </StackLayout>
+
+            <StackLayout HorizontalOptions="End">
+                <Label Text="{Binding SelectedSale.SalesAmount, StringFormat='₱{0:N2}'}"
+                       HorizontalTextAlignment="End"
+                       TextColor="Black"
+                       FontSize="50"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

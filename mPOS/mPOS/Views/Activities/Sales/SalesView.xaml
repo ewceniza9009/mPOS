@@ -1,26 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
              xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
              mc:Ignorable="d"
-             x:Class="mPOS.Views.Start.ItemView"
-             Title="Items"
-             Appearing="ItemView_OnAppearing">
+             x:Class="mPOS.Views.Activities.SalesView"
+             Title="Sales"
+             Appearing="SalesView_OnAppearing">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="CmdAdd"
-                     Text="Add"
-                     IconImageSource="plus_math.png"
-                     Command="{Binding Add}">
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout x:Name="MainStackLayout"
                      Margin="5">
@@ -28,11 +21,16 @@
                          Orientation="Horizontal">
 
                 <Grid x:Name="SearchGrid">
-                    <Entry Grid.Column="0" x:Name="SearchItem"
-                           Placeholder="Search Item"
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Entry Grid.Column="0" Grid.Row="0" x:Name="SearchSale"
+                           Placeholder="Search Sale"
                            WidthRequest="380"
-                           Text="{Binding SearchItemEntry}"/>
-                    <Button Grid.Column="0" x:Name="CmdSearch"
+                           Text="{Binding SearchSaleEntry}"/>
+                    <Button Grid.Column="0" Grid.Row="0"  x:Name="CmdSearch"
                             ImageSource="search.png"
                             HeightRequest="10"
                             WidthRequest="60"
@@ -40,21 +38,32 @@
                             HorizontalOptions="End"
                             Margin="0,-13,-10,0"
                             Command="{Binding Search}"/>
+
+                    <DatePicker Grid.Row="1"
+                                Date="{Binding SearchSaleDate}"/>
+                    <Button Grid.Row="1" 
+                            ImageSource="calendar.png"
+                            HeightRequest="10"
+                            WidthRequest="60"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="End"
+                            Margin="0,-13,-10,0"
+                            Command="{Binding Search}"/>
                 </Grid>
-                
+
             </StackLayout>
-            <StackLayout x:Name="ItemListStackLayout"
+            <StackLayout x:Name="SaleListStackLayout"
                          Orientation="Vertical"
                          HorizontalOptions="Center"
                          VerticalOptions="Center">
-                <ListView x:Name="ItemListView"
-                          ItemsSource="{Binding Items}"
-                          SelectedItem="{Binding SelectedItem}"
-                          RefreshCommand="{Binding RefreshItems}"
+                <ListView x:Name="SaleListView"
+                          ItemsSource="{Binding Sales}"
+                          SelectedItem="{Binding SelectedSale}"
+                          RefreshCommand="{Binding RefreshSales}"
                           IsPullToRefreshEnabled="True"
                           IsRefreshing="{Binding IsBusy}">
                     <ListView.Behaviors>
-                        <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectItem}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                        <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSale}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                     </ListView.Behaviors>
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -63,25 +72,38 @@
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout x:Name="ItemImagePlaceHolder"
                                                      Orientation="Vertical">
-                                            <Image Source="product.png"></Image>
+                                            <Image Source="sales.png"></Image>
                                         </StackLayout>
-                                        <StackLayout x:Name="ItemInfo"
-                                                     Orientation="Vertical">
-                                            <Label Text="{Binding ItemDescription}"
+
+                                        <StackLayout x:Name="SalesDate"
+                                                     Orientation="Horizontal"
+                                                     HorizontalOptions="End">
+                                            <Label Text="{Binding SalesDate, StringFormat='{0:g}'}"
                                                    TextColor="Black"
                                                    FontSize="15"
+                                                   WidthRequest="80"
+                                                   HorizontalTextAlignment="End"
+                                                   FontAttributes="Bold"/>
+                                        </StackLayout>
+
+                                        <StackLayout x:Name="ItemInfo"
+                                                     Orientation="Vertical">
+                                            <Label Text="{Binding SalesNumber}"
+                                                   TextColor="Black"
+                                                   TextDecorations="Underline"
+                                                   FontSize="15"
                                                    HeightRequest="20"
-                                                   WidthRequest="210"
+                                                   WidthRequest="130"
                                                    FontAttributes="Bold"
                                                    Margin="0,0,0,-5"/>
-                                            <Label Text="{Binding BarCode}"
+                                            <Label Text="{Binding CustomerName}"
                                                    TextColor="Black"
                                                    FontSize="12"/>
                                         </StackLayout>
                                         <StackLayout x:Name="ItemPrice"
                                                      Orientation="Horizontal"
                                                      HorizontalOptions="End">
-                                            <Label Text="{Binding Price, StringFormat='₱{0:N2}'}"
+                                            <Label Text="{Binding SalesAmount, StringFormat='₱{0:N2}'}"
                                                    TextColor="DeepPink"
                                                    FontSize="15"
                                                    Margin="0,10,0,0"

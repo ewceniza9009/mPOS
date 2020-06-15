@@ -518,7 +518,7 @@ namespace mPOS.POCO
         public decimal Amount { get; set; }
     }
 
-    public class TrnSales
+    public partial class TrnSales
     {
         public int Id { get; set; }
         public int PeriodId { get; set; }

@@ -14,7 +14,7 @@ namespace mPOS.WebAPI.Repository
         {
             POCO.TrnSales result;
 
-            var mappingProfile = new Mapping.MappingProfileForTrnSales();;
+            var mappingProfile = new Mapping.MappingProfileForTrnSales(); ;
 
             using (var ctx = new Data.posDataContext())
             {
@@ -32,7 +32,7 @@ namespace mPOS.WebAPI.Repository
             IEnumerable<POCO.TrnSales> result;
 
             var dynamicFilter = Utilities.Filterer<POCO.TrnSalesFilter>.GetFilter(filter, filterMethods);
-            var mappingProfile = new Mapping.MappingProfileForTrnSales(); 
+            var mappingProfile = new Mapping.MappingProfileForTrnSales();
 
             using (var ctx = new Data.posDataContext())
             {
@@ -57,10 +57,61 @@ namespace mPOS.WebAPI.Repository
             return result;
         }
 
-        //TODO: Complete TrnSales Saving 
         public long Save(POCO.TrnSales t)
         {
-            throw new NotImplementedException();
+            Data.TrnSale result;
+            var mappingProfile = new Mapping.MappingProfileForTrnSalesReverse();
+
+            using (var ctx = new Data.posDataContext())
+            {
+
+                if (t.Id != 0)
+                {
+                    result = ctx.TrnSales.SingleOrDefault(x => x.Id == t.Id);
+
+                    mappingProfile.mapper.Map(t, result);
+                }
+                else
+                {
+                    t.AccountId = 159;
+                    t.TermId = 7;
+                    t.SalesAgent = 1;
+                    t.TerminalId = 238;
+                    t.PreparedBy = 9;
+                    t.CheckedBy = 9;
+                    t.ApprovedBy = 23;
+                    t.IsCancelled = false;
+                    t.PaidAmount = 0;
+                    t.CreditAmount = 0;
+                    t.DebitAmount = 0;
+                    t.EntryUserId = 1;
+                    t.EntryDateTime = DateTime.Now;
+                    t.UpdateUserId = 1;
+                    t.UpdateDateTime = DateTime.Now;
+
+                    foreach (var tLine in t.TrnSalesLines)
+                    {
+                        tLine.DiscountId = 2;
+                        tLine.DiscountRate = 0;
+                        tLine.DiscountAmount = 0;
+                        tLine.TaxId = 9;
+                        tLine.TaxRate = 0;
+                        tLine.TaxAmount = 0;
+                        tLine.SalesAccountId = 159;
+                        tLine.AssetAccountId = 74;
+                        tLine.CostAccountId = 238;
+                        tLine.TaxAccountId = 238;
+                    }
+
+                    result = mappingProfile.mapper.Map<Data.TrnSale>(t);
+
+                    ctx.TrnSales.InsertOnSubmit(result);
+                }
+
+                ctx.SubmitChanges();
+            }
+
+            return result?.Id ?? 0;
         }
 
         public void Delete(long id)
@@ -75,6 +126,39 @@ namespace mPOS.WebAPI.Repository
                     ctx.SubmitChanges();
                 }
             }
+        }
+
+        //Queries
+        public List<POCO.MstCustomer> GetCustomers()
+        {
+            IEnumerable<POCO.MstCustomer> result;
+
+            var mappingProfile = new Mapping.MappingProfile<Data.MstCustomer, POCO.MstCustomer>();
+
+            using (var ctx = new Data.posDataContext())
+            {
+                var data = ctx.MstCustomers;
+
+                result = mappingProfile.mapper.Map<IEnumerable<Data.MstCustomer>, IEnumerable<POCO.MstCustomer>>(data);
+            }
+
+            return result.ToList();
+        }
+
+        public List<POCO.MstItem> GetItems()
+        {
+            IEnumerable<POCO.MstItem> result;
+
+            var mappingProfile = new Mapping.MappingProfile<Data.MstItem, POCO.MstItem>();
+
+            using (var ctx = new Data.posDataContext())
+            {
+                var data = ctx.MstItems;
+
+                result = mappingProfile.mapper.Map<IEnumerable<Data.MstItem>, IEnumerable<POCO.MstItem>>(data);
+            }
+
+            return result.ToList();
         }
     }
 }

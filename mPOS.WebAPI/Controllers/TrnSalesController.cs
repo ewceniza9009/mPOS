@@ -28,11 +28,13 @@ namespace mPOS.WebAPI.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //TODO: Complete TrnSales Saving
         [HttpPost]
-        public JsonResult Save(POCO.MstItem content)
+        public JsonResult Save(POCO.TrnSales content)
         {
-            return Json(true, JsonRequestBehavior.AllowGet);
+            var repos = new Repository.TrnSales();
+            var result = repos.Save(content);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpDelete]
@@ -40,6 +42,30 @@ namespace mPOS.WebAPI.Controllers
         {
             var repos = new Repository.TrnSales();
             repos.Delete(id);
+        }
+
+        public JsonResult GetCustomers()
+        {
+            var repos = new Repository.TrnSales();
+            var result = repos.GetCustomers();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetItems()
+        {
+            var repos = new Repository.TrnSales();
+            var result = repos.GetItems();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetUnits()
+        {
+            var repos = new Repository.MstItem();
+            var result = repos.GetUnits();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
