@@ -84,6 +84,37 @@ namespace mPOS.ViewModels
             });
         }
 
+        public void LoadItems(object sender = null)
+        {
+            string search = sender?.ToString() ?? string.Empty;
+
+            IsBusy = true;
+
+            Task.Run(async () =>
+            {
+                POCO.MstItemFilter itemFilter = null;
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    itemFilter = new MstItemFilter()
+                    {
+                        ItemDescription = search,
+                        filterMethods = new FilterMethods()
+                        {
+                            Operations = new List<FilterOperation>()
+                            {
+                                new FilterOperation("ItemDescription", Operation.Contains)
+                            }
+                        }
+                    };
+                }
+
+                Items = await ApiRequest<POCO.MstItemFilter, ObservableCollection<POCO.MstItem>>
+                    .PostRead("MstItem/BulkGet", itemFilter);
+
+                IsBusy = false;
+            });
+        }
         #endregion
 
         #region Properties
@@ -114,6 +145,14 @@ namespace mPOS.ViewModels
             set => SetProperty(ref _SearchSaleDate, value);
         }
         private DateTime? _SearchSaleDate;
+        public string SearchItemEntry
+        {
+            get => _SearchItemEntry;
+            set => SetProperty(ref _SearchItemEntry, value);
+        }
+        private string _SearchItemEntry;
+
+        public string SearchBarcode { get; set; }
 
         public bool IsChanged { get; set; }
 
@@ -193,9 +232,16 @@ namespace mPOS.ViewModels
         }
         private Command _RefreshSales;
 
+        public Command RefreshItems
+        {
+            get => _RefreshItems ?? (_RefreshItems = new Command(LoadItems, (x) => true));
+            set => SetProperty(ref _RefreshItems, value);
+        }
+        private Command _RefreshItems;
+
         public Command RefreshSelectedSale
         {
-            get => _RefreshSelectedSale ?? (_RefreshSelectedSale = new Command(ExecuteRefreshSelectedItem, (x) => true));
+            get => _RefreshSelectedSale ?? (_RefreshSelectedSale = new Command(ExecuteRefreshSelectedSale, (x) => true));
             set => SetProperty(ref _RefreshSelectedSale, value);
         }
         private Command _RefreshSelectedSale;
@@ -221,12 +267,25 @@ namespace mPOS.ViewModels
         }
         private Command _Search;
 
+        public Command SearchItem
+        {
+            get => _SearchItem ?? (_SearchItem = new Command(ExecuteSearchItem, (x) => true));
+            set => SetProperty(ref _SearchItem, value);
+        }
+        private Command _SearchItem;
+
         public Command SelectSale
         {
             get => _SelectSale ?? (_SelectSale = new Command(ExecuteSelectSale, (x) => true));
             set => SetProperty(ref _SelectSale, value);
         }
         private Command _SelectSale;
+        public Command SelectItem
+        {
+            get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, (x) => true));
+            set => SetProperty(ref _SelectItem, value);
+        }
+        private Command _SelectItem;
 
         public Command Save
         {
@@ -244,9 +303,10 @@ namespace mPOS.ViewModels
         #endregion
 
         #region Methods
-        public void ExecuteRefreshSelectedItem(object sender)
+        public void ExecuteRefreshSelectedSale(object sender)
         {
             OnPropertyChanged(nameof(SelectedSale));
+            OnPropertyChanged(nameof(SearchBarcode));
             OnPropertyChanged(nameof(Title));
         }
 
@@ -265,6 +325,10 @@ namespace mPOS.ViewModels
         {
             Load(SearchSaleEntry);
         }
+        private void ExecuteSearchItem(object sender)
+        {
+            LoadItems(SearchItemEntry);
+        }
 
         private void ExecuteSelectSale(object sender)
         {
@@ -277,6 +341,17 @@ namespace mPOS.ViewModels
                 LoadSalesLine();
 
                 Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
+            }
+        }
+
+        private void ExecuteSelectItem(object sender)
+        {
+            if (sender is MstItem selectedItem)
+            {
+                IsChanged = false;
+                SelectedItem = selectedItem;
+
+                //TODO : Add Views For TrnSalesLineDetail
             }
         }
 
@@ -347,6 +422,13 @@ namespace mPOS.ViewModels
                     },
                     TaskScheduler.FromCurrentSynchronizationContext())
                 );
+        }
+        #endregion
+
+        #region Other Methods
+        public void ExecuteShowItems()
+        {
+            Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushModalAsync(new SalesItemView(this)));
         }
         #endregion
     }

@@ -56,6 +56,7 @@
 
             <StackLayout Orientation="Horizontal">
                 <Entry Placeholder="Search Barcode"
+                       Text="{Binding SearchBarcode}"
                        WidthRequest="260"/>
                 <Button x:Name="CmdSearchBarcode"
                         WidthRequest="50"
@@ -64,7 +65,8 @@
                 <Button x:Name="CmdSearchItem"
                         WidthRequest="50"
                         HeightRequest="40"
-                        ImageSource="add_item.png"/>
+                        ImageSource="add_item.png"
+                        Clicked="CmdSearchItem_OnClicked"/>
             </StackLayout>
 
             <StackLayout x:Name="SalesLineStackLayout"
