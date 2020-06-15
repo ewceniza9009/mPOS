@@ -44,7 +44,6 @@ namespace mPOS.ViewModels
                     };
                 }
 
-                SaleUnits = await APIItemRequest.GetUnits();
                 Customers = await APISalesRequest.GetCustomers();
 
                 Sales = await ApiRequest<POCO.TrnSalesFilter, ObservableCollection<POCO.TrnSales>>
@@ -66,15 +65,22 @@ namespace mPOS.ViewModels
             Task.Run(async () =>
             {
                 Items = await APISalesRequest.GetItems();
+                SaleUnits = await APIItemRequest.GetUnits();
 
-                if (SelectedSale != null)
+                SelectedSale?.TrnSalesLines.ForEach(y =>
                 {
-                    SelectedSale.TrnSalesLines.ForEach(y =>
-                    {
-                        y.ItemDescription = Items.SingleOrDefault(z => z.Id == y.ItemId)?.ItemDescription;
-                        y.BarCode = Items.SingleOrDefault(z => z.Id == y.ItemId)?.BarCode;
-                    }); ;
-                }
+                    var item = Items.SingleOrDefault(z => z.Id == y.ItemId);
+
+                    y.ItemDescription = item?.ItemDescription;
+                    y.BarCode = item?.BarCode;
+                });
+
+                SelectedSale?.TrnSalesLines.ForEach(y =>
+                {
+                    var unit = SaleUnits.SingleOrDefault(z => z.Id == y.ItemId);
+
+                    y.UnitName = unit?.Unit;
+                });
             });
         }
 
@@ -107,7 +113,6 @@ namespace mPOS.ViewModels
             get => _SearchSaleDate ?? DateTime.Now.Date;
             set => SetProperty(ref _SearchSaleDate, value);
         }
-
         private DateTime? _SearchSaleDate;
 
         public bool IsChanged { get; set; }
