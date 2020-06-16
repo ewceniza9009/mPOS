@@ -21,7 +21,7 @@ namespace mPOS.Views
                 new MenuItems.MenuPageItem { Title = "Sales", Icon = "sales.png", TargetType = typeof(Activities.SalesView) },
                 new MenuItems.MenuPageItem { Title = "Customer", Icon = "customer.png", TargetType = typeof(Start.CustomerView) },
                 new MenuItems.MenuPageItem { Title = "Item", Icon = "product.png", TargetType = typeof(Start.ItemView) },
-                new MenuItems.MenuPageItem { Title = "Setting", Icon = "setting.png", TargetType = typeof(Start.Setting) },
+                new MenuItems.MenuPageItem { Title = "Settings", Icon = "setting.png", TargetType = typeof(Start.Setting) },
                 new MenuItems.MenuPageItem { Title = "Logout", Icon = "logout.png", TargetType = typeof(Start.LogoutPage) }
             };
 

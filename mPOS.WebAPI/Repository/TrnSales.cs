@@ -64,7 +64,6 @@ namespace mPOS.WebAPI.Repository
 
             using (var ctx = new Data.posDataContext())
             {
-
                 if (t.Id != 0)
                 {
                     result = ctx.TrnSales.SingleOrDefault(x => x.Id == t.Id);
@@ -73,6 +72,16 @@ namespace mPOS.WebAPI.Repository
                 }
                 else
                 {
+                    var preSalesNumber = ctx.TrnSales?.Max(x => x.SalesNumber) ?? "0001-000000";
+                    var splitSalesNumber = preSalesNumber.Split('-');
+                    var maxSalesNumber = Int64.Parse(splitSalesNumber[1]);
+                    var newSalesNumberLng = maxSalesNumber + 1000001;
+
+                    var newSalesNumber = $"0001-{newSalesNumberLng.ToString().Substring(1, 6)}";
+
+                    t.PeriodId = 1;
+                    t.SalesNumber = newSalesNumber;
+                    t.ManualInvoiceNumber = newSalesNumber;
                     t.AccountId = 159;
                     t.TermId = 7;
                     t.SalesAgent = 1;
@@ -105,7 +114,7 @@ namespace mPOS.WebAPI.Repository
 
                     result = mappingProfile.mapper.Map<Data.TrnSale>(t);
 
-                    ctx.TrnSales.InsertOnSubmit(result);
+                    ctx.TrnSales?.InsertOnSubmit(result);
                 }
 
                 ctx.SubmitChanges();

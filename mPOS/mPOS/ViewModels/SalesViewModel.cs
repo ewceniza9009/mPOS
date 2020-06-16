@@ -17,6 +17,7 @@ namespace mPOS.ViewModels
     public class SalesViewModel : ViewModelBase
     {
         #region Initialize
+
         public void Load(object sender = null)
         {
             string search = sender?.ToString() ?? string.Empty;
@@ -115,14 +116,17 @@ namespace mPOS.ViewModels
                 IsBusy = false;
             });
         }
+
         #endregion
 
         #region Properties
+
         public bool IsBusy
         {
             get => _IsBusy;
             set => SetProperty(ref _IsBusy, value);
         }
+
         private bool _IsBusy;
 
         public bool IsProcessingAPI
@@ -130,6 +134,7 @@ namespace mPOS.ViewModels
             get => _IsProcessingApi;
             set => SetProperty(ref _IsProcessingApi, value);
         }
+
         private bool _IsProcessingApi;
 
         public string SearchSaleEntry
@@ -137,6 +142,7 @@ namespace mPOS.ViewModels
             get => _SearchSaleEntry;
             set => SetProperty(ref _SearchSaleEntry, value);
         }
+
         private string _SearchSaleEntry;
 
         public DateTime? SearchSaleDate
@@ -144,12 +150,15 @@ namespace mPOS.ViewModels
             get => _SearchSaleDate ?? DateTime.Now.Date;
             set => SetProperty(ref _SearchSaleDate, value);
         }
+
         private DateTime? _SearchSaleDate;
+
         public string SearchItemEntry
         {
             get => _SearchItemEntry;
             set => SetProperty(ref _SearchItemEntry, value);
         }
+
         private string _SearchItemEntry;
 
         public string SearchBarcode { get; set; }
@@ -163,6 +172,7 @@ namespace mPOS.ViewModels
             get => _SelectedSaleId == 0 ? SelectedSale.Id : _SelectedSaleId;
             set => SetProperty(ref _SelectedSaleId, value);
         }
+
         private long _SelectedSaleId;
 
         public MstUnit SelectedUnit
@@ -171,6 +181,7 @@ namespace mPOS.ViewModels
             set => SetProperty(ref _SelectedUnit, value);
 
         }
+
         private MstUnit _SelectedUnit;
 
         public ObservableCollection<POCO.MstUnit> SaleUnits
@@ -178,6 +189,7 @@ namespace mPOS.ViewModels
             get => _SaleUnits;
             set => SetProperty(ref _SaleUnits, value);
         }
+
         private ObservableCollection<POCO.MstUnit> _SaleUnits;
 
         public POCO.MstCustomer SelectedCustomer
@@ -185,6 +197,7 @@ namespace mPOS.ViewModels
             get => _SelectedCustomer;
             set => SetProperty(ref _SelectedCustomer, value);
         }
+
         private POCO.MstCustomer _SelectedCustomer;
 
         public ObservableCollection<POCO.MstCustomer> Customers
@@ -192,6 +205,7 @@ namespace mPOS.ViewModels
             get => _Customers;
             set => SetProperty(ref _Customers, value);
         }
+
         private ObservableCollection<POCO.MstCustomer> _Customers;
 
         public POCO.MstItem SelectedItem
@@ -199,6 +213,7 @@ namespace mPOS.ViewModels
             get => _SelectedItem;
             set => SetProperty(ref _SelectedItem, value);
         }
+
         private POCO.MstItem _SelectedItem;
 
         public ObservableCollection<POCO.MstItem> Items
@@ -206,6 +221,7 @@ namespace mPOS.ViewModels
             get => _Items;
             set => SetProperty(ref _Items, value);
         }
+
         private ObservableCollection<POCO.MstItem> _Items;
 
         public POCO.TrnSales SelectedSale
@@ -214,22 +230,36 @@ namespace mPOS.ViewModels
             set => _SelectedSale = value;
 
         }
+
         private POCO.TrnSales _SelectedSale;
+
+        public POCO.TrnSalesLine SelectedSaleLine
+        {
+            get => _SelectedSaleLine;
+            set => _SelectedSaleLine = value;
+
+        }
+
+        private POCO.TrnSalesLine _SelectedSaleLine;
 
         public ObservableCollection<POCO.TrnSales> Sales
         {
             get => _Sales;
             set => SetProperty(ref _Sales, value);
         }
+
         private ObservableCollection<POCO.TrnSales> _Sales;
+
         #endregion
 
         #region Commands
+
         public Command RefreshSales
         {
             get => _RefreshSales ?? (_RefreshSales = new Command(Load, (x) => true));
             set => SetProperty(ref _RefreshSales, value);
         }
+
         private Command _RefreshSales;
 
         public Command RefreshItems
@@ -237,13 +267,16 @@ namespace mPOS.ViewModels
             get => _RefreshItems ?? (_RefreshItems = new Command(LoadItems, (x) => true));
             set => SetProperty(ref _RefreshItems, value);
         }
+
         private Command _RefreshItems;
 
         public Command RefreshSelectedSale
         {
-            get => _RefreshSelectedSale ?? (_RefreshSelectedSale = new Command(ExecuteRefreshSelectedSale, (x) => true));
+            get => _RefreshSelectedSale ??
+                   (_RefreshSelectedSale = new Command(ExecuteRefreshSelectedSale, (x) => true));
             set => SetProperty(ref _RefreshSelectedSale, value);
         }
+
         private Command _RefreshSelectedSale;
 
         public Command SelectCustomer
@@ -251,6 +284,7 @@ namespace mPOS.ViewModels
             get => _SelectCustomer ?? (_SelectCustomer = new Command(ExecuteSelectCustomer, (x) => true));
             set => SetProperty(ref _SelectCustomer, value);
         }
+
         private Command _SelectCustomer;
 
         public Command Add
@@ -258,6 +292,7 @@ namespace mPOS.ViewModels
             get => _Add ?? (_Add = new Command(ExecuteAdd, (x) => true));
             set => SetProperty(ref _Add, value);
         }
+
         private Command _Add;
 
         public Command Search
@@ -265,6 +300,7 @@ namespace mPOS.ViewModels
             get => _Search ?? (_Search = new Command(ExecuteSearch, (x) => true));
             set => SetProperty(ref _Search, value);
         }
+
         private Command _Search;
 
         public Command SearchItem
@@ -272,6 +308,7 @@ namespace mPOS.ViewModels
             get => _SearchItem ?? (_SearchItem = new Command(ExecuteSearchItem, (x) => true));
             set => SetProperty(ref _SearchItem, value);
         }
+
         private Command _SearchItem;
 
         public Command SelectSale
@@ -279,12 +316,15 @@ namespace mPOS.ViewModels
             get => _SelectSale ?? (_SelectSale = new Command(ExecuteSelectSale, (x) => true));
             set => SetProperty(ref _SelectSale, value);
         }
+
         private Command _SelectSale;
+
         public Command SelectItem
         {
             get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, (x) => true));
             set => SetProperty(ref _SelectItem, value);
         }
+
         private Command _SelectItem;
 
         public Command Save
@@ -292,6 +332,7 @@ namespace mPOS.ViewModels
             get => _Save ?? (_Save = new Command(ExecuteSave, () => true));
             set => SetProperty(ref _Save, value);
         }
+
         private Command _Save;
 
         public Command Delete
@@ -299,15 +340,24 @@ namespace mPOS.ViewModels
             get => _Delete ?? (_Delete = new Command(ExecuteDelete, () => true));
             set => SetProperty(ref _Delete, value);
         }
+
         private Command _Delete;
+
         #endregion
 
         #region Methods
+
         public void ExecuteRefreshSelectedSale(object sender)
         {
             OnPropertyChanged(nameof(SelectedSale));
             OnPropertyChanged(nameof(SearchBarcode));
             OnPropertyChanged(nameof(Title));
+        }
+
+        public void ExecuteRefreshSelectedSaleLine(object sender)
+        {
+            OnPropertyChanged(nameof(SelectedSaleLine));
+            OnPropertyChanged(nameof(SearchBarcode));
         }
 
         private void ExecuteAdd(object sender)
@@ -318,13 +368,15 @@ namespace mPOS.ViewModels
             Sales.Add(newSale);
             SelectedSale = newSale;
 
-            Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
+            Device.BeginInvokeOnMainThread(async () =>
+                await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
         }
 
         private void ExecuteSearch(object sender)
         {
             Load(SearchSaleEntry);
         }
+
         private void ExecuteSearchItem(object sender)
         {
             LoadItems(SearchItemEntry);
@@ -340,7 +392,8 @@ namespace mPOS.ViewModels
 
                 LoadSalesLine();
 
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
             }
         }
 
@@ -351,7 +404,27 @@ namespace mPOS.ViewModels
                 IsChanged = false;
                 SelectedItem = selectedItem;
 
+                SelectedSaleLine = new POCO.TrnSalesLine()
+                {
+                    ItemId = SelectedItem.Id,
+                    ItemDescription = SelectedItem.ItemDescription,
+                    BarCode = SelectedItem.BarCode,
+                    UnitId = SelectedItem.UnitId,
+                    UnitName = SaleUnits?.SingleOrDefault(x => x.Id == SelectedItem.UnitId)?.Unit ?? "Unit(s)",
+                    Quantity = 1,
+                    Price = SelectedItem.Price,
+                    NetPrice = SelectedItem.Price,
+                    Amount = SelectedItem.Price,
+                    SalesLineTimeStamp = DateTime.Now
+                };
+
+                ExecuteRefreshSelectedSaleLine(new object());
+
                 //TODO : Add Views For TrnSalesLineDetail
+                Device.BeginInvokeOnMainThread(
+                    async () => await Application.Current.MainPage.Navigation.PopModalAsync());
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
         }
 
@@ -378,7 +451,8 @@ namespace mPOS.ViewModels
 
                 IsProcessingAPI = false;
 
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record saved.", "Ok"));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.DisplayAlert(Title, "Record saved.", "Ok"));
 
                 isTaskRun = true;
             });
@@ -401,34 +475,65 @@ namespace mPOS.ViewModels
                 await Application.Current.MainPage
                     .DisplayAlert(Title, "Do you want to delete this record?.", "Yes", "No")
                     .ContinueWith(x =>
-                    {
-                        if (x.Result)
                         {
-                            IsProcessingAPI = true;
-
-                            Task.Run(async () =>
+                            if (x.Result)
                             {
-                                Thread.Sleep(1000);
+                                IsProcessingAPI = true;
 
-                                await ApiRequest<POCO.MstItem, POCO.MstItem>
-                                    .Delete("TrnSales/Delete", SelectedSale.Id);
+                                Task.Run(async () =>
+                                {
+                                    Thread.Sleep(1000);
 
-                                IsProcessingAPI = false;
+                                    await ApiRequest<POCO.MstItem, POCO.MstItem>
+                                        .Delete("TrnSales/Delete", SelectedSale.Id);
 
-                                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.", "Ok"));
-                                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
-                            });
-                        }
-                    },
-                    TaskScheduler.FromCurrentSynchronizationContext())
-                );
+                                    IsProcessingAPI = false;
+
+                                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.",
+                                            "Ok"));
+                                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
+                                });
+                            }
+                        },
+                        TaskScheduler.FromCurrentSynchronizationContext())
+            );
         }
+
         #endregion
 
         #region Other Methods
+
         public void ExecuteShowItems()
         {
-            Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushModalAsync(new SalesItemView(this)));
+            Device.BeginInvokeOnMainThread(async () =>
+                await Application.Current.MainPage.Navigation.PushModalAsync(new SalesItemView(this)));
+        }
+
+        public void ExecuteSelectItemByBarCode()
+        {
+            if (!string.IsNullOrEmpty(SearchBarcode))
+            {
+                IsChanged = false;
+                SelectedItem = Items.SingleOrDefault(x => x.BarCode == SearchBarcode);
+
+                SelectedSaleLine = new POCO.TrnSalesLine()
+                {
+                    ItemId = SelectedItem.Id,
+                    ItemDescription = SelectedItem.ItemDescription,
+                    BarCode = SelectedItem.BarCode,
+                    UnitId = SelectedItem.UnitId,
+                    UnitName = SaleUnits?.SingleOrDefault(x => x.Id == SelectedItem.UnitId)?.Unit ?? "Unit(s)",
+                    Quantity = 1,
+                    Price = SelectedItem.Price,
+                    NetPrice = SelectedItem.Price,
+                    Amount = SelectedItem.Price,
+                    SalesLineTimeStamp = DateTime.Now
+                };
+
+                ExecuteRefreshSelectedSaleLine(new object());
+
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
+            }
         }
         #endregion
     }

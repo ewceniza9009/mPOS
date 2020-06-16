@@ -35,6 +35,7 @@ namespace mPOS.Views.Activities.Sales
                 Navigation.PopModalAsync();
 
                 vm.SearchBarcode = result.Text;
+                vm.ExecuteSelectItemByBarCode();
                 vm.ExecuteRefreshSelectedSale(new object());
             };
 

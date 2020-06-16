@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:mPOS.Converters;assembly=mPOS"
+             xmlns:commands="clr-namespace:mPOS.Commands;assembly=mPOS"
+             mc:Ignorable="d"
+             x:Class="mPOS.Views.Activities.Sales.SalesItemDetailView"
+             Title="{Binding Title, Mode=TwoWay}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:CurrencyConverter x:Key="currencyConverter" />
+            <converters:DecimalConverter x:Key="decimalConverter" />
+            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
+            <converters:SelectedIndexChangedArgsConverter x:Key="PropertyChangedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdOK"
+                     Text="OK"
+                     IconImageSource="ok.png"
+                     Clicked="CmdOK_OnClicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout x:Name="MainStackLayout" 
+                     Margin="10">
+            <StackLayout Orientation="Vertical">
+                <Label Text="Item Information:"/>
+                <Entry Text="{Binding SelectedSaleLine.ItemDescription, Mode=TwoWay}" IsReadOnly="True"/>
+                <Entry Text="{Binding SelectedSaleLine.BarCode, Mode=TwoWay}" IsReadOnly="True"/>
+                <Entry Text="{Binding SelectedSaleLine.UnitName, Mode=TwoWay}" IsReadOnly="True"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical">
+                <Label Text="Quantity:"/>
+                <StackLayout Orientation="Horizontal">
+                    <Entry Text="{Binding SelectedSaleLine.Quantity, Mode=TwoWay, StringFormat='{0:N0}'}"
+                           Keyboard="Numeric"
+                           WidthRequest="190">
+                        <Entry.Behaviors>
+                            <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Stepper x:Name="QuantityStepper" Value="{Binding SelectedSaleLine.Quantity}" 
+                             Increment="1"
+                             Maximum="100000"
+                             ValueChanged="QuantityStepper_OnValueChanged"></Stepper>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                <Label Text="Net Price:"/>
+                <Entry Text="{Binding SelectedSaleLine.NetPrice, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                       IsReadOnly="True">
+                </Entry>
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                <Label Text="Amount:"/>
+                <Entry Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
+                       IsReadOnly="True">
+                </Entry>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
