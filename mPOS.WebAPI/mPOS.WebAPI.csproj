@@ -198,6 +198,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>pos.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Data\TrnSalesLine.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

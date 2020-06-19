@@ -69,6 +69,12 @@ namespace mPOS.WebAPI.Repository
                     result = ctx.TrnSales.SingleOrDefault(x => x.Id == t.Id);
 
                     mappingProfile.mapper.Map(t, result);
+
+                    //ctx.TrnSales.Attach(result, true);
+                    //ctx.TrnSalesLines.AttachAll(result.TrnSalesLines.Where(x => !x.IsNew), true);
+                    //ctx.TrnSalesLines.InsertAllOnSubmit(result.TrnSalesLines.Where(x => x.IsNew));
+                    //ctx.TrnSalesLines.DeleteAllOnSubmit(result.TrnSalesLines.Where(x => x.IsDeleted));
+                    
                 }
                 else
                 {

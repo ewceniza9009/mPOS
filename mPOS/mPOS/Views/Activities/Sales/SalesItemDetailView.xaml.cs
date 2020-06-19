@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using mPOS.Enums;
+using mPOS.POCO;
 using mPOS.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -28,10 +30,15 @@ namespace mPOS.Views.Activities.Sales
 
         private void CmdOK_OnClicked(object sender, EventArgs e)
         {
-            vm.SelectedSale.TrnSalesLines = vm.SelectedSale.TrnSalesLines.Append(vm.SelectedSaleLine);
-            vm.ExecuteRefreshSelectedSale(new object());
+            Navigation.PopAsync().ContinueWith(x =>
+            {
+                if (vm.ItemFrom == ItemFrom.Item)
+                {
+                    vm.SelectedSale.TrnSalesLines.Add(vm.SelectedSaleLine);
+                }
 
-            Navigation.PopAsync();
+                vm.ReloadSalesLines();
+            });
         }
     }
 }

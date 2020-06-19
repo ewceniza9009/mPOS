@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -551,7 +552,7 @@ namespace mPOS.POCO
         public int UpdateUserId { get; set; }
         public DateTime UpdateDateTime { get; set; }
         public int? Pax { get; set; }
-        public IEnumerable<TrnSalesLine> TrnSalesLines { get; set; }
+        public List<TrnSalesLine> TrnSalesLines { get; set; }
     }
 
     public partial class TrnSalesLine

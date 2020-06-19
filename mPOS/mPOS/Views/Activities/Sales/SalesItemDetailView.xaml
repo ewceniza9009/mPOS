@@ -59,7 +59,10 @@
             <StackLayout Orientation="Vertical">
                 <Label Text="Amount:"/>
                 <Entry Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
-                       IsReadOnly="True">
+                       TextColor="ForestGreen"
+                       FontSize="50"
+                       IsReadOnly="True"
+                       HorizontalTextAlignment="End">
                 </Entry>
             </StackLayout>
         </StackLayout>

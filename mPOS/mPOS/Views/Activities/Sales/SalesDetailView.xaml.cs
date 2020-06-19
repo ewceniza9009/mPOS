@@ -28,6 +28,7 @@ namespace mPOS.Views.Activities.Sales
         private async void CmdSearchBarcode_Clicked(object sender, EventArgs e)
         {
             scanPage = new ZXingScannerPage();
+
             scanPage.OnScanResult += (result) =>
             {
                 scanPage.IsScanning = false;
@@ -45,6 +46,12 @@ namespace mPOS.Views.Activities.Sales
         private void CmdSearchItem_OnClicked(object sender, EventArgs e)
         {
             vm.ExecuteShowItems();
+        }
+
+        private void MenuItem_OnClicked(object sender, EventArgs e)
+        {
+            vm.SelectedSale.TrnSalesLines.Remove(vm.SelectedSaleLine);
+            vm.ReloadSalesLines();
         }
     }
 }

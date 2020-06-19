@@ -13,6 +13,7 @@
             <converters:CurrencyConverter x:Key="currencyConverter" />
             <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
             <converters:SelectedIndexChangedArgsConverter x:Key="PropertyChangedConverter" />
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
@@ -34,7 +35,8 @@
                 <Label Text="{Binding SelectedSale.SalesAmount, StringFormat='₱{0:N2}'}"
                        HorizontalTextAlignment="End"
                        TextColor="ForestGreen"
-                       FontSize="50"/>
+                       FontSize="50"
+                       />
             </StackLayout>
             <StackLayout Margin="10,0,10,10">
                 <StackLayout HorizontalOptions="Center">
@@ -42,109 +44,139 @@
                                    IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
                                    HeightRequest="50"/>
                 </StackLayout>
-                <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Sales Date: "
+                           WidthRequest="100"
+                           Margin="0,8,0,0"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+                    <DatePicker Date="{Binding SelectedSale.SalesDate}"
+                                HeightRequest="40"
+                                HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Customer: "
+                           WidthRequest="100"
+                           Margin="0,8,0,0"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
                     <Picker ItemsSource="{Binding Customers}"
-                        SelectedItem="{Binding SelectedCustomer}"
-                        ItemDisplayBinding="{Binding Customer}">
+                            SelectedItem="{Binding SelectedCustomer}"
+                            ItemDisplayBinding="{Binding Customer}"
+                            HeightRequest="40"
+                            HorizontalOptions="FillAndExpand">
                         <Picker.Behaviors>
                             <commands:EventToCommandBehavior EventName="PropertyChanged" 
-                                                         Command="{Binding SelectCustomer}" 
-                                                         EventArgsConverter="{StaticResource PropertyChangedConverter}"/>
+                                                             Command="{Binding SelectCustomer}" 
+                                                             EventArgsConverter="{StaticResource PropertyChangedConverter}"/>
                         </Picker.Behaviors>
                     </Picker>
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal">
-                    <Entry Placeholder="Barcode"
-                       Text="{Binding SearchBarcode}"
-                       WidthRequest="260"
-                       IsReadOnly="True"/>
                     <Button x:Name="CmdSearchBarcode"
-                        WidthRequest="50"
-                        HeightRequest="40"
-                        ImageSource="barcode_scanner.png"/>
+                            WidthRequest="50"
+                            HeightRequest="40"
+                            ImageSource="barcode_scanner.png"/>
                     <Button x:Name="CmdSearchItem"
-                        WidthRequest="50"
-                        HeightRequest="40"
-                        ImageSource="add_item.png"
-                        Clicked="CmdSearchItem_OnClicked"/>
+                            WidthRequest="50"
+                            HeightRequest="40"
+                            ImageSource="add_item.png"
+                            Clicked="CmdSearchItem_OnClicked"/>
+                    <Entry Placeholder="Barcode"
+                           Text="{Binding SearchBarcode}"
+                           WidthRequest="260"
+                           IsReadOnly="True"/>
                 </StackLayout>
 
                 <StackLayout x:Name="SalesLineStackLayout"
                          Orientation="Vertical"
                          HorizontalOptions="Center"
                          VerticalOptions="Center">
-                    <RelativeLayout>
-                        <Image Source="shopping_basket.png" 
-                           VerticalOptions="CenterAndExpand" 
-                           HorizontalOptions="CenterAndExpand"/>
-                        <ListView x:Name="SalesLineListView" 
-                              ItemsSource="{Binding SelectedSale.TrnSalesLines}"
-                              SelectedItem="{Binding SelectedSalesLine}"
-                              VerticalScrollBarVisibility="Always">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <ViewCell.View>
-                                            <StackLayout Orientation="Horizontal">
-                                                <StackLayout x:Name="ItemImagePlaceHolder"
-                                                         Orientation="Vertical">
-                                                    <Image Source="product.png"></Image>
-                                                </StackLayout>
-                                                <StackLayout x:Name="ItemInfo"
-                                                         Orientation="Vertical">
-                                                    <Label Text="{Binding ItemDescription}"
-                                                       TextColor="Black"
-                                                       FontSize="15"
-                                                       HeightRequest="20"
-                                                       WidthRequest="150"
-                                                       FontAttributes="Bold"
-                                                       Margin="0,0,0,-5"/>
-                                                    <Label Text="{Binding BarCode}"
-                                                       TextColor="Black"
-                                                       FontSize="12"/>
-                                                </StackLayout>
-                                                <StackLayout Orientation="Vertical">
+
+                    <ScrollView>
+                        <RelativeLayout>
+                            <Image Source="shopping_basket.png" 
+                                   VerticalOptions="CenterAndExpand" 
+                                   HorizontalOptions="CenterAndExpand"/>
+                            
+                                <ListView x:Name="SalesLineListView" 
+                                      ItemsSource="{Binding SelectedSale.TrnSalesLines}"
+                                      SelectedItem="{Binding SelectedSaleLine}">
+                                    <ListView.Behaviors>
+                                        <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                                    </ListView.Behaviors>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ViewCell.View>
                                                     <StackLayout Orientation="Horizontal">
-                                                        <StackLayout x:Name="Quantity"
-                                                                 Orientation="Horizontal"
-                                                                 HorizontalOptions="Start">
-                                                            <Label Text="{Binding Quantity, StringFormat='{0:N2}'}"
-                                                               TextColor="Black"
-                                                               FontSize="15"
-                                                               HorizontalTextAlignment="End"
-                                                               FontAttributes="Bold"/>
+                                                        <StackLayout x:Name="ItemImagePlaceHolder"
+                                                             Orientation="Vertical">
+                                                            <Image Source="product.png"></Image>
                                                         </StackLayout>
-                                                        <StackLayout x:Name="Unit"
-                                                                 Orientation="Horizontal"
-                                                                 HorizontalOptions="Start">
-                                                            <Label Text="{Binding UnitName}"
-                                                               TextColor="Black"
-                                                               FontSize="15"
-                                                               HorizontalTextAlignment="End"
-                                                               FontAttributes="Bold">
-                                                            </Label>
-                                                        </StackLayout>
-                                                    </StackLayout>
-                                                    <StackLayout x:Name="Amount"
-                                                             Orientation="Horizontal"
-                                                             HorizontalOptions="Start">
-                                                        <Label Text="{Binding Amount, StringFormat='₱{0:N2}'}"
-                                                           TextColor="ForestGreen"
+                                                        <StackLayout x:Name="ItemInfo"
+                                                             Orientation="Vertical">
+                                                            <Label Text="{Binding ItemDescription}"
+                                                           TextColor="Black"
                                                            FontSize="15"
-                                                           HorizontalTextAlignment="Start"
-                                                           Margin="0,-5,0,0"
+                                                           HeightRequest="20"
+                                                           WidthRequest="150"
                                                            FontAttributes="Bold"
-                                                           TextDecorations="Underline"/>
+                                                           Margin="0,0,0,-5"/>
+                                                            <Label Text="{Binding BarCode}"
+                                                           TextColor="Black"
+                                                           FontSize="12"/>
+                                                        </StackLayout>
+                                                        <StackLayout Orientation="Vertical">
+                                                            <StackLayout Orientation="Horizontal">
+                                                                <StackLayout x:Name="Quantity"
+                                                                     Orientation="Horizontal"
+                                                                     HorizontalOptions="Start">
+                                                                    <Label Text="{Binding Quantity, StringFormat='{0:N2}'}"
+                                                                   TextColor="Black"
+                                                                   FontSize="15"
+                                                                   HorizontalTextAlignment="End"
+                                                                   FontAttributes="Bold"/>
+                                                                </StackLayout>
+                                                                <StackLayout x:Name="Unit"
+                                                                     Orientation="Horizontal"
+                                                                     HorizontalOptions="Start">
+                                                                    <Label Text="{Binding UnitName}"
+                                                                   TextColor="Black"
+                                                                   FontSize="15"
+                                                                   HorizontalTextAlignment="End"
+                                                                   FontAttributes="Bold">
+                                                                    </Label>
+                                                                </StackLayout>
+                                                            </StackLayout>
+                                                            <StackLayout x:Name="Amount"
+                                                                 Orientation="Horizontal"
+                                                                 HorizontalOptions="Start">
+                                                                <Label Text="{Binding Amount, StringFormat='₱{0:N2}'}"
+                                                               TextColor="ForestGreen"
+                                                               FontSize="15"
+                                                               HorizontalTextAlignment="Start"
+                                                               Margin="0,-5,0,0"
+                                                               FontAttributes="Bold"
+                                                               TextDecorations="Underline"/>
+                                                            </StackLayout>
+                                                        </StackLayout>
                                                     </StackLayout>
-                                                </StackLayout>
-                                            </StackLayout>
-                                        </ViewCell.View>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </RelativeLayout>
+                                                </ViewCell.View>
+                                                <ViewCell.ContextActions>
+                                                    <MenuItem Text="Delete"
+                                                          IsDestructive="True"
+                                                          Clicked="MenuItem_OnClicked"></MenuItem>
+                                                </ViewCell.ContextActions>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                        </RelativeLayout>
+                    </ScrollView>
                 </StackLayout>
             </StackLayout>
         </StackLayout>
