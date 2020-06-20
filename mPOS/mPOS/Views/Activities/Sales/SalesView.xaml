@@ -35,7 +35,8 @@
 
                     <DatePicker Grid.Row="0"
                                 Date="{Binding SearchSaleDate}"
-                                Margin="0,-5,0,0"/>
+                                Margin="0,-5,0,0"
+                                DateSelected="DatePicker_OnDateSelected"/>
                     <Button Grid.Row="0" 
                             ImageSource="calendar.png"
                             HeightRequest="10"

@@ -28,6 +28,12 @@ namespace mPOS.Views.Activities.Sales
             vm.ExecuteRefreshSelectedSaleLine(new object());
         }
 
+        private void InputView_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            vm.SelectedSaleLine.Amount = vm.SelectedSaleLine.NetPrice * vm.SelectedSaleLine.Quantity;
+            vm.ExecuteRefreshSelectedSaleLine(new object());
+        }
+
         private void CmdOK_OnClicked(object sender, EventArgs e)
         {
             Navigation.PopAsync().ContinueWith(x =>

@@ -25,5 +25,10 @@ namespace mPOS.Views.Activities
         {
             vm.Load();
         }
+
+        private void DatePicker_OnDateSelected(object sender, DateChangedEventArgs e)
+        {
+            vm.ExecuteSearch(new object());
+        }
     }
 }

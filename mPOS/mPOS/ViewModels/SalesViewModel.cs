@@ -346,7 +346,7 @@ namespace mPOS.ViewModels
                 await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
         }
 
-        private void ExecuteSearch(object sender)
+        public void ExecuteSearch(object sender)
         {
             Load(SearchSaleEntry);
         }

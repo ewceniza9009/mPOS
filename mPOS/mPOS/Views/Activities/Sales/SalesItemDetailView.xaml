@@ -39,11 +39,9 @@
                 <StackLayout Orientation="Horizontal">
                     <Entry Text="{Binding SelectedSaleLine.Quantity, Mode=TwoWay, StringFormat='{0:N0}'}"
                            Keyboard="Numeric"
-                           WidthRequest="190">
-                        <Entry.Behaviors>
-                            <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
-                        </Entry.Behaviors>
-                    </Entry>
+                           WidthRequest="190"
+                           TextChanged="InputView_OnTextChanged">
+                        </Entry>
                     <Stepper x:Name="QuantityStepper" Value="{Binding SelectedSaleLine.Quantity}" 
                              Increment="1"
                              Maximum="100000"

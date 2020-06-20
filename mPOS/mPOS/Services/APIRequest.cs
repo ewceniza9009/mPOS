@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace mPOS.Services
 {
@@ -42,8 +43,22 @@ namespace mPOS.Services
 
                 var responseContent = await client.PostAsync(requestUri, byteContent);
                 var response = await responseContent.Content.ReadAsStringAsync();
+                var typeParameterType = typeof(TResult);
 
-                result = JsonConvert.DeserializeObject<TResult>(response);
+                if (typeParameterType.FullName != null && typeParameterType.FullName.Contains("TrnSales"))
+                {
+                    result = JsonConvert.DeserializeObject<TResult>(response, new JsonSerializerSettings
+                    {
+                        DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                        DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                        DateParseHandling = DateParseHandling.DateTimeOffset
+                    });
+                }
+                else
+                {
+                    result = JsonConvert.DeserializeObject<TResult>(response);
+                }
+
             }
 
             return result;

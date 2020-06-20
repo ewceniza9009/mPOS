@@ -47,8 +47,8 @@
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Sales Date: "
                            WidthRequest="100"
-                           Margin="0,8,0,0"
-                           FontSize="18"
+                           Margin="0,12,0,0"
+                           FontSize="15"
                            FontAttributes="Bold"
                            TextColor="Black"/>
                     <DatePicker Date="{Binding SelectedSale.SalesDate}"
@@ -58,8 +58,8 @@
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Customer: "
                            WidthRequest="100"
-                           Margin="0,8,0,0"
-                           FontSize="18"
+                           Margin="0,12,0,0"
+                           FontSize="15"
                            FontAttributes="Bold"
                            TextColor="Black"/>
                     <Picker ItemsSource="{Binding Customers}"
@@ -76,16 +76,20 @@
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal">
-                    <Button x:Name="CmdSearchBarcode"
-                            WidthRequest="50"
-                            HeightRequest="40"
-                            ImageSource="barcode_scanner.png"/>
                     <Button x:Name="CmdSearchItem"
                             WidthRequest="50"
                             HeightRequest="40"
                             ImageSource="add_item.png"
+                            BackgroundColor="Transparent"
                             Clicked="CmdSearchItem_OnClicked"/>
-                    <Entry Placeholder="Barcode"
+
+                    <Button x:Name="CmdSearchBarcode"
+                            WidthRequest="50"
+                            HeightRequest="40"
+                            BackgroundColor="Transparent"
+                            ImageSource="barcode_scanner.png"/>
+
+                    <Entry Placeholder="Last Barcode"
                            Text="{Binding SearchBarcode}"
                            WidthRequest="260"
                            IsReadOnly="True"/>
