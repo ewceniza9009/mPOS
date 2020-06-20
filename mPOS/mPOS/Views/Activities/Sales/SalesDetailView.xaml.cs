@@ -50,7 +50,7 @@ namespace mPOS.Views.Activities.Sales
 
         private void MenuItem_OnClicked(object sender, EventArgs e)
         {
-            vm.SelectedSale.TrnSalesLines.Remove(vm.SelectedSaleLine);
+            vm.SelectedSaleLine.IsDeleted = true;
             vm.ReloadSalesLines();
         }
     }

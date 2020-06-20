@@ -66,15 +66,27 @@ namespace mPOS.WebAPI.Repository
             {
                 if (t.Id != 0)
                 {
+                    foreach (var tLine in t.TrnSalesLines.Where(x => x.Id == 0))
+                    {
+                        tLine.DiscountId = 2;
+                        tLine.DiscountRate = 0;
+                        tLine.DiscountAmount = 0;
+                        tLine.TaxId = 9;
+                        tLine.TaxRate = 0;
+                        tLine.TaxAmount = 0;
+                        tLine.SalesAccountId = 159;
+                        tLine.AssetAccountId = 74;
+                        tLine.CostAccountId = 238;
+                        tLine.TaxAccountId = 238;
+                        tLine.SalesLineTimeStamp = DateTime.Now;
+                    }
+
                     result = ctx.TrnSales.SingleOrDefault(x => x.Id == t.Id);
 
                     mappingProfile.mapper.Map(t, result);
 
-                    //ctx.TrnSales.Attach(result, true);
-                    //ctx.TrnSalesLines.AttachAll(result.TrnSalesLines.Where(x => !x.IsNew), true);
-                    //ctx.TrnSalesLines.InsertAllOnSubmit(result.TrnSalesLines.Where(x => x.IsNew));
-                    //ctx.TrnSalesLines.DeleteAllOnSubmit(result.TrnSalesLines.Where(x => x.IsDeleted));
-                    
+                    ctx.TrnSalesLines.InsertAllOnSubmit(result.TrnSalesLines.Where(x => x.Id == 0));
+                    ctx.TrnSalesLines.DeleteAllOnSubmit(result.TrnSalesLines.Where(x => x.IsDeleted));
                 }
                 else
                 {
@@ -88,13 +100,13 @@ namespace mPOS.WebAPI.Repository
                     t.PeriodId = 1;
                     t.SalesNumber = newSalesNumber;
                     t.ManualInvoiceNumber = newSalesNumber;
-                    t.AccountId = 159;
+                    t.AccountId = 64;
                     t.TermId = 7;
                     t.SalesAgent = 1;
-                    t.TerminalId = 238;
-                    t.PreparedBy = 9;
-                    t.CheckedBy = 9;
-                    t.ApprovedBy = 23;
+                    t.TerminalId = 1;
+                    t.PreparedBy = 1;
+                    t.CheckedBy = 1;
+                    t.ApprovedBy = 1;
                     t.IsCancelled = false;
                     t.PaidAmount = 0;
                     t.CreditAmount = 0;
@@ -116,6 +128,7 @@ namespace mPOS.WebAPI.Repository
                         tLine.AssetAccountId = 74;
                         tLine.CostAccountId = 238;
                         tLine.TaxAccountId = 238;
+                        tLine.SalesLineTimeStamp = DateTime.Now;
                     }
 
                     result = mappingProfile.mapper.Map<Data.TrnSale>(t);

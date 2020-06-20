@@ -5,13 +5,8 @@ using System.Web;
 
 namespace mPOS.WebAPI.Data
 {
-    //public partial class TrnSalesLine
-    //{
-    //    public bool IsNew
-    //    {
-    //        get => this.SalesLineTimeStamp == null && !this.IsDeleted;
-    //    }
-
-    //    public bool IsDeleted { get; set; }
-    //}
+    public partial class TrnSalesLine
+    {
+        public bool IsDeleted { get; set; }
+    }
 }

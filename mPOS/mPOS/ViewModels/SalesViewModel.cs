@@ -57,18 +57,10 @@ namespace mPOS.ViewModels
                         ?.Customer;
                 });
 
-                IsBusy = false;
-            });
-        }
-
-        public void LoadSalesLine()
-        {
-            Task.Run(async () =>
-            {
                 Items = await APISalesRequest.GetItems();
                 SaleUnits = await APIItemRequest.GetUnits();
 
-                LoadSalesLineFunc();
+                IsBusy = false;
             });
         }
 
@@ -329,7 +321,7 @@ namespace mPOS.ViewModels
         {
             var newSale = new POCO.TrnSales()
             {
-                SalesDate = DateTime.Now,
+                SalesDate = DateTime.Now.Date,
                 CustomerId = 5451,
                 CustomerName = "Walk In"
             };
@@ -522,7 +514,7 @@ namespace mPOS.ViewModels
             }
         }
 
-        public void LoadSalesLineFunc()
+        public void LoadSalesLine()
         {
             SelectedSale?.TrnSalesLines.ForEach(y =>
             {
@@ -542,7 +534,9 @@ namespace mPOS.ViewModels
 
         public void ReloadSalesLines()
         {
-            var saleLines = SelectedSale.TrnSalesLines;
+            var saleLines = SelectedSale.TrnSalesLines
+                .Where(x => x.IsDeleted == false)
+                .ToList();
             SelectedSale.TrnSalesLines = new List<TrnSalesLine>();
 
             saleLines.ForEach(line =>

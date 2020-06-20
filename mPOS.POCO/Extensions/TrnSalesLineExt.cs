@@ -11,5 +11,6 @@ namespace mPOS.POCO
         public string ItemDescription { get; set; }
         public string BarCode { get; set; }
         public string UnitName { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

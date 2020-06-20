@@ -1,4 +1,6 @@
-﻿namespace mPOS.WebAPI.Mapping
+﻿using System.Web.ClientServices.Providers;
+
+namespace mPOS.WebAPI.Mapping
 {
     public class MappingProfileForTrnSales
     {
