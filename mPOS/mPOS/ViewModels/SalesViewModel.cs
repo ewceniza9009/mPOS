@@ -220,7 +220,6 @@ namespace mPOS.ViewModels
             get => _RefreshSales ?? (_RefreshSales = new Command(Load, (x) => true));
             set => SetProperty(ref _RefreshSales, value);
         }
-
         private Command _RefreshSales;
 
         public Command RefreshItems
@@ -228,7 +227,6 @@ namespace mPOS.ViewModels
             get => _RefreshItems ?? (_RefreshItems = new Command(LoadItems, (x) => true));
             set => SetProperty(ref _RefreshItems, value);
         }
-
         private Command _RefreshItems;
 
         public Command RefreshSelectedSale
