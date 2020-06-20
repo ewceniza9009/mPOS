@@ -39,5 +39,19 @@ namespace mPOS.Services
 
             return result;
         }
+
+        public static async Task<ObservableCollection<POCO.MstUnit>> GetUnits()
+        {
+            ObservableCollection<POCO.MstUnit> result;
+            var requestUri = $@"{UriBase}/MstItem/GetUnits";
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetStringAsync(requestUri);
+                result = JsonConvert.DeserializeObject<ObservableCollection<POCO.MstUnit>>(response);
+            }
+
+            return result;
+        }
     }
 }

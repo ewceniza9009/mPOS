@@ -58,7 +58,7 @@ namespace mPOS.ViewModels
                 });
 
                 Items = await APISalesRequest.GetItems();
-                SaleUnits = await APIItemRequest.GetUnits();
+                SaleUnits = await APISalesRequest.GetUnits();
 
                 IsBusy = false;
             });
@@ -438,6 +438,8 @@ namespace mPOS.ViewModels
             {
                 Thread.Sleep(1000);
 
+                SelectedSale.Amount = SelectedSale.TrnSalesLines.Sum(x => x.Amount);
+
                 SelectedSaleId = await ApiRequest<POCO.TrnSales, POCO.TrnSales>
                     .Save("TrnSales/Save", SelectedSale);
 
@@ -530,6 +532,8 @@ namespace mPOS.ViewModels
 
         public void LoadSalesLine()
         {
+            OnPropertyChanged(nameof(SaleUnits));
+
             SelectedSale?.TrnSalesLines.ForEach(y =>
             {
                 var item = Items.SingleOrDefault(z => z.Id == y.ItemId);
@@ -540,7 +544,7 @@ namespace mPOS.ViewModels
 
             SelectedSale?.TrnSalesLines.ForEach(y =>
             {
-                var unit = SaleUnits.SingleOrDefault(z => z.Id == y.ItemId);
+                var unit = SaleUnits.SingleOrDefault(z => z.Id == y.UnitId);
 
                 y.UnitName = unit?.Unit;
             });
