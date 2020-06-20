@@ -281,6 +281,14 @@ namespace mPOS.ViewModels
         }
         private Command _SelectSaleLine;
 
+        public Command DeleteSaleLine
+        {
+            get => _DeleteSaleLine ?? (_DeleteSaleLine = new Command(ExecuteDeleteSaleLine, (x) => true));
+            set => SetProperty(ref _DeleteSaleLine, value);
+        }
+
+        private Command _DeleteSaleLine;
+
         public Command SelectItem
         {
             get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, (x) => true));
@@ -404,6 +412,12 @@ namespace mPOS.ViewModels
                 Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
+        }
+
+        private void ExecuteDeleteSaleLine(object sender)
+        {
+            ((TrnSalesLine) sender).IsDeleted = true; 
+            ReloadSalesLines();
         }
 
         private void ExecuteSelectCustomer(object obj)

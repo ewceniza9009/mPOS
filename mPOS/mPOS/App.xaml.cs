@@ -11,6 +11,8 @@ namespace mPOS
 
         public App()
         {
+            Device.SetFlags(new[] { "SwipeView_Experimental" });
+
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();

@@ -104,7 +104,8 @@
                             
                                 <ListView x:Name="SalesLineListView" 
                                       ItemsSource="{Binding SelectedSale.TrnSalesLines}"
-                                      SelectedItem="{Binding SelectedSaleLine}">
+                                      SelectedItem="{Binding SelectedSaleLine}"
+                                      HasUnevenRows="True">
                                     <ListView.Behaviors>
                                         <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                                     </ListView.Behaviors>
@@ -112,7 +113,8 @@
                                         <DataTemplate>
                                             <ViewCell>
                                                 <ViewCell.View>
-                                                    <StackLayout Orientation="Horizontal">
+                                                    <SwipeView>
+                                                        <StackLayout Orientation="Horizontal">
                                                         <StackLayout x:Name="ItemImagePlaceHolder"
                                                              Orientation="Vertical">
                                                             <Image Source="product.png"></Image>
@@ -165,12 +167,17 @@
                                                             </StackLayout>
                                                         </StackLayout>
                                                     </StackLayout>
+                                                        <SwipeView.RightItems>
+                                                            <SwipeItems Mode="Reveal">
+                                                                <SwipeItemView Command="{Binding Source={x:Reference SalesLineListView}, Path=BindingContext.DeleteSaleLine}"
+                                                                               CommandParameter="{Binding .}">
+                                                                    <Image Source="delete.png"
+                                                                           Margin="-50,0,0,0"/>
+                                                                </SwipeItemView>
+                                                            </SwipeItems>
+                                                        </SwipeView.RightItems>
+                                                    </SwipeView>
                                                 </ViewCell.View>
-                                                <ViewCell.ContextActions>
-                                                    <MenuItem Text="Delete"
-                                                          IsDestructive="True"
-                                                          Clicked="MenuItem_OnClicked"></MenuItem>
-                                                </ViewCell.ContextActions>
                                             </ViewCell>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>

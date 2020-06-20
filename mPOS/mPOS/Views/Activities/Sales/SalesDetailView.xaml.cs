@@ -47,11 +47,5 @@ namespace mPOS.Views.Activities.Sales
         {
             vm.ExecuteShowItems();
         }
-
-        private void MenuItem_OnClicked(object sender, EventArgs e)
-        {
-            vm.SelectedSaleLine.IsDeleted = true;
-            vm.ReloadSalesLines();
-        }
     }
 }
