@@ -528,6 +528,48 @@ namespace mPOS.ViewModels
             }
         }
 
+        public void ExecuteSelectItemByContinuesBarCode()
+        {
+            if (!string.IsNullOrEmpty(SearchBarcode))
+            {
+                SelectedItem = Items.SingleOrDefault(x => x.BarCode == SearchBarcode);
+
+                var isItemPunchedIn = SelectedSale.TrnSalesLines.Any(x => x.ItemId == SelectedItem.Id);
+
+                if (!isItemPunchedIn)
+                {
+                    SelectedSaleLine = new POCO.TrnSalesLine()
+                    {
+                        ItemId = SelectedItem.Id,
+                        ItemDescription = SelectedItem.ItemDescription,
+                        BarCode = SelectedItem.BarCode,
+                        UnitId = SelectedItem.UnitId,
+                        UnitName = SaleUnits?.SingleOrDefault(x => x.Id == SelectedItem.UnitId)?.Unit ?? "Unit(s)",
+                        Quantity = 1,
+                        Price = SelectedItem.Price,
+                        NetPrice = SelectedItem.Price,
+                        Amount = SelectedItem.Price,
+                        SalesLineTimeStamp = DateTime.Now
+                    };
+
+                    SelectedSale.TrnSalesLines.Add(SelectedSaleLine);
+                }
+                else
+                {
+                    SelectedSaleLine = SelectedSale.TrnSalesLines.SingleOrDefault(x => x.ItemId == SelectedItem.Id);
+
+                    if (SelectedSaleLine != null)
+                    {
+                        SelectedSaleLine.Quantity = SelectedSaleLine.Quantity + 1;
+                        SelectedSaleLine.Amount = SelectedSaleLine.Quantity * SelectedSaleLine.NetPrice;
+                    }
+                }
+
+                ExecuteRefreshSelectedSaleLine(new object());
+                ReloadSalesLines();
+            }
+        }
+
         public void LoadSalesLine()
         {
             OnPropertyChanged(nameof(SaleUnits));
