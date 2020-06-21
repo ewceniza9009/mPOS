@@ -28,6 +28,14 @@
         <StackLayout x:Name="MainStackLayout" 
                      Margin="10">
             <StackLayout Orientation="Vertical">
+                <Label Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
+                       TextColor="ForestGreen"
+                       FontSize="50"
+                       HorizontalTextAlignment="End">
+                </Label>
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical">
                 <Label Text="Item Information:"/>
                 <Entry Text="{Binding SelectedSaleLine.ItemDescription, Mode=TwoWay}" IsReadOnly="True"/>
                 <Entry Text="{Binding SelectedSaleLine.BarCode, Mode=TwoWay}" IsReadOnly="True"/>
@@ -37,28 +45,20 @@
             <StackLayout Orientation="Vertical">
                 <Label Text="Quantity:"/>
                 <StackLayout Orientation="Horizontal">
-                    <Entry Text="{Binding SelectedSaleLine.Quantity, Mode=TwoWay, StringFormat='{0:N0}'}"
-                           Keyboard="Numeric"
-                           WidthRequest="190"
-                           TextChanged="InputView_OnTextChanged">
-                        </Entry>
                     <Stepper x:Name="QuantityStepper" Value="{Binding SelectedSaleLine.Quantity}" 
                              Increment="1"
                              Maximum="100000"
-                             ValueChanged="QuantityStepper_OnValueChanged"></Stepper>
+                             ValueChanged="QuantityStepper_OnValueChanged"/>
+                    <Entry Text="{Binding SelectedSaleLine.Quantity, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                           Keyboard="Numeric"
+                           WidthRequest="190"
+                           TextChanged="InputView_OnTextChanged"
+                           HorizontalTextAlignment="End"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout Orientation="Vertical">
                 <Label Text="Net Price:"/>
                 <Entry Text="{Binding SelectedSaleLine.NetPrice, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
-                       IsReadOnly="True">
-                </Entry>
-            </StackLayout>
-            <StackLayout Orientation="Vertical">
-                <Label Text="Amount:"/>
-                <Entry Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
-                       TextColor="ForestGreen"
-                       FontSize="50"
                        IsReadOnly="True"
                        HorizontalTextAlignment="End">
                 </Entry>
