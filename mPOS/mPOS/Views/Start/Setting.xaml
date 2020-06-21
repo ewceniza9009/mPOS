@@ -6,13 +6,52 @@
              mc:Ignorable="d"
              x:Class="mPOS.Views.Start.Setting"
              Title="Settings">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdSave"
+                     Text="Save"
+                     IconImageSource="save.png"
+                     Command="{Binding Save}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Button Text="Welcome to Settings page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                WidthRequest="300"
-                Clicked="Button_OnClicked"/>
+        <StackLayout Margin="10">
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Id:" />
+                        <Entry Text="{Binding Settings.Id}" 
+                               IsEnabled="False" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Current User:"/>
+                        <Entry Text="{Binding Settings.UserFullName}" 
+                               IsEnabled="False"
+                               IsReadOnly="True">
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Login Date:"/>
+                        <Entry Text="{Binding Settings.LoginDate, Mode=TwoWay}" 
+                               IsEnabled="False"
+                               IsReadOnly="True">
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Server:"/>
+                        <Entry Text="{Binding Settings.ServerName}" 
+                               IsReadOnly="True">
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Continues Barcode:"/>
+                        <Switch IsToggled="{Binding Settings.ContinuesBarcode, Mode=TwoWay}"
+                                HorizontalOptions="Start"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

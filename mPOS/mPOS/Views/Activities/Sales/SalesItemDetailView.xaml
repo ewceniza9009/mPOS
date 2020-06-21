@@ -53,9 +53,11 @@
                            Keyboard="Numeric"
                            WidthRequest="190"
                            TextChanged="InputView_OnTextChanged"
-                           HorizontalTextAlignment="End"/>
+                           HorizontalTextAlignment="End">
+                    </Entry>
                 </StackLayout>
             </StackLayout>
+
             <StackLayout Orientation="Vertical">
                 <Label Text="Net Price:"/>
                 <Entry Text="{Binding SelectedSaleLine.NetPrice, Mode=TwoWay, Converter={StaticResource decimalConverter}}"

@@ -64,15 +64,19 @@ namespace mPOS.WebAPI.Repository
             throw new NotImplementedException();
         }
 
-        public bool IsLoginSuccess(string user, string password)
+        public POCO.MstUser IsLoginSuccess(string user, string password)
         {
-            var result = false;
+            var result = new POCO.MstUser();
+
+            var mappingProfile = new Mapping.MappingProfile<Data.MstUser, POCO.MstUser>();
 
             using (var ctx = new Data.posDataContext())
             {
-                result = ctx.MstUsers.Any(x =>
+                var data = ctx.MstUsers.SingleOrDefault(x =>
                     x.UserName == user &&
                     x.Password == password); ;
+
+                result = mappingProfile.mapper.Map<Data.MstUser, POCO.MstUser>(data);
             }
 
             return result;

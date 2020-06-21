@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using mPOS.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -46,14 +47,14 @@ namespace mPOS.Views
             }
         }
 
-        private void CmdHome_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new PosNavigation());
-        }
-
         private void PosNavigation_OnDisappearing(object sender, EventArgs e)
         {
             Disappearing -= PosNavigation_OnDisappearing;
+        }
+
+        private void PosNavigation_OnAppearing(object sender, EventArgs e)
+        {
+            UserFullName.Text = SettingsRepository.GetUserFullName();
         }
     }
 }

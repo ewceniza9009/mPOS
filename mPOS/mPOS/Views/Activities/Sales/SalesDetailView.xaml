@@ -38,7 +38,7 @@
                        FontSize="50"
                        />
             </StackLayout>
-            <StackLayout Margin="10,0,10,10">
+            <StackLayout Margin="10,0,10,0">
                 <StackLayout HorizontalOptions="Center">
                     <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
                                    IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
@@ -50,7 +50,7 @@
                     <StackLayout>
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="#7EB4C0"
-                                     HeightRequest="55">
+                                     HeightRequest="50">
                             <Label Text="SALES"
                                    HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"

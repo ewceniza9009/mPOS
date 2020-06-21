@@ -7,11 +7,9 @@
              x:Class="mPOS.Views.PosNavigation"
              xmlns:pages="clr-namespace:mPOS.Views"
              NavigationPage.HasNavigationBar="False"
+             Appearing="PosNavigation_OnAppearing"
              Disappearing="PosNavigation_OnDisappearing">
     <MasterDetailPage.ToolbarItems>
-        <!--<ToolbarItem x:Name="CmdHome"
-                     Text="Home"
-                     Clicked="CmdHome_Clicked"></ToolbarItem>-->
     </MasterDetailPage.ToolbarItems>
 
     <MasterDetailPage.Master>
@@ -26,20 +24,31 @@
                     <Image Source="splashscrn.jpg" Aspect="AspectFill" />
                     <StackLayout Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                         <Image Source="user.png" Aspect="AspectFit" WidthRequest="60" HeightRequest="60" />
-                        <Label Text="Erwin Wilson Ceniza" TextColor="White" FontSize="Large" />
+                        <Label x:Name="UserFullName"  Text="New User" TextColor="White" FontSize="Large" />
                     </StackLayout>
                 </Grid>
                 <StackLayout Grid.Row="1" Spacing="15">
+                    <Frame>
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="home.png"
+                                   HeightRequest="30"
+                                   WidthRequest="40"></Image>
+                            <Label Text="MENU"
+                                   Padding="0,5,0,0"
+                                   FontSize="16"
+                                   TextColor="Black"
+                                   FontAttributes="Bold"></Label>
+                        </StackLayout>
+                    </Frame>
                     <ListView x:Name="NavigationDrawerList"
                               RowHeight="60"
                               SeparatorVisibility="None"
+                              SeparatorColor="Transparent"
                               ItemSelected="ListView_ItemSelected">
-
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout>
-                                        <!-- Main design for our menu items -->
                                         <StackLayout VerticalOptions="FillAndExpand"
                                                      Orientation="Horizontal"
                                                      Padding="20,10,0,10"

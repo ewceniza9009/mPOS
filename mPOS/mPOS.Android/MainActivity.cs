@@ -1,11 +1,12 @@
-﻿                  using System;
-
+﻿using System;
+using System.IO;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Environment = System.Environment;
 
 namespace mPOS.Droid
 {                                     
@@ -24,7 +25,12 @@ namespace mPOS.Droid
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+
+            string dbFile = "settings_db.db3";
+            string folderPath = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            string dbFileCompletePath = Path.Combine(folderPath, dbFile);
+
+            LoadApplication(new App(dbFileCompletePath));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
