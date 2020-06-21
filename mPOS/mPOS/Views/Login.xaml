@@ -10,7 +10,7 @@
         <StackLayout Orientation="Vertical"
                      Padding="5,5,5,5">
             <Image Source="poslogo.png"
-                   Margin="0,130,0,0"
+                   Margin="0,100,0,0"
                    WidthRequest="300"/>
             <StackLayout Orientation="Vertical"
                          Margin="10,0,10,0">
@@ -26,10 +26,11 @@
             </StackLayout>
             <Button x:Name="CmdLogin"
                     Text="Login"
-                    Margin="50,50,50,0"
+                    Margin="30,30,30,0"
                     HeightRequest="50"
                     BackgroundColor="#6C8CA4"
                     TextColor="White"
+                    ImageSource="enter_key.png"
                     Clicked="CmdLogin_Clicked"/>
 
             <Label x:Name="LoginText" 

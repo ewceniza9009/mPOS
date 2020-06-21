@@ -27,16 +27,20 @@
                         <Label x:Name="UserFullName"  Text="New User" TextColor="White" FontSize="Large" />
                     </StackLayout>
                 </Grid>
-                <StackLayout Grid.Row="1" Spacing="15">
-                    <Frame>
-                        <StackLayout Orientation="Horizontal">
+                <StackLayout Grid.Row="1">
+                    <Frame Padding="0"
+                           Margin="0"
+                           HeightRequest="60">
+                        <StackLayout Orientation="Horizontal"
+                                     BackgroundColor="#7EB4C0">
                             <Image Source="home.png"
                                    HeightRequest="30"
-                                   WidthRequest="40"></Image>
+                                   WidthRequest="40"
+                                   Margin="10,0,0,0"></Image>
                             <Label Text="MENU"
-                                   Padding="0,5,0,0"
+                                   Padding="10,20,0,0"
                                    FontSize="16"
-                                   TextColor="Black"
+                                   TextColor="WhiteSmoke"
                                    FontAttributes="Bold"></Label>
                         </StackLayout>
                     </Frame>

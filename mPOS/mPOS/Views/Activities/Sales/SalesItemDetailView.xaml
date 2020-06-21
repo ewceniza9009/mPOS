@@ -29,7 +29,7 @@
                      Margin="10">
             <StackLayout Orientation="Vertical">
                 <Label Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
-                       TextColor="ForestGreen"
+                       TextColor="#6C8CA4"
                        FontSize="50"
                        HorizontalTextAlignment="End">
                 </Label>

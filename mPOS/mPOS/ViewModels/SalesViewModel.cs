@@ -601,7 +601,7 @@ namespace mPOS.ViewModels
             {
                 SelectedSale.TrnSalesLines.Add(line);
             });
-
+             
             ExecuteRefreshSelectedSale(new object());
         }
         #endregion
