@@ -51,7 +51,7 @@
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="#7EB4C0"
                                      HeightRequest="50">
-                            <Label Text="SALES"
+                            <Label Text="HEADER"
                                    HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
                                    FontAttributes="Bold"
@@ -105,7 +105,7 @@
 
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="#7EB4C0">
-                            <Label Text="LINE ITEMS"
+                            <Label Text="LINES"
                                    HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
                                    FontAttributes="Bold"
@@ -144,7 +144,7 @@
                                       ItemsSource="{Binding SelectedSale.TrnSalesLines}"
                                       SelectedItem="{Binding SelectedSaleLine}"
                                       HasUnevenRows="True"
-                                      CachingStrategy="RecycleElement">
+                                      BindingContextChanged="SalesLineListView_OnBindingContextChanged">
                                     <ListView.Behaviors>
                                         <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                                     </ListView.Behaviors>

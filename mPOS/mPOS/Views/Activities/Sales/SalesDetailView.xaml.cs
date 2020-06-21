@@ -70,5 +70,10 @@ namespace mPOS.Views.Activities.Sales
         {
             vm.ExecuteShowItems();
         }
+
+        private void SalesLineListView_OnBindingContextChanged(object sender, EventArgs e)
+        {
+            //TODO: Trap Caching Strategy Error
+        }
     }
 }
