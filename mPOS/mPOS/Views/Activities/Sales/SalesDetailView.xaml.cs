@@ -17,6 +17,8 @@ namespace mPOS.Views.Activities.Sales
         private SalesViewModel vm;
         ZXingScannerPage scanPage;
 
+        //TODO : CachingStrategy="RecycleElementAndDataTemplate"
+
         public SalesDetailView(SalesViewModel vm)
         {
             InitializeComponent();
@@ -69,11 +71,6 @@ namespace mPOS.Views.Activities.Sales
         private void CmdSearchItem_OnClicked(object sender, EventArgs e)
         {
             vm.ExecuteShowItems();
-        }
-
-        private void SalesLineListView_OnBindingContextChanged(object sender, EventArgs e)
-        {
-            //TODO: Trap Caching Strategy Error
         }
     }
 }
