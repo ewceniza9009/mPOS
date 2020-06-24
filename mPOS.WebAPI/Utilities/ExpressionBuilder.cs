@@ -76,13 +76,13 @@ namespace mPOS.WebAPI.Utilities
                     return Expression.LessThanOrEqual(member, constant);
 
                 case POCO.Operation.Contains:
-                    return Expression.Call(member, containsMethod, constant);
+                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, containsMethod, constant));
 
                 case POCO.Operation.StartsWith:
-                    return Expression.Call(member, startsWithMethod, constant);
+                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, startsWithMethod, constant));
 
                 case POCO.Operation.EndsWith:
-                    return Expression.Call(member, endsWithMethod, constant);
+                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, endsWithMethod, constant));
                 default:
                     return null;
             }
@@ -97,11 +97,53 @@ namespace mPOS.WebAPI.Utilities
             return Expression.AndAlso(bin1, bin2);
         }
     }
-
     public class Filter
     {
         public string PropertyName { get; set; }
         public POCO.Operation Operation { get; set; }
         public object Value { get; set; }
     }
+
+    public class CaseInsensitiveExpressionVisitor : ExpressionVisitor
+    {
+        private Boolean insideContains = false;
+        protected override Expression VisitMember(MemberExpression node)
+        {
+            if (insideContains)
+            {
+                if (node.Type == typeof(String))
+                {
+                    var methodInfo = typeof(String).GetMethod("ToLower", new Type[] { });
+                    var expression = Expression.Call(node, methodInfo);
+                    return expression;
+                }
+            }
+            return base.VisitMember(node);
+        }
+
+        protected override Expression VisitMethodCall(MethodCallExpression node)
+        {
+            if (node.Method.Name == "Contains")
+            {
+                if (insideContains) throw new NotSupportedException();
+                insideContains = true;
+                var result = base.VisitMethodCall(node);
+                insideContains = false;
+                return result;
+            }
+            return base.VisitMethodCall(node);
+        }
+    }
+
+    /*Usage
+    static void Main(string[] args)
+    {
+        Expression<Func<Test, bool>> expr = (t) => t.Name.Contains("a");
+        var expr1 = (Expression<Func<Test, bool>>)new CaseInsensitiveExpressionVisitor().Visit(expr);
+        var test = new[] { new Test { Name = "A" } };
+        var length = test.Where(expr1.Compile()).ToArray().Length;
+        Debug.Assert(length == 1);
+        Debug.Assert(test.Where(expr.Compile()).ToArray().Length == 0);
+    }
+    */
 }
