@@ -123,7 +123,7 @@ namespace mPOS.WebAPI.Utilities
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
-            if (node.Method.Name == "Contains")
+            if (node.Method.Name == "Contains" || node.Method.Name == "StartsWith" || node.Method.Name == "EndsWith")
             {
                 if (insideContains) throw new NotSupportedException();
                 insideContains = true;
