@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
+             xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
+             mc:Ignorable="d"
+             x:Class="mPOSv2.Views.Setup.Customer.CustomerView"
+             Title="Customers"
+             Appearing="HomePage_OnAppearing">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdAdd"
+                     Text="Add"
+                     IconImageSource="plus_math.png"
+                     Command="{Binding Add}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout x:Name="MainStackLayout"
+                     Margin="5">
+            <SearchBar x:Name="SearchItem"
+                       Text="{Binding SearchCustomerEntry}"
+                       SearchCommand="{Binding Search}"
+                       Placeholder="Search"
+                       HorizontalOptions="FillAndExpand"
+                       Margin="-20,0,0,0"
+                       TextChanged="SearchItem_OnTextChanged"/>
+            <StackLayout x:Name="CustomerListStackLayout"
+                         Orientation="Vertical"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
+
+                <ListView x:Name="CustomerListView"
+                          ItemsSource="{Binding Customers}"
+                          SelectedItem="{Binding SelectedCustomer}"
+                          RefreshCommand="{Binding RefreshCustomers}"
+                          IsPullToRefreshEnabled="True"
+                          IsRefreshing="{Binding IsBusy}">
+                    <ListView.Behaviors>
+                        <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectCustomer}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid
+                                        Padding="0,10,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="30"/>
+                                        </Grid.ColumnDefinitions>
+                                        <RelativeLayout Grid.Column="0"
+                                                        Margin="0,-13,0,0">
+                                            <Image Source="sphere.png"
+                                                   HeightRequest="50"
+                                                   WidthRequest="50" />
+                                            <Label Text="{Binding Initials}"
+                                                       TextColor="AliceBlue"
+                                                       FontSize="20"
+                                                       Padding="12,10,0,0"></Label>
+                                        </RelativeLayout>
+                                        <Label Grid.Column="1" 
+                                               Text="{Binding Customer, Mode=TwoWay}" 
+                                               TextColor="Black"
+                                               FontSize="16"/>
+                                        <Label Grid.Column="2" 
+                                               Text="{Binding ContactNumber, Mode=TwoWay}" 
+                                               TextColor="Black"
+                                               FontSize="16"/>
+                                        <Image Grid.Column="3" Source="chevron_right.png" 
+                                               WidthRequest="25"
+                                               HeightRequest="25"
+                                        />
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -8,8 +8,8 @@ using Android.Widget;
 using Android.OS;
 using Environment = System.Environment;
 
-namespace mPOS.Droid
-{                                     
+namespace mPOSv2.Android
+{
     [Activity(Label = "mPOS", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
@@ -19,8 +19,6 @@ namespace mPOS.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
@@ -32,7 +30,7 @@ namespace mPOS.Droid
 
             LoadApplication(new App(dbFileCompletePath));
         }
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -41,3 +39,4 @@ namespace mPOS.Droid
         }
     }
 }
+

@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
+             xmlns:sfDatePicker="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
+             xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
+             mc:Ignorable="d"
+             x:Class="mPOSv2.Views.Activity.Sales.SalesView"
+             Title="Sales"
+             Appearing="SalesView_OnAppearing">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdAdd"
+                     Text="Add"
+                     IconImageSource="plus_math.png"
+                     Command="{Binding Add}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout x:Name="MainStackLayout"
+                     Margin="5">
+            <StackLayout x:Name="SearchStackLayout"
+                         Orientation="Vertical">
+                <SearchBar x:Name="SearchSale"
+                           Text="{Binding SearchSaleEntry}"
+                           SearchCommand="{Binding Search}"
+                           Placeholder="Search"
+                           HorizontalOptions="FillAndExpand"
+                           Margin="-20,0,0,0"
+                           TextChanged="SearchSale_OnTextChanged"/>
+                <DatePicker x:Name="SearchSaleDate" 
+                            Date="{Binding SearchSaleDate}"
+                            HorizontalOptions="FillAndExpand"
+                            DateSelected="SearchSaleDate_OnDateSelected"/>
+            </StackLayout>
+            <StackLayout x:Name="SalesListMessage"
+                         IsVisible="{Binding IsListEmpty}">
+                <Label Text="No record(s) found!"
+                       Padding="0,300,0,0"
+                       FontAttributes="Bold"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout x:Name="SaleListStackLayout"
+                         Orientation="Vertical"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         IsVisible="{Binding IsListNotEmpty}">
+                <ListView x:Name="SaleListView"
+                          ItemsSource="{Binding Sales}"
+                          SelectedItem="{Binding SelectedSale}"
+                          RefreshCommand="{Binding RefreshSales}"
+                          IsPullToRefreshEnabled="True"
+                          IsRefreshing="{Binding IsBusy}">
+                    <ListView.Behaviors>
+                        <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSale}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout x:Name="ItemImagePlaceHolder"
+                                                     Orientation="Vertical">
+                                            <Image Source="sales.png"></Image>
+                                        </StackLayout>
+
+                                        <StackLayout x:Name="SalesDate"
+                                                     Orientation="Horizontal"
+                                                     HorizontalOptions="End">
+                                            <Label Text="{Binding SalesDate, StringFormat='{0:g}'}"
+                                                   TextColor="Black"
+                                                   FontSize="15"
+                                                   WidthRequest="80"
+                                                   HorizontalTextAlignment="End"/>
+                                        </StackLayout>
+
+                                        <StackLayout x:Name="ItemInfo"
+                                                     Orientation="Vertical">
+                                            <Label Text="{Binding SalesNumber}"
+                                                   TextColor="Black"
+                                                   TextDecorations="Underline"
+                                                   FontSize="15"
+                                                   HeightRequest="20"
+                                                   WidthRequest="130"
+                                                   FontAttributes="Bold"
+                                                   Margin="0,0,0,-5"/>
+                                            <Label Text="{Binding CustomerName}"
+                                                   TextColor="Black"
+                                                   FontSize="12"/>
+                                        </StackLayout>
+                                        <StackLayout x:Name="ItemPrice"
+                                                     Orientation="Horizontal"
+                                                     HorizontalOptions="End">
+                                            <Label Text="{Binding SalesAmount, StringFormat='₱{0:N2}'}"
+                                                   TextColor="Gold"
+                                                   FontSize="15"
+                                                   Margin="0,10,0,0"
+                                                   HorizontalTextAlignment="End"
+                                                   FontAttributes="Bold"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

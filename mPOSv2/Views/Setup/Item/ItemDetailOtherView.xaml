@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+xmlns:numerictextbox="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
+xmlns:numericupdown="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
+             xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
+             mc:Ignorable="d"
+             x:Class="mPOSv2.Views.Setup.Item.ItemDetailOtherView"
+             Appearing="ItemDetailOtherView_OnAppearing">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DecimalConverter x:Key="decimalConverter" />
+            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
+            <converters:SelectedIndexChangedArgsConverter x:Key="PropertyChangedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout x:Name="LayoutRoot">
+            <ScrollView>
+                <StackLayout x:Name="MainStackLayout" 
+                             Margin="10">
+                    <StackLayout HorizontalOptions="Center">
+                        <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
+                                           IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
+                                           HeightRequest="50"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Unit:" />
+                        <combobox:SfComboBox x:Name="UnitComboBox"
+                                             DataSource="{Binding ItemUnits}"
+                                             SelectedItem="{Binding SelectedUnit}"
+                                             DisplayMemberPath="Unit"
+                                             IsEditableMode="true" 
+                                             AllowFiltering="true" 
+                                             MaximumDropDownHeight="150"
+                                             ComboBoxMode="SuggestAppend"
+                                             SelectionChanged="UnitComboBox_OnSelectionChanged"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Cost:"/>
+                        <numerictextbox:SfNumericTextBox x:Name="CostEntry"
+                                                         Value="{Binding SelectedItem.Cost}"
+                                                         ParserMode="Double"
+                                                         FormatString="n"
+                                                         ValueChanged="CostEntry_OnValueChanged"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Mark Up(%):"/>
+                        <numerictextbox:SfNumericTextBox x:Name="MarkUpEntry"
+                                                          Value="{Binding SelectedItem.MarkUp}"
+                                                          ParserMode="Double"
+                                                          FormatString="p"
+                                                          PercentDisplayMode="Value"
+                                                          ValueChanged="MarkUpEntry_OnValueChanged"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Stock Level Qty:"/>
+                        <numericupdown:SfNumericUpDown  x:Name="StockLevelQtyStepper" 
+                                                        Value="{Binding SelectedItem.ReorderQuantity}"
+                                                        EnableGroupSeparator="True"
+                                                        ParsingMode="Double"
+                                                        FormatString="n"
+                                                        ValueChanged="StockLevelQtyStepper_OnValueChanged"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Remarks:"/>
+                        <Editor Text="{Binding SelectedItem.Remarks, Mode=TwoWay}" 
+                                HeightRequest="350">
+                            <Editor.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Editor.Behaviors>
+                        </Editor>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

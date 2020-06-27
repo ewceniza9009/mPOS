@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xForms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             mc:Ignorable="d"
+             x:Class="mPOSv2.AppMenu"
+             NavigationPage.HasNavigationBar="False"
+             Appearing="AppMenu_OnAppearing">
+    <MasterDetailPage.ToolbarItems>
+    </MasterDetailPage.ToolbarItems>
+
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu"
+                     NavigationPage.HasNavigationBar="False">
+            <Grid BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Image Source="splashscrn.jpg" Aspect="AspectFill" />
+                    <StackLayout Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                        <Image Source="user.png" Aspect="AspectFit" WidthRequest="60" HeightRequest="60" />
+                        <Label x:Name="UserFullName"  Text="New User" TextColor="White" FontSize="Large" />
+                    </StackLayout>
+                </Grid>
+                <StackLayout Grid.Row="1">
+                    <Frame Padding="0"
+                           Margin="0"
+                           HeightRequest="60">
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="home.png"
+                                   HeightRequest="30"
+                                   WidthRequest="40"
+                                   Margin="10,0,0,0"></Image>
+                            <Label Text="MENU"
+                                   Padding="10,20,0,0"
+                                   FontSize="16"
+                                   TextColor="Gray"
+                                   FontAttributes="Bold"></Label>
+                        </StackLayout>
+                    </Frame>
+                    <xForms:SfListView x:Name="NavigationDrawerList"
+                                       ItemSize="60"
+                                       ItemTapped="NavigationDrawerList_OnItemTapped">
+                        <xForms:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout>
+                                        <StackLayout VerticalOptions="FillAndExpand"
+                                                     Orientation="Horizontal"
+                                                     Padding="20,10,0,10"
+                                                     Spacing="20">
+
+                                            <Image Source="{Binding Icon}"
+                                                   WidthRequest="30"
+                                                   HeightRequest="30"
+                                                   VerticalOptions="Center" />
+
+                                            <Label Text="{Binding Title}"
+                                                   FontSize="Medium"
+                                                   VerticalOptions="Center"
+                                                   TextColor="Black"/>
+                                        </StackLayout>
+                                        <BoxView HeightRequest="1" BackgroundColor="Gray"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </xForms:SfListView.ItemTemplate>
+
+                    </xForms:SfListView>
+                </StackLayout>
+            </Grid>
+        </ContentPage>
+    </MasterDetailPage.Master>
+
+    <MasterDetailPage.Detail HasNavigationBar ="False">
+        <NavigationPage HasNavigationBar="False"
+                        HasBackButton="False">
+
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

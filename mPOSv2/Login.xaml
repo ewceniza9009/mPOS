@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+            x:Class="mPOSv2.Login">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical"
+                     Padding="5,5,5,5">
+            <Image Source="poslogo.png"
+                   Margin="0,100,0,0"
+                   WidthRequest="300"/>
+            <StackLayout Orientation="Vertical"
+                         Margin="10,0,10,0">
+                <Entry x:Name="UserName" 
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       Placeholder="Username"/>
+                <Entry x:Name="Password" 
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       Placeholder="Password"
+                       IsPassword="True"/>
+            </StackLayout>
+
+            <button:SfButton x:Name="CmdLogin"
+                             Text="LOGIN"
+                             FontAttributes="Bold"
+                             Margin="30,30,30,0"
+                             HeightRequest="50"
+                             TextColor="White"
+                             ImageSource="enter_key.png"
+                             CornerRadius="3"
+                             ShowIcon="True"
+                             Clicked="CmdLogin_Clicked"/>
+
+            <Label x:Name="LoginText" 
+                   HorizontalTextAlignment="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

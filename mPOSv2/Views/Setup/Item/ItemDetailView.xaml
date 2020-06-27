@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:item="clr-namespace:mPOSv2.Views.Setup.Item;assembly=mPOSv2"
+            mc:Ignorable="d"
+            x:Class="mPOSv2.Views.Setup.Item.ItemDetailView"
+            Title="{Binding Title, Mode=TwoWay}">
+    <TabbedPage.ToolbarItems>
+    <ToolbarItem x:Name="CmdDelete"
+                 Text="Delete"
+                 IconImageSource="delete.png"
+                 Command="{Binding Delete}"></ToolbarItem>
+    <ToolbarItem x:Name="CmdSave"
+                 Text="Save"
+                 IconImageSource="save.png"
+                 Command="{Binding Save}"></ToolbarItem>
+    </TabbedPage.ToolbarItems>
+
+    <!--<start:ItemDetailGeneralView IconImageSource="info.png"/>-->
+    <item:ItemDetailGeneralView Title="General Info"/>
+    <!--<start:ItemDetailOtherView IconImageSource="item_others.png"/>-->
+    <item:ItemDetailOtherView Title="Others"/>
+</TabbedPage>
