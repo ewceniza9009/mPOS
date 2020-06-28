@@ -50,5 +50,13 @@ namespace mPOS.WebAPI.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetItemCategories()
+        {
+            var repos = new Repository.MstItem();
+            var result = repos.GetItemCategories();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

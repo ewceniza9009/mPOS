@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using mPOSv2.Enums;
 using mPOS.POCO;
 using mPOSv2.Services;
+using mPOSv2.Views.Activity.Sales;
 using mPOSv2.Views.Start;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -374,8 +375,8 @@ namespace mPOSv2.ViewModels
 
             LoadSalesLine();
 
-            //Device.BeginInvokeOnMainThread(async () =>
-            //    await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
+            Device.BeginInvokeOnMainThread(async () =>
+                await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
         }
 
         public void ExecuteSearch(object sender)
@@ -387,7 +388,7 @@ namespace mPOSv2.ViewModels
             OnPropertyChanged(nameof(IsListNotEmpty));
         }
 
-        private void ExecuteSearchItem(object sender)
+        public void ExecuteSearchItem(object sender)
         {
             LoadItems(SearchItemEntry);
         }
@@ -402,8 +403,8 @@ namespace mPOSv2.ViewModels
 
                 LoadSalesLine();
 
-                //Device.BeginInvokeOnMainThread(async () =>
-                //    await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
             }
         }
 
@@ -434,8 +435,8 @@ namespace mPOSv2.ViewModels
 
                 Device.BeginInvokeOnMainThread(
                     async () => await Application.Current.MainPage.Navigation.PopModalAsync());
-                //Device.BeginInvokeOnMainThread(async () =>
-                //    await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
             else
             {
@@ -445,8 +446,8 @@ namespace mPOSv2.ViewModels
 
                 ExecuteRefreshSelectedSaleLine(new object());
 
-                //Device.BeginInvokeOnMainThread(async () =>
-                //    await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () =>
+                await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
         }
 
@@ -456,7 +457,7 @@ namespace mPOSv2.ViewModels
             ReloadSalesLines();
         }
 
-        private void ExecuteSelectCustomer(object obj)
+        public void ExecuteSelectCustomer(object obj)
         {
             if (SelectedCustomer != null)
             {
@@ -533,8 +534,8 @@ namespace mPOSv2.ViewModels
         #region Other Methods
         public void ExecuteShowItems()
         {
-            //Device.BeginInvokeOnMainThread(async () =>
-            //    await Application.Current.MainPage.Navigation.PushModalAsync(new SalesItemView(this)));
+            Device.BeginInvokeOnMainThread(async () =>
+                await Application.Current.MainPage.Navigation.PushModalAsync(new SalesItemView(this)));
         }
 
         public void ExecuteSelectItemByBarCode()
@@ -562,7 +563,7 @@ namespace mPOSv2.ViewModels
 
                 ExecuteRefreshSelectedSaleLine(new object());
 
-                //Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
         }
 

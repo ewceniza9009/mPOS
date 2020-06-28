@@ -27,5 +27,19 @@ namespace mPOSv2.Services
 
             return result;
         }
+
+        public static async Task<ObservableCollection<string>> GetItemCategories()
+        {
+            ObservableCollection<string> result;
+            var requestUri = $@"{UriBase}/MstItem/GetItemCategories";
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetStringAsync(requestUri);
+                result = JsonConvert.DeserializeObject<ObservableCollection<string>>(response);
+            }
+
+            return result;
+        }
     }
 }

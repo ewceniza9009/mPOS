@@ -12,6 +12,8 @@ namespace mPOSv2
         public static string FilePath;
         public App()
         {
+            Device.SetFlags(new[] { "SwipeView_Experimental" });
+
             InitializeComponent();
 
             MainPage = new NavigationPage(new Login());
@@ -19,6 +21,8 @@ namespace mPOSv2
 
         public App(string filePath)
         {
+            Device.SetFlags(new[] { "SwipeView_Experimental" });
+
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTMzN0AzMTM4MmUzMTJlMzBYTml4RFZ2ZmVsRmlNbmdCcDNjVG9naS9qWEFzVXJvL0FkSmlJbnkzVHV3PQ==");
 
             FilePath = filePath;

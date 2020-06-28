@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -41,7 +42,8 @@
                           SelectedItem="{Binding SelectedCustomer}"
                           RefreshCommand="{Binding RefreshCustomers}"
                           IsPullToRefreshEnabled="True"
-                          IsRefreshing="{Binding IsBusy}">
+                          IsRefreshing="{Binding IsBusy}"
+                          >
                     <ListView.Behaviors>
                         <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectCustomer}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                     </ListView.Behaviors>
@@ -49,7 +51,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <Grid
+                                    <!--<Grid
                                         Padding="0,10,0,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="20"/>
@@ -82,7 +84,29 @@
                                                WidthRequest="25"
                                                HeightRequest="25"
                                         />
-                                    </Grid>
+                                    </Grid>-->
+                                    <StackLayout Orientation="Horizontal">
+                                        <sfAvatarView:SfAvatarView ContentType="Initials"
+                                                                   InitialsType="DoubleCharacter"
+                                                                   AvatarName="{Binding Customer}"
+                                                                   InitialsColor="Black"                     
+                                                                   WidthRequest="45"
+                                                                   FontAttributes="Bold"                     
+                                                                   CornerRadius="25"                        
+                                                                   BackgroundColor="LightBlue"/>
+                                        <Label Text="{Binding Customer, Mode=TwoWay}" 
+                                               TextColor="Black"
+                                               FontSize="16"
+                                               WidthRequest="180"
+                                               Margin="5,10,0,0"/>
+                                        <Label Text="{Binding ContactNumber, Mode=TwoWay}" 
+                                               TextColor="Black"
+                                               FontSize="16"
+                                               Margin="0,10,0,0"/>
+                                        <Image Source="chevron_right.png" 
+                                               WidthRequest="25"
+                                               HeightRequest="25"/>
+                                    </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
                         </DataTemplate>

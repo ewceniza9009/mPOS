@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
+xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+             xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
+             xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
+             mc:Ignorable="d"
+             x:Class="mPOSv2.Views.Activity.Sales.SalesDetailView"
+             Title="{Binding Title, Mode=TwoWay}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:CurrencyConverter x:Key="currencyConverter" />
+            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
+            <converters:SelectedIndexChangedArgsConverter x:Key="PropertyChangedConverter" />
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdDelete"
+                     Text="Delete"
+                     IconImageSource="delete.png"
+                     Command="{Binding Delete}"></ToolbarItem>
+        <ToolbarItem x:Name="CmdSave"
+                     Text="Save"
+                     IconImageSource="save.png"
+                     Command="{Binding Save}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout HorizontalOptions="End"
+                         Padding="10"
+                         WidthRequest="1000">
+                <Label Text="{Binding SelectedSale.SalesAmount, StringFormat='₱{0:N2}'}"
+                       HorizontalTextAlignment="End"
+                       TextColor="Gold"
+                       FontSize="50"
+                       />
+            </StackLayout>
+            <StackLayout Margin="10,0,10,0">
+                <StackLayout HorizontalOptions="Center">
+                    <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
+                                   IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
+                                   HeightRequest="50"/>
+                </StackLayout>
+
+                <Frame CornerRadius="3"
+                       Padding="0">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal"
+                                     BackgroundColor="LightSkyBlue"
+                                     HeightRequest="40">
+                            <Label Text="INFORMATION"
+                                   HorizontalOptions="FillAndExpand"
+                                   HorizontalTextAlignment="Start"
+                                   FontAttributes="Bold"
+                                   TextColor="WhiteSmoke"
+                                   VerticalTextAlignment="End"
+                                   Margin="5"/>
+
+                            <Button x:Name="CmdMore"
+                                    WidthRequest="50"
+                                    HeightRequest="40"
+                                    BackgroundColor="LightSkyBlue"
+                                    ImageSource="view_more.png"/>
+                        </StackLayout>
+
+                        <StackLayout Margin="5">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Sales Date: "
+                                       WidthRequest="100"
+                                       Margin="0,12,0,0"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="Black"/>
+                                <DatePicker Date="{Binding SelectedSale.SalesDate}"
+                                        HeightRequest="40"
+                                        HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Customer: "
+                                       WidthRequest="100"
+                                       Margin="0,16,0,0"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       TextColor="Black"/>
+
+                                <combobox:SfComboBox x:Name="CustomerComboBox"
+                                                     DataSource="{Binding Customers}"
+                                                     SelectedItem="{Binding SelectedCustomer}"
+                                                     DisplayMemberPath="Customer"
+                                                     IsEditableMode="true" 
+                                                     AllowFiltering="true" 
+                                                     MaximumDropDownHeight="400"
+                                                     ComboBoxMode="SuggestAppend"
+                                                     HorizontalOptions="FillAndExpand"
+                                                     SelectionChanged="UnitComboBox_OnSelectionChanged"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <Frame CornerRadius="3"  
+                       Padding="0">
+                    <StackLayout x:Name="SalesLineStackLayout"
+                         Orientation="Vertical"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
+
+                        <StackLayout Orientation="Horizontal"
+                                     BackgroundColor="LightSkyBlue"
+                                     HeightRequest="40">
+                            <Label Text="SALE ITEMS"
+                                   HorizontalOptions="FillAndExpand"
+                                   HorizontalTextAlignment="Start"
+                                   FontAttributes="Bold"
+                                   TextColor="WhiteSmoke"
+                                   VerticalTextAlignment="End"
+                                   Padding="5"/>
+                            <Button x:Name="CmdSearchItem"
+                                    WidthRequest="40"
+                                    HeightRequest="35"
+                                    BackgroundColor="LightSkyBlue"
+                                    ImageSource="add_item.png"
+                                    Clicked="CmdSearchItem_OnClicked"/>
+
+                            <Button x:Name="CmdSearchBarcode"
+                                    WidthRequest="40"
+                                    HeightRequest="35"
+                                    BackgroundColor="LightSkyBlue"
+                                    ImageSource="barcode_scanner.png"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal">
+                            <Entry Placeholder="Last Barcode"
+                                   Text="{Binding SearchBarcode}"
+                                   HeightRequest="40"
+                                   HorizontalOptions="FillAndExpand"
+                                   IsReadOnly="True"
+                                   IsEnabled="False"/>
+                        </StackLayout>
+                        <RelativeLayout>
+                            <Image Source="shopping_basket.png" 
+                                   VerticalOptions="CenterAndExpand" 
+                                   HorizontalOptions="CenterAndExpand"/>
+                            <ListView x:Name="SalesLineListView" 
+                                          ItemsSource="{Binding SelectedSale.TrnSalesLines}"
+                                          SelectedItem="{Binding SelectedSaleLine}"
+                                          HasUnevenRows="True"
+                                          HeightRequest="410">
+                                <ListView.Behaviors>
+                                    <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                                </ListView.Behaviors>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ViewCell.View>
+                                                <SwipeView BackgroundColor="Transparent">
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <StackLayout x:Name="ItemImagePlaceHolder"
+                                                                         Orientation="Vertical">
+                                                            <Image Source="product.png"></Image>
+                                                        </StackLayout>
+                                                        <StackLayout x:Name="ItemInfo"
+                                                                         Orientation="Vertical">
+                                                            <Label Text="{Binding ItemDescription}"
+                                                                       TextColor="Black"
+                                                                       FontSize="15"
+                                                                       HeightRequest="20"
+                                                                       WidthRequest="150"
+                                                                       FontAttributes="Bold"
+                                                                       Margin="0,0,0,-5"/>
+                                                            <Label Text="{Binding BarCode}"
+                                                                       TextColor="Black"
+                                                                       FontSize="12"/>
+                                                        </StackLayout>
+                                                        <StackLayout Orientation="Vertical">
+                                                            <StackLayout Orientation="Horizontal">
+                                                                <StackLayout x:Name="Quantity"
+                                                                                 Orientation="Horizontal"
+                                                                                 HorizontalOptions="Start">
+                                                                    <Label Text="{Binding Quantity, StringFormat='{0:N2}'}"
+                                                                               TextColor="Black"
+                                                                               FontSize="15"
+                                                                               HorizontalTextAlignment="End"
+                                                                               FontAttributes="Bold"/>
+                                                                </StackLayout>
+                                                                <StackLayout x:Name="Unit"
+                                                                                 Orientation="Horizontal"
+                                                                                 HorizontalOptions="Start">
+                                                                    <Label Text="{Binding UnitName}"
+                                                                               TextColor="Black"
+                                                                               FontSize="15"
+                                                                               HorizontalTextAlignment="End"
+                                                                               FontAttributes="Bold">
+                                                                    </Label>
+                                                                </StackLayout>
+                                                            </StackLayout>
+                                                            <StackLayout x:Name="Amount"
+                                                                             Orientation="Horizontal"
+                                                                             HorizontalOptions="Start">
+                                                                <Label Text="{Binding Amount, StringFormat='₱{0:N2}'}"
+                                                                           TextColor="Gold"
+                                                                           FontSize="15"
+                                                                           HorizontalTextAlignment="Start"
+                                                                           Margin="0,-5,0,0"
+                                                                           FontAttributes="Bold"
+                                                                           TextDecorations="Underline"/>
+                                                            </StackLayout>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                    <SwipeView.RightItems>
+                                                        <SwipeItems Mode="Reveal">
+                                                            <SwipeItemView Command="{Binding Source={x:Reference SalesLineListView}, Path=BindingContext.DeleteSaleLine}"
+                                                                               CommandParameter="{Binding .}">
+                                                                <Image Source="remove_item.png"
+                                                                           Margin="-50,0,0,0"/>
+                                                            </SwipeItemView>
+                                                        </SwipeItems>
+                                                    </SwipeView.RightItems>
+                                                </SwipeView>
+                                            </ViewCell.View>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                            <!--<listview:SfListView x:Name="SalesLineListView" 
+                                                 ItemsSource="{Binding SelectedSale.TrnSalesLines}"
+                                                 SelectedItem="{Binding SelectedSaleLine}"
+                                                 HeightRequest="410"
+                                                 ItemSize="45">
+                                <listview:SfListView.Behaviors>
+                                    <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                                </listview:SfListView.Behaviors>
+                                <listview:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ViewCell.View>
+                                                <SwipeView BackgroundColor="Transparent">
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <StackLayout x:Name="ItemImagePlaceHolder"
+                                                                         Orientation="Vertical">
+                                                            <Image Source="product.png"
+                                                               Margin="0,-5,0,0"></Image>
+                                                        </StackLayout>
+                                                        <StackLayout x:Name="ItemInfo"
+                                                                         Orientation="Vertical">
+                                                            <Label Text="{Binding ItemDescription}"
+                                                                       TextColor="Black"
+                                                                       FontSize="15"
+                                                                       HeightRequest="20"
+                                                                       WidthRequest="150"
+                                                                       FontAttributes="Bold"
+                                                                       Margin="0,0,0,-5"/>
+                                                            <Label Text="{Binding BarCode}"
+                                                                   TextColor="Black"
+                                                                   FontSize="12"/>
+                                                        </StackLayout>
+                                                        <StackLayout Orientation="Vertical">
+                                                            <StackLayout Orientation="Horizontal">
+                                                                <StackLayout x:Name="Quantity"
+                                                                                 Orientation="Horizontal"
+                                                                                 HorizontalOptions="Start">
+                                                                    <Label Text="{Binding Quantity, StringFormat='{0:N2}'}"
+                                                                               TextColor="Black"
+                                                                               FontSize="15"
+                                                                               HorizontalTextAlignment="End"
+                                                                               FontAttributes="Bold"/>
+                                                                </StackLayout>
+                                                                <StackLayout x:Name="Unit"
+                                                                                 Orientation="Horizontal"
+                                                                                 HorizontalOptions="Start">
+                                                                    <Label Text="{Binding UnitName}"
+                                                                               TextColor="Black"
+                                                                               FontSize="15"
+                                                                               HorizontalTextAlignment="End"
+                                                                               FontAttributes="Bold">
+                                                                    </Label>
+                                                                </StackLayout>
+                                                            </StackLayout>
+                                                            <StackLayout x:Name="Amount"
+                                                                             Orientation="Horizontal"
+                                                                             HorizontalOptions="Start">
+                                                                <Label Text="{Binding Amount, StringFormat='₱{0:N2}'}"
+                                                                           TextColor="Gold"
+                                                                           FontSize="15"
+                                                                           HorizontalTextAlignment="Start"
+                                                                           Margin="0,-5,0,0"
+                                                                           FontAttributes="Bold"
+                                                                           TextDecorations="Underline"/>
+                                                            </StackLayout>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                    <SwipeView.RightItems>
+                                                        <SwipeItems Mode="Reveal">
+                                                            <SwipeItemView Command="{Binding Source={x:Reference SalesLineListView}, Path=BindingContext.DeleteSaleLine}"
+                                                                           CommandParameter="{Binding .}">
+                                                                <Image Source="remove_item.png"
+                                                                       Margin="-50,0,0,0"/>
+                                                            </SwipeItemView>
+                                                        </SwipeItems>
+                                                    </SwipeView.RightItems>
+                                                </SwipeView>
+                                            </ViewCell.View>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </listview:SfListView.ItemTemplate>
+                            </listview:SfListView>-->
+                        </RelativeLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -31,36 +31,20 @@ namespace mPOSv2.Views.Activity.Sales
         private void SalesView_OnAppearing(object sender, EventArgs e)
         {
             vm.Load();
-            //ShowListMessage();
         }
 
         private void SearchSale_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            vm.ExecuteSearch(new object());
-            //ShowListMessage();
+            if (string.IsNullOrEmpty(SearchSale.Text))
+            {
+                vm.Load();
+            }
         }
 
         private void SearchSaleDate_OnDateSelected(object sender, Xamarin.Forms.DateChangedEventArgs e)
         {
             vm.ExecuteSearch(new object());
-            //ShowListMessage();
         } 
-        #endregion
-
-        #region Methods
-        //public void ShowListMessage()
-        //{
-        //    if (vm.IsListEmpty)
-        //    {
-        //        SalesListMessage.IsVisible = true;
-        //        SaleListStackLayout.IsVisible = false;
-        //    }
-        //    else
-        //    {
-        //        SalesListMessage.IsVisible = false;
-        //        SaleListStackLayout.IsVisible = true;
-        //    }
-        //}
         #endregion
     }
 }

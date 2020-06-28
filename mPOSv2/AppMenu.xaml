@@ -69,7 +69,6 @@
                                 </ViewCell>
                             </DataTemplate>
                         </xForms:SfListView.ItemTemplate>
-
                     </xForms:SfListView>
                 </StackLayout>
             </Grid>

@@ -59,13 +59,5 @@ namespace mPOS.WebAPI.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-        public JsonResult GetUnits()
-        {
-            var repos = new Repository.MstItem();
-            var result = repos.GetUnits();
-
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
     }
 }

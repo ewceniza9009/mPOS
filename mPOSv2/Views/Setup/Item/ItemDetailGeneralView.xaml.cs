@@ -7,6 +7,8 @@ using mPOSv2.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
+using SelectionChangedEventArgs = Syncfusion.XForms.ComboBox.SelectionChangedEventArgs;
+using ValueChangedEventArgs = Syncfusion.SfAutoComplete.XForms.ValueChangedEventArgs;
 
 namespace mPOSv2.Views.Setup.Item
 {
@@ -48,6 +50,25 @@ namespace mPOSv2.Views.Setup.Item
 
             await Navigation.PushModalAsync(scanPage);
         }
+
+        private void CategoryAutoComplete_OnValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            vm.ExecuteRefreshSelectedItem(new object());
+        }
+
+        private void CategoryComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vm.ExecuteRefreshSelectedItem(new object());
+        }
+
+        private void CategoryAutoComplete_OnCompleted(object sender, EventArgs e)
+        {
+            vm.ItemCategories.Add(CategoryAutoComplete.Text);
+            vm.ExecuteRefreshSelectedItem(new object());
+        }
         #endregion
+
+
+
     }
 }

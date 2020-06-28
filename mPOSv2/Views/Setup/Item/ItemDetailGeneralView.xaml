@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -86,11 +89,24 @@
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Category:"/>
-                        <Entry Text="{Binding SelectedItem.Category, Mode=TwoWay}" >
-                            <Entry.Behaviors>
-                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
-                            </Entry.Behaviors>
-                        </Entry>
+                        <!--<combobox:SfComboBox x:Name="CategoryComboBox"
+                                             DataSource="{Binding ItemCategories}"
+                                             SelectedItem="{Binding SelectedItem.Category}"
+                                             IsEditableMode="true" 
+                                             AllowFiltering="true" 
+                                             MaximumDropDownHeight="300"
+                                             ComboBoxMode="SuggestAppend"
+                                             SelectionChanged="CategoryComboBox_OnSelectionChanged" />-->
+                        <autocomplete:SfAutoComplete x:Name="CategoryAutoComplete" 
+                                                     DataSource="{Binding ItemCategories}"
+                                                     SelectedValue="{Binding SelectedItem.Category}"
+                                                     MaximumDropDownHeight="300"
+                                                     AutoCompleteMode="Suggest"
+                                                     SuggestionBoxPlacement="Top"
+                                                     Completed="CategoryAutoComplete_OnCompleted"
+                                                     ValueChanged="CategoryAutoComplete_OnValueChanged">
+                            
+                        </autocomplete:SfAutoComplete>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">

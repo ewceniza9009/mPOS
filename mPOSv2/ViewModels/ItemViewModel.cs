@@ -45,6 +45,7 @@ namespace mPOSv2.ViewModels
                     .PostRead("MstItem/BulkGet", itemFilter);
 
                 ItemUnits = await APIItemRequest.GetUnits();
+                ItemCategories = await APIItemRequest.GetItemCategories();
 
                 IsBusy = false;
             });
@@ -92,12 +93,27 @@ namespace mPOSv2.ViewModels
         }
         private MstUnit _SelectedUnit;
 
+        public string SelectedCategory
+        {
+            get => _SelectedCategory;
+            set => SetProperty(ref _SelectedCategory, value);
+
+        }
+        private string _SelectedCategory;
+
         public ObservableCollection<MstUnit> ItemUnits
         {
             get => _ItemUnits;
             set => SetProperty(ref _ItemUnits, value);
         }
         private ObservableCollection<MstUnit> _ItemUnits;
+
+        public ObservableCollection<string> ItemCategories
+        {
+            get => _ItemCategories;
+            set => SetProperty(ref _ItemCategories, value);
+        }
+        private ObservableCollection<string> _ItemCategories;
 
         public MstItem SelectedItem
         {

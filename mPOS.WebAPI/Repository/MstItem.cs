@@ -126,5 +126,21 @@ namespace mPOS.WebAPI.Repository
 
             return result.ToList();
         }
+
+        public List<string> GetItemCategories()
+        {
+            List<string> result;
+
+            using (var ctx = new Data.posDataContext())
+            {
+
+                result = ctx.MstItems
+                    .GroupBy(x => x.Category).ToList()
+                    .Select(y => y.Key)
+                    .ToList();
+            }
+
+            return result;
+        }
     }
 }
