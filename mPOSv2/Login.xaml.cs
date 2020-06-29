@@ -15,11 +15,18 @@ namespace mPOSv2
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Login : ContentPage
     {
+        #region Properties
+        private int loginAttemptCount = 0;
+        #endregion
+
+        #region ctor
         public Login()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Events
         private async void CmdLogin_Clicked(object sender, EventArgs e)
         {
             var user = new MstUser
@@ -39,7 +46,7 @@ namespace mPOSv2
             {
                 var login = await ApiRequest<MstUser, MstUser>.PostRead("MstUser/CanLogin", user);
 
-                if (login!= null && login.Id != 0)
+                if (login != null && login.Id != 0)
                 {
                     Settings settings;
 
@@ -87,13 +94,30 @@ namespace mPOSv2
                 }
                 else
                 {
-                    LoginText.Text = "Invalid username or password!";
+                    if (loginAttemptCount > 1)
+                    {
+                        LoginText.Text = $"Invalid username or password!, attempt {loginAttemptCount}";
+                        LoginText.TextColor = Color.Red;
+
+                        if (loginAttemptCount > 10)
+                        {
+                            await Application.Current.MainPage.DisplayAlert("POS", "App will be terminated", "Ok");
+                            Environment.Exit(0);
+                        }
+                    }
+                    else
+                    {
+                        LoginText.Text = $"Invalid username or password!";
+                    }
+
+                    loginAttemptCount++;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LoginText.Text = $"{ex.Message}";
             }
-        }
+        } 
+        #endregion
     }
 }
