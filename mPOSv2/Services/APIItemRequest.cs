@@ -12,12 +12,10 @@ namespace mPOSv2.Services
 {
     public class APIItemRequest
     {
-        private static readonly string UriBase = GlobalVariables.UriBase;
-
         public static async Task<ObservableCollection<MstUnit>> GetUnits()
         {
             ObservableCollection<MstUnit> result;
-            var requestUri = $@"{UriBase}/MstItem/GetUnits";
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/MstItem/GetUnits";
 
             using (var client = new HttpClient())
             {
@@ -31,7 +29,7 @@ namespace mPOSv2.Services
         public static async Task<ObservableCollection<string>> GetItemCategories()
         {
             ObservableCollection<string> result;
-            var requestUri = $@"{UriBase}/MstItem/GetItemCategories";
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/MstItem/GetItemCategories";
 
             using (var client = new HttpClient())
             {

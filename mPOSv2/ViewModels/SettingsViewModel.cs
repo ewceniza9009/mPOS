@@ -42,5 +42,10 @@ namespace mPOSv2.ViewModels
             Device.BeginInvokeOnMainThread(async () =>
                 await Application.Current.MainPage.DisplayAlert("Settings", "Record saved.", "Ok"));
         }
+
+        public void RefreshSettings()
+        {
+            OnPropertyChanged(nameof(Settings));
+        }
     }
 }

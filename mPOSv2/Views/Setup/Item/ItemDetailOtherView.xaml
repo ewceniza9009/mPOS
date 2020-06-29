@@ -31,6 +31,20 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
+                        <Label Text="Remarks:"/>
+                        <!--<Editor Text="{Binding SelectedItem.Remarks, Mode=TwoWay}" 
+                                HeightRequest="350">
+                            <Editor.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Editor.Behaviors>
+                        </Editor>-->
+                        <richTextEditor:SfRichTextEditor x:Name="RemarksRichText"
+                                                         Text="{Binding SelectedItem.Remarks, Mode=TwoWay}"
+                                                         HeightRequest="350"
+                                                         TextChanged="RemarksRichText_OnTextChanged"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
                         <Label Text="Unit:" />
                         <combobox:SfComboBox x:Name="UnitComboBox"
                                              DataSource="{Binding ItemUnits}"
@@ -70,16 +84,6 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
                                                         ParsingMode="Double"
                                                         FormatString="n"
                                                         ValueChanged="StockLevelQtyStepper_OnValueChanged"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="Remarks:"/>
-                        <Editor Text="{Binding SelectedItem.Remarks, Mode=TwoWay}" 
-                                HeightRequest="350">
-                            <Editor.Behaviors>
-                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
-                            </Editor.Behaviors>
-                        </Editor><richTextEditor:SfRichTextEditor/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

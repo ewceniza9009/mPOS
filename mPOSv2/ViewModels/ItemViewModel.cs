@@ -53,6 +53,13 @@ namespace mPOSv2.ViewModels
         #endregion
 
         #region Properties
+        public bool IsHideCategory
+        {
+            get => _IsHideCategory;
+            set => SetProperty(ref _IsHideCategory, value);
+        }
+        private bool _IsHideCategory;
+
         public bool IsBusy
         {
             get => _IsBusy;
@@ -122,7 +129,6 @@ namespace mPOSv2.ViewModels
 
         }
         private MstItem _SelectedItem;
-
         public ObservableCollection<MstItem> Items
         {
             get => _Items;

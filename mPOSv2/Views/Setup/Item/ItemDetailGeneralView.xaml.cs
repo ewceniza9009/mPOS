@@ -26,6 +26,9 @@ namespace mPOSv2.Views.Setup.Item
             InitializeComponent();
 
             CmdScanBarcode.Clicked += CmdScanBarcode_Clicked;
+
+            CategoryComboBox.IsVisible = true;
+            CategoryEntry.IsVisible = false;
         }
         #endregion
 
@@ -61,14 +64,28 @@ namespace mPOSv2.Views.Setup.Item
             vm.ExecuteRefreshSelectedItem(new object());
         }
 
-        private void CategoryAutoComplete_OnCompleted(object sender, EventArgs e)
+        //private void CategoryAutoComplete_OnCompleted(object sender, EventArgs e)
+        //{
+        //    vm.ItemCategories.Add(CategoryAutoComplete.Text);
+        //    vm.ExecuteRefreshSelectedItem(new object());
+        //}
+
+        private void CmdNewCategory_OnClicked(object sender, EventArgs e)
         {
-            vm.ItemCategories.Add(CategoryAutoComplete.Text);
-            vm.ExecuteRefreshSelectedItem(new object());
+            if (!vm.IsHideCategory)
+            {
+                vm.IsHideCategory = true;
+                CategoryComboBox.IsVisible = !vm.IsHideCategory;
+                CategoryEntry.IsVisible = vm.IsHideCategory;
+                
+            }
+            else
+            {
+                vm.IsHideCategory = false;
+                CategoryComboBox.IsVisible = !vm.IsHideCategory;
+                CategoryEntry.IsVisible = vm.IsHideCategory;
+            }
         }
         #endregion
-
-
-
     }
 }

@@ -40,9 +40,14 @@
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Server:"/>
-                        <Entry Text="{Binding Settings.ServerName}" 
-                               IsReadOnly="True">
-                        </Entry>
+                        <StackLayout Orientation="Horizontal">
+                            <Entry Text="{Binding Settings.ServerName}"
+                                   HorizontalOptions="FillAndExpand"/>
+                            <Button x:Name="CmdGetDefault" 
+                                    Text="G"
+                                    WidthRequest="50"
+                                    Clicked="CmdGetDefault_OnClicked"></Button>
+                        </StackLayout>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">

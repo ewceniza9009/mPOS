@@ -54,8 +54,8 @@ xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib
                             </Entry>
                             <Button x:Name="CmdScanBarcode"
                                     WidthRequest="50"
-                                    HeightRequest="10"
-                                    BackgroundColor="Transparent"
+                                    HeightRequest="40"
+                                    BackgroundColor="White"
                                     ImageSource="barcode_scanner.png"/>
                         </StackLayout>
                     </StackLayout>
@@ -89,15 +89,32 @@ xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib
 
                     <StackLayout Orientation="Vertical">
                         <Label Text="Category:"/>
-                        <!--<combobox:SfComboBox x:Name="CategoryComboBox"
-                                             DataSource="{Binding ItemCategories}"
-                                             SelectedItem="{Binding SelectedItem.Category}"
-                                             IsEditableMode="true" 
-                                             AllowFiltering="true" 
-                                             MaximumDropDownHeight="300"
-                                             ComboBoxMode="SuggestAppend"
-                                             SelectionChanged="CategoryComboBox_OnSelectionChanged" />-->
-                        <autocomplete:SfAutoComplete x:Name="CategoryAutoComplete" 
+                        <StackLayout Orientation="Horizontal">
+                            <combobox:SfComboBox x:Name="CategoryComboBox"
+                                                 DataSource="{Binding ItemCategories}"
+                                                 SelectedItem="{Binding SelectedItem.Category}"
+                                                 IsEditableMode="true" 
+                                                 AllowFiltering="true" 
+                                                 MaximumDropDownHeight="300"
+                                                 ComboBoxMode="SuggestAppend"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 SelectionChanged="CategoryComboBox_OnSelectionChanged" />
+                            <Entry x:Name ="CategoryEntry" 
+                                   Text="{Binding SelectedItem.Category, Mode=TwoWay}"
+                                   HorizontalOptions="FillAndExpand">
+                                <Entry.Behaviors>
+                                    <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Button x:Name="CmdNewCategory" 
+                                    ImageSource="new_category.png"
+                                    WidthRequest="50"
+                                    HeightRequest="40"
+                                    BackgroundColor="White"
+                                    Clicked="CmdNewCategory_OnClicked"
+                                    />
+                        </StackLayout>
+                        <!--<autocomplete:SfAutoComplete x:Name="CategoryAutoComplete" 
                                                      DataSource="{Binding ItemCategories}"
                                                      SelectedValue="{Binding SelectedItem.Category}"
                                                      MaximumDropDownHeight="300"
@@ -106,7 +123,7 @@ xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib
                                                      Completed="CategoryAutoComplete_OnCompleted"
                                                      ValueChanged="CategoryAutoComplete_OnValueChanged">
                             
-                        </autocomplete:SfAutoComplete>
+                        </autocomplete:SfAutoComplete>-->
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">

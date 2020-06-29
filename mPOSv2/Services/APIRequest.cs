@@ -12,13 +12,10 @@ namespace mPOSv2.Services
 {
     public class ApiRequest<T, TResult> where T: class
     {
-
-        private static readonly string UriBase = GlobalVariables.UriBase;
-
         public static async Task<TResult> Read(string route, long id)
         {
             TResult result;
-            var requestUri = $@"{UriBase}/{route}?id={id}";
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}?id={id}";
 
             using (var client = new HttpClient())
             {
@@ -32,7 +29,7 @@ namespace mPOSv2.Services
         public static async Task<TResult> PostRead(string route = null, T arg = null)
         {
             TResult result;
-            var requestUri = $@"{UriBase}/{route}";
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}";
 
             using (var client = new HttpClient())
             {
@@ -68,7 +65,7 @@ namespace mPOSv2.Services
         public static async Task<long> Save(string route, T arg)
         {
             long result;
-            var requestUri = $@"{UriBase}/{route}";
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}";
 
             using (var client = new HttpClient())
             {
@@ -89,7 +86,7 @@ namespace mPOSv2.Services
 
         public static async Task Delete(string route, long id)
         {
-            var requestUri = $@"{UriBase}/{route}?id={id}";
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}?id={id}";
 
             using (var client = new HttpClient())
             {

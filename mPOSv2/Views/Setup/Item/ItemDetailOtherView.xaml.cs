@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using FocusEventArgs = Xamarin.Forms.FocusEventArgs;
 using SelectionChangedEventArgs = Syncfusion.XForms.ComboBox.SelectionChangedEventArgs;
+using TextChangedEventArgs = Syncfusion.XForms.RichTextEditor.TextChangedEventArgs;
 
 namespace mPOSv2.Views.Setup.Item
 {
@@ -51,6 +52,11 @@ namespace mPOSv2.Views.Setup.Item
         {
             vm.ExecuteSelectUnit(new object());
             vm.ExecuteRefreshSelectedItem(new object());
+        }
+
+        private void RemarksRichText_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            vm?.ExecuteRefreshSelectedItem(new object());
         }
         #endregion
 

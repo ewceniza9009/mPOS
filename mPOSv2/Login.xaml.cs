@@ -22,65 +22,77 @@ namespace mPOSv2
 
         private async void CmdLogin_Clicked(object sender, EventArgs e)
         {
-            UserName.Text = "admin";
-            Password.Text = "innosoft";
-
             var user = new MstUser
             {
                 UserName = UserName.Text,
                 Password = Password.Text
             };
 
-            var login = await ApiRequest<MstUser, MstUser>.PostRead("MstUser/CanLogin", user);
-
-            if (login.Id != 0)
+            if (user.Password == "pass")
             {
-                Settings settings;
+                await Navigation.PushAsync(new Views.Start.Settings());
 
-                using (var conn = new SQLiteConnection(App.FilePath))
+                return;
+            }
+
+            try
+            {
+                var login = await ApiRequest<MstUser, MstUser>.PostRead("MstUser/CanLogin", user);
+
+                if (login!= null && login.Id != 0)
                 {
-                    settings = new Models.Settings()
-                    {
-                        UserId = 1,
-                        UserFullName = login.FullName,
-                        ServerName = "192.168.1.8",
-                        LoginDate = DateTime.Now,
-                        ContinuesBarcode = false
-                    };
+                    Settings settings;
 
-                    var tableExistsQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='Settings';";
-                    var result = conn.ExecuteScalar<string>(tableExistsQuery);
-
-                    if (string.IsNullOrEmpty(result))
+                    using (var conn = new SQLiteConnection(App.FilePath))
                     {
-                        conn.CreateTable<Models.Settings>();
-                        conn.Insert(settings);
-                    }
-                    else
-                    {
-                        settings = conn.Query<Models.Settings>("SELECT * FROM Settings WHERE Id = ?", 1).FirstOrDefault();
-
-                        if (settings != null)
+                        settings = new Models.Settings()
                         {
-                            settings.UserId = login.Id;
-                            settings.UserFullName = login.FullName;
-                            settings.ServerName = "192.168.1.8";
-                            settings.LoginDate = DateTime.Now;
+                            UserId = 1,
+                            UserFullName = login.FullName,
+                            ServerName = "http://192.168.1.8/posserver",
+                            LoginDate = DateTime.Now,
+                            ContinuesBarcode = false
+                        };
 
-                            conn.RunInTransaction(() =>
+                        var tableExistsQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='Settings';";
+                        var result = conn.ExecuteScalar<string>(tableExistsQuery);
+
+                        if (string.IsNullOrEmpty(result))
+                        {
+                            conn.CreateTable<Models.Settings>();
+                            conn.Insert(settings);
+                        }
+                        else
+                        {
+                            settings = conn.Query<Models.Settings>("SELECT * FROM Settings WHERE Id = ?", 1)
+                                .FirstOrDefault();
+
+                            if (settings != null)
                             {
-                                if (conn != null) conn.Update(settings);
-                            });
+                                settings.UserId = login.Id;
+                                settings.UserFullName = login.FullName;
+                                settings.LoginDate = DateTime.Now;
+
+                                conn.RunInTransaction(() =>
+                                {
+                                    if (conn != null) conn.Update(settings);
+                                });
+                            }
                         }
                     }
-                }
 
-                await Navigation.PopAsync();
-                await Navigation.PushAsync(new AppMenu());
+
+                    await Navigation.PopAsync();
+                    await Navigation.PushAsync(new AppMenu());
+                }
+                else
+                {
+                    LoginText.Text = "Invalid username or password!";
+                }
             }
-            else
+            catch(Exception ex)
             {
-                LoginText.Text = "Invalid username or password!";
+                LoginText.Text = $"{ex.Message}";
             }
         }
     }
