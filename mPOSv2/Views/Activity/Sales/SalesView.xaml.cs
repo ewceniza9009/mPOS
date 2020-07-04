@@ -30,6 +30,9 @@ namespace mPOSv2.Views.Activity.Sales
         #region Events
         private void SalesView_OnAppearing(object sender, EventArgs e)
         {
+            vm = new SalesViewModel();
+            BindingContext = vm;
+
             vm.Load();
 
             Models.Page.Pager.CurrentPage = 1;

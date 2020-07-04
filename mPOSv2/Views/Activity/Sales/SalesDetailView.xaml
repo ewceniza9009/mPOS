@@ -148,8 +148,7 @@
                                           SelectedItem="{Binding SelectedSaleLine}"
                                           HasUnevenRows="True"
                                           HeightRequest="360"
-                                          SeparatorVisibility="None"
-                                          CachingStrategy="RecycleElement">
+                                          SeparatorVisibility="None">
                                 <ListView.Behaviors>
                                     <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                                 </ListView.Behaviors>
