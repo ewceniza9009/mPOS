@@ -57,9 +57,6 @@ namespace mPOSv2.ViewModels
                         ?.Customer;
                 });
 
-                Items = await APISalesRequest.GetItems();
-                SaleUnits = await APISalesRequest.GetUnits();
-
                 OnPropertyChanged(nameof(Sales));
                 OnPropertyChanged(nameof(IsListEmpty));
                 OnPropertyChanged(nameof(IsListNotEmpty));
@@ -197,6 +194,21 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _SaleUnits, value);
         }
         private ObservableCollection<MstUnit> _SaleUnits;
+
+        public MstTax SelectedTax
+        {
+            get => _SelectedTax;
+            set => SetProperty(ref _SelectedTax, value);
+
+        }
+        private MstTax _SelectedTax;
+
+        public ObservableCollection<MstTax> Taxes
+        {
+            get => _Taxes;
+            set => SetProperty(ref _Taxes, value);
+        }
+        private ObservableCollection<MstTax> _Taxes;
 
         public MstCustomer SelectedCustomer
         {
@@ -358,8 +370,12 @@ namespace mPOSv2.ViewModels
             OnPropertyChanged(nameof(SearchBarcode));
         }
 
-        private void ExecuteAdd(object sender)
+        private async void ExecuteAdd(object sender)
         {
+            Items = await APISalesRequest.GetItems();
+            SaleUnits = await APISalesRequest.GetUnits();
+            Taxes = await APISalesRequest.GetTaxes();
+
             var newSale = new TrnSales()
             {
                 SalesDate = DateTime.Now.Date,
@@ -393,8 +409,12 @@ namespace mPOSv2.ViewModels
             LoadItems(SearchItemEntry);
         }
 
-        private void ExecuteSelectSale(object sender)
+        private async void ExecuteSelectSale(object sender)
         {
+            Items = await APISalesRequest.GetItems();
+            SaleUnits = await APISalesRequest.GetUnits();
+            Taxes = await APISalesRequest.GetTaxes();
+
             if (sender is TrnSales selectedSale)
             {
                 IsChanged = false;
@@ -416,6 +436,20 @@ namespace mPOSv2.ViewModels
 
                 IsChanged = false;
                 SelectedItem = selectedItem;
+                SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
+
+                var taxAmount = 0m;
+                var amount = SelectedItem.Price;
+
+                if (SelectedTax.Code == "INCLUSIVE")
+                {
+                    taxAmount = Math.Round((SelectedItem.Price / (1 + SelectedTax.Rate / 100))  * (SelectedTax.Rate / 100), 2);
+                }
+                else
+                {
+                    taxAmount = Math.Round(SelectedItem.Price * (SelectedTax.Rate / 100), 2);
+                    amount = Math.Round(SelectedItem.Price + taxAmount, 2);
+                }
 
                 SelectedSaleLine = new TrnSalesLine()
                 {
@@ -427,7 +461,11 @@ namespace mPOSv2.ViewModels
                     Quantity = 1,
                     Price = SelectedItem.Price,
                     NetPrice = SelectedItem.Price,
-                    Amount = SelectedItem.Price,
+                    TaxId = SelectedTax.Id,
+                    TaxRate = SelectedTax.Rate,
+                    TaxAmount = taxAmount,
+                    TaxAccountId = SelectedTax.AccountId,
+                    Amount = amount,
                     SalesLineTimeStamp = DateTime.Now
                 };
 
@@ -443,6 +481,7 @@ namespace mPOSv2.ViewModels
                 ItemFrom = ItemFrom.SaleLine;
 
                 SelectedSaleLine = sender as TrnSalesLine;
+                SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
 
                 ExecuteRefreshSelectedSaleLine(new object());
 

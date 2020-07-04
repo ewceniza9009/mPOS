@@ -14,7 +14,7 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
              Appearing="ItemDetailOtherView_OnAppearing">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:DecimalConverter x:Key="decimalConverter" />
+            <converters:CurrencyConverter x:Key="currencyConverter" />
             <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
             <converters:SelectedIndexChangedArgsConverter x:Key="PropertyChangedConverter" />
         </ResourceDictionary>
@@ -28,20 +28,6 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
                         <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
                                            IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
                                            HeightRequest="50"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="Remarks:"/>
-                        <!--<Editor Text="{Binding SelectedItem.Remarks, Mode=TwoWay}" 
-                                HeightRequest="350">
-                            <Editor.Behaviors>
-                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
-                            </Editor.Behaviors>
-                        </Editor>-->
-                        <richTextEditor:SfRichTextEditor x:Name="RemarksRichText"
-                                                         Text="{Binding SelectedItem.Remarks, Mode=TwoWay}"
-                                                         HeightRequest="350"
-                                                         TextChanged="RemarksRichText_OnTextChanged"/>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
@@ -77,6 +63,16 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
+                        <Label Text="Price:"/>
+                        <Entry Text="{Binding SelectedItem.Price, Mode=TwoWay, Converter={StaticResource currencyConverter}}" 
+                               TextColor="Gold">
+                            <Entry.Behaviors>
+                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
+                            </Entry.Behaviors>
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
                         <Label Text="Stock Level Qty:"/>
                         <numericupdown:SfNumericUpDown  x:Name="StockLevelQtyStepper" 
                                                         Value="{Binding SelectedItem.ReorderQuantity}"
@@ -84,6 +80,14 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
                                                         ParsingMode="Double"
                                                         FormatString="n"
                                                         ValueChanged="StockLevelQtyStepper_OnValueChanged"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Remarks:"/>
+                        <richTextEditor:SfRichTextEditor x:Name="RemarksRichText"
+                                                         HtmlText="{Binding SelectedItem.Remarks, Mode=TwoWay}"
+                                                         HeightRequest="290"
+                                                         TextChanged="RemarksRichText_OnTextChanged"/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

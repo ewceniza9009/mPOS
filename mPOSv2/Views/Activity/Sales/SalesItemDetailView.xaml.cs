@@ -24,7 +24,21 @@ namespace mPOSv2.Views.Activity.Sales
 
         private void QuantityStepper_OnValueChanged(object sender, ValueEventArgs e)
         {
-            vm.SelectedSaleLine.Amount = vm.SelectedSaleLine.NetPrice * vm.SelectedSaleLine.Quantity;
+            var taxAmount = 0m;
+            var amount = Math.Round(vm.SelectedSaleLine.NetPrice * vm.SelectedSaleLine.Quantity, 2);
+
+            if (vm.SelectedTax.Code == "INCLUSIVE")
+            {
+                taxAmount = Math.Round((amount/ (1 + vm.SelectedTax.Rate / 100)) * (vm.SelectedTax.Rate / 100), 2);
+            }
+            else
+            {
+                taxAmount = Math.Round(amount * (vm.SelectedTax.Rate / 100), 2);
+                amount = Math.Round(amount + taxAmount, 2);
+            }
+
+            vm.SelectedSaleLine.Amount = amount;
+            vm.SelectedSaleLine.TaxAmount = taxAmount;
             vm.ExecuteRefreshSelectedSaleLine(new object());
         }
 

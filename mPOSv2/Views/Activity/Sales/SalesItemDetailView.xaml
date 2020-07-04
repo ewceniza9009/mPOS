@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
              xmlns:numericupdown="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms"
+             xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesItemDetailView"
              Title="{Binding Title, Mode=TwoWay}">
@@ -57,6 +58,34 @@
             <StackLayout Orientation="Vertical">
                 <Label Text="Net Price:"/>
                 <Entry Text="{Binding SelectedSaleLine.NetPrice, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                       IsReadOnly="True"
+                       HorizontalTextAlignment="End">
+                </Entry>
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical">
+                <Label Text="Vat:" />
+                <comboBox:SfComboBox x:Name="TaxComboBox"
+                                     DataSource="{Binding Taxes}"
+                                     SelectedItem="{Binding SelectedTax}"
+                                     DisplayMemberPath="Tax"
+                                     IsEditableMode="true" 
+                                     AllowFiltering="true" 
+                                     MaximumDropDownHeight="300"
+                                     ComboBoxMode="SuggestAppend"
+                                     IsEnabled="false"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical">
+                <Label Text="Vat Rate:"/>
+                <Entry Text="{Binding SelectedSaleLine.TaxRate, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                       IsReadOnly="True"
+                       HorizontalTextAlignment="End">
+                </Entry>
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                <Label Text="Vat Amount:"/>
+                <Entry Text="{Binding SelectedSaleLine.TaxAmount, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
                        IsReadOnly="True"
                        HorizontalTextAlignment="End">
                 </Entry>

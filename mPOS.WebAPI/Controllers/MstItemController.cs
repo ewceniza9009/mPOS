@@ -58,5 +58,13 @@ namespace mPOS.WebAPI.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetTaxes()
+        {
+            var repos = new Repository.MstItem();
+            var result = repos.GetTaxes();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

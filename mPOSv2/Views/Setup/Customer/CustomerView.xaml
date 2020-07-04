@@ -51,40 +51,6 @@ xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusi
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <!--<Grid
-                                        Padding="0,10,0,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="20"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="110"/>
-                                            <ColumnDefinition Width="30"/>
-                                        </Grid.ColumnDefinitions>
-                                        <RelativeLayout Grid.Column="0"
-                                                        Margin="0,-13,0,0">
-                                            <Image Source="sphere.png"
-                                                   HeightRequest="50"
-                                                   WidthRequest="50" />
-                                            <Label Text="{Binding Initials}"
-                                                       TextColor="AliceBlue"
-                                                       FontSize="20"
-                                                       Padding="12,10,0,0"></Label>
-                                        </RelativeLayout>
-                                        <Label Grid.Column="1" 
-                                               Text="{Binding Customer, Mode=TwoWay}" 
-                                               TextColor="Black"
-                                               FontSize="16"/>
-                                        <Label Grid.Column="2" 
-                                               Text="{Binding ContactNumber, Mode=TwoWay}" 
-                                               TextColor="Black"
-                                               FontSize="16"/>
-                                        <Image Grid.Column="3" Source="chevron_right.png" 
-                                               WidthRequest="25"
-                                               HeightRequest="25"
-                                        />
-                                    </Grid>-->
                                     <StackLayout Orientation="Horizontal">
                                         <sfAvatarView:SfAvatarView ContentType="Initials"
                                                                    InitialsType="DoubleCharacter"
@@ -97,15 +63,12 @@ xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusi
                                         <Label Text="{Binding Customer, Mode=TwoWay}" 
                                                TextColor="Black"
                                                FontSize="16"
-                                               WidthRequest="180"
-                                               Margin="5,10,0,0"/>
+                                               WidthRequest="200"
+                                               Margin="10,10,0,0"/>
                                         <Label Text="{Binding ContactNumber, Mode=TwoWay}" 
                                                TextColor="Black"
                                                FontSize="16"
                                                Margin="0,10,0,0"/>
-                                        <Image Source="chevron_right.png" 
-                                               WidthRequest="25"
-                                               HeightRequest="25"/>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

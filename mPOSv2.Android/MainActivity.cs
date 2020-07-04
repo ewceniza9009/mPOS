@@ -29,6 +29,8 @@ namespace mPOSv2.Android
             string dbFileCompletePath = Path.Combine(folderPath, dbFile);
 
             LoadApplication(new App(dbFileCompletePath));
+
+            Window.SetSoftInputMode(SoftInput.AdjustResize);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {

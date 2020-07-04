@@ -8,7 +8,7 @@ using WebGrease.Css.Extensions;
 
 namespace mPOS.WebAPI.Repository
 {
-    public class TrnSales : IRead<POCO.TrnSales, POCO.TrnSalesFilter, POCO.FilterMethods>, IRepository<POCO.TrnSales>
+    public partial class TrnSales : IRead<POCO.TrnSales, POCO.TrnSalesFilter, POCO.FilterMethods>, IRepository<POCO.TrnSales>
     {
         public POCO.TrnSales Read(long id)
         {
@@ -122,13 +122,9 @@ namespace mPOS.WebAPI.Repository
                         tLine.DiscountId = 2;
                         tLine.DiscountRate = 0;
                         tLine.DiscountAmount = 0;
-                        tLine.TaxId = 9;
-                        tLine.TaxRate = 0;
-                        tLine.TaxAmount = 0;
                         tLine.SalesAccountId = 159;
                         tLine.AssetAccountId = 74;
                         tLine.CostAccountId = 238;
-                        tLine.TaxAccountId = 238;
                         tLine.SalesLineTimeStamp = DateTime.Now;
                     }
 
@@ -155,39 +151,6 @@ namespace mPOS.WebAPI.Repository
                     ctx.SubmitChanges();
                 }
             }
-        }
-
-        //Queries
-        public List<POCO.MstCustomer> GetCustomers()
-        {
-            IEnumerable<POCO.MstCustomer> result;
-
-            var mappingProfile = new Mapping.MappingProfile<Data.MstCustomer, POCO.MstCustomer>();
-
-            using (var ctx = new Data.posDataContext())
-            {
-                var data = ctx.MstCustomers;
-
-                result = mappingProfile.mapper.Map<IEnumerable<Data.MstCustomer>, IEnumerable<POCO.MstCustomer>>(data);
-            }
-
-            return result.ToList();
-        }
-
-        public List<POCO.MstItem> GetItems()
-        {
-            IEnumerable<POCO.MstItem> result;
-
-            var mappingProfile = new Mapping.MappingProfile<Data.MstItem, POCO.MstItem>();
-
-            using (var ctx = new Data.posDataContext())
-            {
-                var data = ctx.MstItems;
-
-                result = mappingProfile.mapper.Map<IEnumerable<Data.MstItem>, IEnumerable<POCO.MstItem>>(data);
-            }
-
-            return result.ToList();
         }
     }
 }

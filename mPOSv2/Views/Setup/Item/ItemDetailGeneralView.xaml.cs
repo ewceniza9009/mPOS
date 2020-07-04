@@ -64,12 +64,6 @@ namespace mPOSv2.Views.Setup.Item
             vm.ExecuteRefreshSelectedItem(new object());
         }
 
-        //private void CategoryAutoComplete_OnCompleted(object sender, EventArgs e)
-        //{
-        //    vm.ItemCategories.Add(CategoryAutoComplete.Text);
-        //    vm.ExecuteRefreshSelectedItem(new object());
-        //}
-
         private void CmdNewCategory_OnClicked(object sender, EventArgs e)
         {
             if (!vm.IsHideCategory)
@@ -86,6 +80,13 @@ namespace mPOSv2.Views.Setup.Item
                 CategoryEntry.IsVisible = vm.IsHideCategory;
             }
         }
+
+        private void OutputTaxComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vm.SelectedItem.OutTaxId = vm.SelectedTax.Id;
+            vm.ExecuteRefreshSelectedItem(new object());
+        }
         #endregion
+
     }
 }

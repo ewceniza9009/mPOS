@@ -44,9 +44,6 @@ namespace mPOSv2.ViewModels
                 Items = await ApiRequest<MstItemFilter, ObservableCollection<MstItem>>
                     .PostRead("MstItem/BulkGet", itemFilter);
 
-                ItemUnits = await APIItemRequest.GetUnits();
-                ItemCategories = await APIItemRequest.GetItemCategories();
-
                 IsBusy = false;
             });
         }
@@ -92,14 +89,6 @@ namespace mPOSv2.ViewModels
         }
         private long _SelectedItemId;
 
-        public MstUnit SelectedUnit
-        {
-            get => _SelectedUnit;
-            set => SetProperty(ref _SelectedUnit, value);
-
-        }
-        private MstUnit _SelectedUnit;
-
         public string SelectedCategory
         {
             get => _SelectedCategory;
@@ -108,6 +97,21 @@ namespace mPOSv2.ViewModels
         }
         private string _SelectedCategory;
 
+        public ObservableCollection<string> ItemCategories
+        {
+            get => _ItemCategories;
+            set => SetProperty(ref _ItemCategories, value);
+        }
+        private ObservableCollection<string> _ItemCategories;
+
+        public MstUnit SelectedUnit
+        {
+            get => _SelectedUnit;
+            set => SetProperty(ref _SelectedUnit, value);
+
+        }
+        private MstUnit _SelectedUnit;
+
         public ObservableCollection<MstUnit> ItemUnits
         {
             get => _ItemUnits;
@@ -115,12 +119,20 @@ namespace mPOSv2.ViewModels
         }
         private ObservableCollection<MstUnit> _ItemUnits;
 
-        public ObservableCollection<string> ItemCategories
+        public MstTax SelectedTax
         {
-            get => _ItemCategories;
-            set => SetProperty(ref _ItemCategories, value);
+            get => _SelectedTax;
+            set => SetProperty(ref _SelectedTax, value);
+
         }
-        private ObservableCollection<string> _ItemCategories;
+        private MstTax _SelectedTax;
+
+        public ObservableCollection<MstTax> Taxes
+        {
+            get => _Taxes;
+            set => SetProperty(ref _Taxes, value);
+        }
+        private ObservableCollection<MstTax> _Taxes;
 
         public MstItem SelectedItem
         {
@@ -202,12 +214,32 @@ namespace mPOSv2.ViewModels
             OnPropertyChanged(nameof(Title));
         }
 
-        private void ExecuteAdd(object sender)
+        private async void ExecuteAdd(object sender)
         {
-            var newItem = new MstItem();
+            var newItem = new MstItem()
+            {
+                ItemDescription = "NA",
+                BarCode = "NA",
+                Alias = "NA",
+                GenericName = "NA",
+                Category = "Items for sale",
+                Cost = 0,
+                MarkUp = 0,
+                Price = 1,
+                OutTaxId = 9,
+                UnitId = 1,
+                Remarks = "NA"
+            };
+
+            ItemUnits = await APIItemRequest.GetUnits();
+            ItemCategories = await APIItemRequest.GetItemCategories();
+            Taxes = await APIItemRequest.GetTaxes();
 
             Items.Add(newItem);
             SelectedItem = newItem;
+
+            SelectedUnit = ItemUnits.SingleOrDefault(x => x.Id == SelectedItem.UnitId);
+            SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
 
             Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new ItemDetailView(this)));
         }
@@ -225,13 +257,18 @@ namespace mPOSv2.ViewModels
             }
         }
 
-        private void ExecuteSelectItem(object sender)
+        private async void ExecuteSelectItem(object sender)
         {
+            ItemUnits = await APIItemRequest.GetUnits();
+            ItemCategories = await APIItemRequest.GetItemCategories();
+            Taxes = await APIItemRequest.GetTaxes();
+
             if (sender is MstItem selectedItem)
             {
                 IsChanged = false;
                 SelectedItem = selectedItem;
-                SelectedUnit = ItemUnits.SingleOrDefault(y => y.Id == SelectedItem.UnitId);
+                SelectedUnit = ItemUnits.SingleOrDefault(x => x.Id == SelectedItem.UnitId);
+                SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
 
                 Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new ItemDetailView(this)));
             }

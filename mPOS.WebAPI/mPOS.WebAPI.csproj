@@ -214,7 +214,10 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Common\Common.cs" />
     <Compile Include="Repository\Extensions\MstCustomer.Ext.cs" />
+    <Compile Include="Repository\Extensions\MstItem.Ext.cs" />
+    <Compile Include="Repository\Extensions\TrnSales.Ext.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\MstAccount.cs" />
     <Compile Include="Repository\MstCustomer.cs" />

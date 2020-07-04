@@ -53,5 +53,19 @@ namespace mPOSv2.Services
 
             return result;
         }
+
+        public static async Task<ObservableCollection<MstTax>> GetTaxes()
+        {
+            ObservableCollection<MstTax> result;
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetTaxes";
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetStringAsync(requestUri);
+                result = JsonConvert.DeserializeObject<ObservableCollection<MstTax>>(response);
+            }
+
+            return result;
+        }
     }
 }

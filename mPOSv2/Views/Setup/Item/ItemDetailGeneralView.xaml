@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
-xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib"
              xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -13,7 +11,6 @@ xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib
              Appearing="ItemDetailGeneralView_OnAppearing">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:CurrencyConverter x:Key="currencyConverter" />
             <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -111,39 +108,47 @@ xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=mscorlib
                                     WidthRequest="50"
                                     HeightRequest="40"
                                     BackgroundColor="White"
-                                    Clicked="CmdNewCategory_OnClicked"
-                                    />
+                                    Clicked="CmdNewCategory_OnClicked"/>
                         </StackLayout>
-                        <!--<autocomplete:SfAutoComplete x:Name="CategoryAutoComplete" 
-                                                     DataSource="{Binding ItemCategories}"
-                                                     SelectedValue="{Binding SelectedItem.Category}"
-                                                     MaximumDropDownHeight="300"
-                                                     AutoCompleteMode="Suggest"
-                                                     SuggestionBoxPlacement="Top"
-                                                     Completed="CategoryAutoComplete_OnCompleted"
-                                                     ValueChanged="CategoryAutoComplete_OnValueChanged">
-                            
-                        </autocomplete:SfAutoComplete>-->
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
-                        <Label Text="Price:"/>
-                        <Entry Text="{Binding SelectedItem.Price, Mode=TwoWay, Converter={StaticResource currencyConverter}}" 
-                               TextColor="Gold">
-                            <Entry.Behaviors>
-                                <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
-                            </Entry.Behaviors>
-                        </Entry>
+                        <Label Text="Output Tax:" />
+                        <combobox:SfComboBox x:Name="OutputTaxComboBox"
+                                             DataSource="{Binding Taxes}"
+                                             SelectedItem="{Binding SelectedTax}"
+                                             DisplayMemberPath="Tax"
+                                             IsEditableMode="true" 
+                                             AllowFiltering="true" 
+                                             MaximumDropDownHeight="300"
+                                             ComboBoxMode="SuggestAppend"
+                                             SelectionChanged="OutputTaxComboBox_OnSelectionChanged">
+                            <combobox:SfComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Tax}"
+                                               WidthRequest="150"
+                                               Margin="5,10,0,0"/>
+                                        <Label Text="{Binding Code}"
+                                               WidthRequest="100"
+                                               Margin="5,10,0,0"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </combobox:SfComboBox.ItemTemplate>
+                        </combobox:SfComboBox>
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="Inventory:"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Inventory:"
+                               WidthRequest="60"/>
                         <Switch IsToggled="{Binding SelectedItem.IsInventory, Mode=TwoWay}"
                                 HorizontalOptions="Start"/>
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="Locked:"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Locked:"
+                               WidthRequest="70"
+                               Padding="0,5,0,0"/>
                         <CheckBox IsChecked="{Binding SelectedItem.IsLocked, Mode=TwoWay}" />
                     </StackLayout>
                 </StackLayout>

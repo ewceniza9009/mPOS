@@ -7,7 +7,7 @@ using mPOS.WebAPI.Utilities;
 
 namespace mPOS.WebAPI.Repository
 {
-    public class MstItem : IRead<POCO.MstItem, POCO.MstItemFilter, POCO.FilterMethods>, IRepository<POCO.MstItem>
+    public partial class MstItem : IRead<POCO.MstItem, POCO.MstItemFilter, POCO.FilterMethods>, IRepository<POCO.MstItem>
     {
         public POCO.MstItem Read(long id)
         {
@@ -108,39 +108,6 @@ namespace mPOS.WebAPI.Repository
                     ctx.SubmitChanges();
                 }
             }
-        }
-
-        //Queries
-        public List<POCO.MstUnit> GetUnits()
-        {
-            IEnumerable<POCO.MstUnit> result;
-
-            var mappingProfile = new Mapping.MappingProfile<Data.MstUnit, POCO.MstUnit>();
-
-            using (var ctx = new Data.posDataContext())
-            {
-                var data = ctx.MstUnits;
-
-                result = mappingProfile.mapper.Map<IEnumerable<Data.MstUnit>, IEnumerable<POCO.MstUnit>>(data);
-            }
-
-            return result.ToList();
-        }
-
-        public List<string> GetItemCategories()
-        {
-            List<string> result;
-
-            using (var ctx = new Data.posDataContext())
-            {
-
-                result = ctx.MstItems
-                    .GroupBy(x => x.Category).ToList()
-                    .Select(y => y.Key)
-                    .ToList();
-            }
-
-            return result;
         }
     }
 }
