@@ -158,7 +158,17 @@ namespace mPOSv2.ViewModels
 
         private void ExecuteAdd(object sender)
         {
-            var newCustomer = new MstCustomer();
+            var newCustomer = new MstCustomer()
+            {
+                Customer = "NA",
+                Address = "NA",
+                ContactNumber = "NA",
+                ContactPerson = "NA",
+                CreditLimit = 1000,
+                TIN = "",
+                WithReward = false,
+                RewardConversion = 0
+            };
 
             Customers.Add(newCustomer);
             SelectedCustomer = newCustomer;

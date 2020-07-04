@@ -42,10 +42,12 @@
                         <Label Text="Server:"/>
                         <StackLayout Orientation="Horizontal">
                             <Entry Text="{Binding Settings.ServerName}"
-                                   HorizontalOptions="FillAndExpand"/>
+                                   WidthRequest="310"
+                                   HorizontalOptions="StartAndExpand"/>
                             <Button x:Name="CmdGetDefault" 
                                     Text="G"
                                     WidthRequest="50"
+                                    HorizontalOptions="EndAndExpand"
                                     Clicked="CmdGetDefault_OnClicked"></Button>
                         </StackLayout>
                     </StackLayout>
