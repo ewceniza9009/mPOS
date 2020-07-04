@@ -44,6 +44,11 @@ namespace mPOSv2
 
             try
             {
+                LoginActivityIndicator.IsRunning = true;
+                LoginActivityIndicator.IsVisible = true;
+
+                LoginText.Text = $"Logging in, please wait for a moment!";
+
                 var login = await ApiRequest<MstUser, MstUser>.PostRead("MstUser/CanLogin", user);
 
                 if (login != null && login.Id != 0)
@@ -88,18 +93,17 @@ namespace mPOSv2
                         }
                     }
 
-
                     await Navigation.PopAsync();
                     await Navigation.PushAsync(new AppMenu());
                 }
                 else
                 {
-                    if (loginAttemptCount > 1)
+                    if (loginAttemptCount > 0)
                     {
                         LoginText.Text = $"Invalid username or password!, attempt {loginAttemptCount}";
                         LoginText.TextColor = Color.Red;
 
-                        if (loginAttemptCount > 10)
+                        if (loginAttemptCount > 9)
                         {
                             await Application.Current.MainPage.DisplayAlert("POS", "App will be terminated", "Ok");
                             Environment.Exit(0);
@@ -112,10 +116,16 @@ namespace mPOSv2
 
                     loginAttemptCount++;
                 }
+
+                LoginActivityIndicator.IsRunning = false;
+                LoginActivityIndicator.IsVisible = false;
             }
             catch (Exception ex)
             {
                 LoginText.Text = $"{ex.Message}";
+
+                LoginActivityIndicator.IsRunning = false;
+                LoginActivityIndicator.IsVisible = false;
             }
         } 
         #endregion

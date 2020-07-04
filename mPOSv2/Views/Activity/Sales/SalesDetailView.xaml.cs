@@ -106,6 +106,11 @@ namespace mPOSv2.Views.Activity.Sales
 
             vm.ReloadSalesLines();
         }
+
+        private void SalesDetailView_OnDisappearing(object sender, EventArgs e)
+        {
+            Models.Page.Pager.CurrentPage = 1;
+        }
         #endregion
     }
 }

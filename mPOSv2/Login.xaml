@@ -11,7 +11,7 @@
         <StackLayout Orientation="Vertical"
                      Padding="5,5,5,5">
             <Image Source="poslogo.png"
-                   Margin="0,100,0,0"
+                   Margin="0,50,0,0"
                    WidthRequest="300"/>
             <StackLayout Orientation="Vertical"
                          Margin="10,0,10,0">
@@ -29,7 +29,7 @@
             <button:SfButton x:Name="CmdLogin"
                              Text="LOGIN"
                              FontAttributes="Bold"
-                             Margin="30,30,30,0"
+                             Margin="30,0,30,0"
                              HeightRequest="50"
                              TextColor="White"
                              ImageSource="enter_key.png"
@@ -39,6 +39,8 @@
 
             <Label x:Name="LoginText" 
                    HorizontalTextAlignment="Center"/>
+            <ActivityIndicator x:Name="LoginActivityIndicator"
+                               HeightRequest="50"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

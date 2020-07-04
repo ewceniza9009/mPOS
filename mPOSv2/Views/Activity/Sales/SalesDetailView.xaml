@@ -1,21 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
-xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
              xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesDetailView"
-             Title="{Binding Title, Mode=TwoWay}">
+             Title="{Binding Title, Mode=TwoWay}"
+             Disappearing="SalesDetailView_OnDisappearing">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:CurrencyConverter x:Key="currencyConverter" />
-            <converters:TextChangedEventArgsConverter x:Key="TextChangedConverter" />
-            <converters:SelectedIndexChangedArgsConverter x:Key="PropertyChangedConverter" />
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -152,7 +149,8 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                                           SelectedItem="{Binding SelectedSaleLine}"
                                           HasUnevenRows="True"
                                           HeightRequest="360"
-                                          SeparatorVisibility="None">
+                                          SeparatorVisibility="None"
+                                          CachingStrategy="RecycleElement">
                                 <ListView.Behaviors>
                                     <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                                 </ListView.Behaviors>
@@ -236,8 +234,20 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                 <StackLayout Orientation="Horizontal"
                              HorizontalOptions="Center">
                     <StackLayout Orientation="Horizontal">
-                        <Button x:Name="ButtonPagePrev" Text="Prev" WidthRequest="60" Clicked="ButtonPagePrev_OnClicked"/>
-                        <Button x:Name="ButtonPageNext" Text="Next" WidthRequest="60" Clicked="ButtonPageNext_OnClicked"/>
+                        <buttons:SfButton x:Name="ButtonPagePrev"
+                                          Text="PREV"
+                                          FontAttributes="Bold"
+                                          WidthRequest="60"
+                                          TextColor="White"
+                                          CornerRadius="3"
+                                          Clicked="ButtonPagePrev_OnClicked"/>
+                        <buttons:SfButton x:Name="ButtonPageNext"
+                                          Text="NEXT"
+                                          FontAttributes="Bold"
+                                          WidthRequest="60"
+                                          TextColor="White"
+                                          CornerRadius="3"
+                                          Clicked="ButtonPageNext_OnClicked"/>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
