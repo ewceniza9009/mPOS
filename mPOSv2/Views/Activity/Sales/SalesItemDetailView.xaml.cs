@@ -29,11 +29,11 @@ namespace mPOSv2.Views.Activity.Sales
 
             if (vm.SelectedTax.Code == "INCLUSIVE")
             {
-                taxAmount = Math.Round((amount/ (1 + vm.SelectedTax.Rate / 100)) * (vm.SelectedTax.Rate / 100), 2);
+                taxAmount = Math.Round((amount/ (1 + vm.SelectedSaleLine.TaxRate / 100)) * (vm.SelectedSaleLine.TaxRate / 100), 2);
             }
             else
             {
-                taxAmount = Math.Round(amount * (vm.SelectedTax.Rate / 100), 2);
+                taxAmount = Math.Round(amount * (vm.SelectedSaleLine.TaxRate / 100), 2);
                 amount = Math.Round(amount + taxAmount, 2);
             }
 

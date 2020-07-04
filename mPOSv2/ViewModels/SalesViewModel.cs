@@ -481,7 +481,7 @@ namespace mPOSv2.ViewModels
                 ItemFrom = ItemFrom.SaleLine;
 
                 SelectedSaleLine = sender as TrnSalesLine;
-                SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
+                SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedSaleLine.TaxId);
 
                 ExecuteRefreshSelectedSaleLine(new object());
 
