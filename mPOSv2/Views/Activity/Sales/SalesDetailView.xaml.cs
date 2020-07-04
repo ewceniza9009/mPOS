@@ -83,7 +83,29 @@ namespace mPOSv2.Views.Activity.Sales
         private void UnitComboBox_OnSelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
         {
             vm.ExecuteSelectCustomer(new object());
-        } 
+        }
+
+        private void ButtonPagePrev_OnClicked(object sender, EventArgs e)
+        {
+            if (Models.Page.Pager.CurrentPage != 1)
+            {
+                Models.Page.Pager.CurrentPage--;
+            }
+
+            vm.ReloadSalesLines();
+        }
+
+        private void ButtonPageNext_OnClicked(object sender, EventArgs e)
+        {
+            var endPage = Models.Page.Pager.EndPage = vm.GetEndPage();
+
+            if (Models.Page.Pager.CurrentPage != (int)endPage)
+            {
+                Models.Page.Pager.CurrentPage++;
+            }
+
+            vm.ReloadSalesLines();
+        }
         #endregion
     }
 }

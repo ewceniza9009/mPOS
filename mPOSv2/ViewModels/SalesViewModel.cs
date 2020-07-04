@@ -259,6 +259,13 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _Sales, value);
         }
         private ObservableCollection<TrnSales> _Sales;
+
+        public ObservableCollection<TrnSalesLine> SalesLines
+        {
+            get => _SalesLines;
+            set => SetProperty(ref _SalesLines, value);
+        }
+        private ObservableCollection<TrnSalesLine> _SalesLines;
         #endregion
 
         #region Commands
@@ -717,6 +724,23 @@ namespace mPOSv2.ViewModels
 
                 y.UnitName = unit?.Unit;
             });
+
+            Models.Page.Pager.EndPage = GetEndPage();
+
+            SalesLines = GetSalesLines(Models.Page.Pager.Start ,Models.Page.Pager.PageSize);
+        }
+
+        public ObservableCollection<TrnSalesLine> GetSalesLines(int start, int pageSize)
+        {
+            var result = new ObservableCollection<TrnSalesLine>();
+            var data = SelectedSale.TrnSalesLines.Skip(start).Take(pageSize);
+
+            data.ForEach(salesLine =>
+            {
+                result.Add(salesLine);
+            });
+
+            return result;
         }
 
         public void ReloadSalesLines()
@@ -732,7 +756,21 @@ namespace mPOSv2.ViewModels
             });
              
             ExecuteRefreshSelectedSale(new object());
+
+            Models.Page.Pager.EndPage = GetEndPage();
+
+            SalesLines = GetSalesLines(Models.Page.Pager.Start, Models.Page.Pager.PageSize);
         }
+
+        public double GetEndPage()
+        {
+            var result = SelectedSale.TrnSalesLines.Any()
+                ? SelectedSale.TrnSalesLines.Count() / (double) Models.Page.Pager.PageSize
+                : 0;
+
+            return Math.Ceiling(result);
+        }
+
         #endregion
     }
 }
