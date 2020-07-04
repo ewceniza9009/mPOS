@@ -585,6 +585,20 @@ namespace mPOSv2.ViewModels
 
                 IsChanged = false;
                 SelectedItem = Items.SingleOrDefault(x => x.BarCode == SearchBarcode);
+                SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
+
+                var taxAmount = 0m;
+                var amount = SelectedItem.Price;
+
+                if (SelectedTax.Code == "INCLUSIVE")
+                {
+                    taxAmount = Math.Round((SelectedItem.Price / (1 + SelectedTax.Rate / 100)) * (SelectedTax.Rate / 100), 2);
+                }
+                else
+                {
+                    taxAmount = Math.Round(SelectedItem.Price * (SelectedTax.Rate / 100), 2);
+                    amount = Math.Round(SelectedItem.Price + taxAmount, 2);
+                }
 
                 SelectedSaleLine = new TrnSalesLine()
                 {
@@ -596,7 +610,11 @@ namespace mPOSv2.ViewModels
                     Quantity = 1,
                     Price = SelectedItem.Price,
                     NetPrice = SelectedItem.Price,
-                    Amount = SelectedItem.Price,
+                    TaxId = SelectedTax.Id,
+                    TaxRate = SelectedTax.Rate,
+                    TaxAmount = taxAmount,
+                    TaxAccountId = SelectedTax.AccountId,
+                    Amount = amount,
                     SalesLineTimeStamp = DateTime.Now
                 };
 
@@ -611,11 +629,25 @@ namespace mPOSv2.ViewModels
             if (!string.IsNullOrEmpty(SearchBarcode))
             {
                 SelectedItem = Items.SingleOrDefault(x => x.BarCode == SearchBarcode);
+                SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
 
                 var isItemPunchedIn = SelectedSale.TrnSalesLines.Any(x => x.ItemId == SelectedItem.Id);
 
                 if (!isItemPunchedIn)
                 {
+                    var taxAmount = 0m;
+                    var amount = SelectedItem.Price;
+
+                    if (SelectedTax.Code == "INCLUSIVE")
+                    {
+                        taxAmount = Math.Round((SelectedItem.Price / (1 + SelectedTax.Rate / 100)) * (SelectedTax.Rate / 100), 2);
+                    }
+                    else
+                    {
+                        taxAmount = Math.Round(SelectedItem.Price * (SelectedTax.Rate / 100), 2);
+                        amount = Math.Round(SelectedItem.Price + taxAmount, 2);
+                    }
+
                     SelectedSaleLine = new TrnSalesLine()
                     {
                         ItemId = SelectedItem.Id,
@@ -626,7 +658,11 @@ namespace mPOSv2.ViewModels
                         Quantity = 1,
                         Price = SelectedItem.Price,
                         NetPrice = SelectedItem.Price,
-                        Amount = SelectedItem.Price,
+                        TaxId = SelectedTax.Id,
+                        TaxRate = SelectedTax.Rate,
+                        TaxAmount = taxAmount,
+                        TaxAccountId = SelectedTax.AccountId,
+                        Amount = amount,
                         SalesLineTimeStamp = DateTime.Now
                     };
 
@@ -636,10 +672,25 @@ namespace mPOSv2.ViewModels
                 {
                     SelectedSaleLine = SelectedSale.TrnSalesLines.SingleOrDefault(x => x.ItemId == SelectedItem.Id);
 
+                    var taxAmount = 0m;
+                    var quantity = SelectedSaleLine.Quantity + 1;
+                    var amount = quantity * SelectedSaleLine.NetPrice;
+
+                    if (SelectedTax.Code == "INCLUSIVE")
+                    {
+                        taxAmount = Math.Round((amount / (1 + SelectedTax.Rate / 100)) * (SelectedTax.Rate / 100), 2);
+                    }
+                    else
+                    {
+                        taxAmount = Math.Round(amount * (SelectedTax.Rate / 100), 2);
+                        amount = Math.Round(amount + taxAmount, 2);
+                    }
+
                     if (SelectedSaleLine != null)
                     {
-                        SelectedSaleLine.Quantity = SelectedSaleLine.Quantity + 1;
-                        SelectedSaleLine.Amount = SelectedSaleLine.Quantity * SelectedSaleLine.NetPrice;
+                        SelectedSaleLine.Quantity = quantity;
+                        SelectedSaleLine.TaxAmount = taxAmount;
+                        SelectedSaleLine.Amount = amount;
                     }
                 }
 
