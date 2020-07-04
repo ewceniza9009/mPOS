@@ -6,7 +6,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False"
-            x:Class="mPOSv2.Login">
+             x:Class="mPOSv2.Login"
+             Disappearing="Login_OnDisappearing">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical"
                      Padding="5,5,5,5">
@@ -40,7 +41,7 @@
             <Label x:Name="LoginText" 
                    HorizontalTextAlignment="Center"/>
             <ActivityIndicator x:Name="LoginActivityIndicator"
-                               HeightRequest="50"/>
+                               HeightRequest="70"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

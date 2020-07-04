@@ -9,8 +9,7 @@
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesDetailView"
-             Title="{Binding Title, Mode=TwoWay}"
-             Disappearing="SalesDetailView_OnDisappearing">
+             Title="{Binding Title, Mode=TwoWay}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />

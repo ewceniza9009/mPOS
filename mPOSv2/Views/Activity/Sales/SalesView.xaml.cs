@@ -31,6 +31,8 @@ namespace mPOSv2.Views.Activity.Sales
         private void SalesView_OnAppearing(object sender, EventArgs e)
         {
             vm.Load();
+
+            Models.Page.Pager.CurrentPage = 1;
         }
 
         private void SearchSale_OnTextChanged(object sender, TextChangedEventArgs e)

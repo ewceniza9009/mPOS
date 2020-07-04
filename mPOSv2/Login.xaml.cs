@@ -127,7 +127,13 @@ namespace mPOSv2
                 LoginActivityIndicator.IsRunning = false;
                 LoginActivityIndicator.IsVisible = false;
             }
-        } 
+        }
+
+        private void Login_OnDisappearing(object sender, EventArgs e)
+        {
+            LoginText.Text = "";
+            LoginText.TextColor = Color.Black;
+        }
         #endregion
     }
 }
