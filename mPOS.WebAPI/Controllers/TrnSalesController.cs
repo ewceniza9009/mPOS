@@ -67,5 +67,13 @@ namespace mPOS.WebAPI.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetDiscounts()
+        {
+            var repos = new Repository.TrnSales();
+            var result = repos.GetDiscounts();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

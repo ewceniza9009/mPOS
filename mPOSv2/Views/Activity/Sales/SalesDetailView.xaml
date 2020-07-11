@@ -32,7 +32,7 @@
                          WidthRequest="1000">
                 <Label Text="{Binding SelectedSale.SalesAmount, StringFormat='₱{0:N2}'}"
                        HorizontalTextAlignment="End"
-                       TextColor="Gold"
+                       TextColor="DodgerBlue"
                        FontSize="50"
                        />
             </Frame>
@@ -49,8 +49,7 @@
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="LightSkyBlue"
                                      HeightRequest="40">
-                            <Label Text="INFORMATION"
-                                   HorizontalOptions="FillAndExpand"
+                            <Label HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
                                    FontAttributes="Bold"
                                    TextColor="WhiteSmoke"
@@ -110,8 +109,7 @@
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="LightSkyBlue"
                                      HeightRequest="40">
-                            <Label Text="SALE ITEMS"
-                                   HorizontalOptions="FillAndExpand"
+                            <Label HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
                                    FontAttributes="Bold"
                                    TextColor="WhiteSmoke"
@@ -201,7 +199,7 @@
                                                                              Orientation="Horizontal"
                                                                              HorizontalOptions="Start">
                                                                 <Label Text="{Binding Amount, StringFormat='₱{0:N2}'}"
-                                                                           TextColor="Gold"
+                                                                           TextColor="DarkBlue"
                                                                            FontSize="15"
                                                                            HorizontalTextAlignment="Start"
                                                                            Margin="0,-5,0,0"

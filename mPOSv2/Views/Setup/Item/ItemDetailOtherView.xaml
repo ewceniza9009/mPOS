@@ -65,7 +65,7 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
                     <StackLayout Orientation="Vertical">
                         <Label Text="Price:"/>
                         <Entry Text="{Binding SelectedItem.Price, Mode=TwoWay, Converter={StaticResource currencyConverter}}" 
-                               TextColor="Gold">
+                               TextColor="DarkBlue">
                             <Entry.Behaviors>
                                 <commands:EventToCommandBehavior EventName="TextChanged" Command="{Binding RefreshSelectedItem}" EventArgsConverter="{StaticResource TextChangedConverter}" />
                             </Entry.Behaviors>

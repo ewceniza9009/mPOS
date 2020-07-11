@@ -6,7 +6,8 @@
             xmlns:item="clr-namespace:mPOSv2.Views.Setup.Item;assembly=mPOSv2"
             mc:Ignorable="d"
             x:Class="mPOSv2.Views.Setup.Item.ItemDetailView"
-            Title="{Binding Title, Mode=TwoWay}">
+            Title="{Binding Title, Mode=TwoWay}"
+            BarBackgroundColor="LightSkyBlue">
     <TabbedPage.ToolbarItems>
     <ToolbarItem x:Name="CmdDelete"
                  Text="Delete"

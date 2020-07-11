@@ -147,7 +147,7 @@
 
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Locked:"
-                               WidthRequest="70"
+                               WidthRequest="65"
                                Padding="0,5,0,0"/>
                         <CheckBox IsChecked="{Binding SelectedItem.IsLocked, Mode=TwoWay}" />
                     </StackLayout>

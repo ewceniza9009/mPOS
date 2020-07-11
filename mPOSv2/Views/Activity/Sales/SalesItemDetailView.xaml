@@ -29,7 +29,7 @@
                    Padding="10"
                    WidthRequest="1000">
                 <Label Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
-                       TextColor="Gold"
+                       TextColor="DodgerBlue"
                        FontSize="50"
                        HorizontalTextAlignment="End">
                 </Label>
