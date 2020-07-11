@@ -210,6 +210,21 @@ namespace mPOSv2.ViewModels
         }
         private ObservableCollection<MstTax> _Taxes;
 
+        public MstDiscount SelectedDiscount
+        {
+            get => _SelectedDiscount;
+            set => SetProperty(ref _SelectedDiscount, value);
+
+        }
+        private MstDiscount _SelectedDiscount;
+
+        public ObservableCollection<MstDiscount> Discounts
+        {
+            get => _Discounts;
+            set => SetProperty(ref _Discounts, value);
+        }
+        private ObservableCollection<MstDiscount> _Discounts;
+
         public MstCustomer SelectedCustomer
         {
             get => _SelectedCustomer;
@@ -421,6 +436,7 @@ namespace mPOSv2.ViewModels
             Items = await APISalesRequest.GetItems();
             SaleUnits = await APISalesRequest.GetUnits();
             Taxes = await APISalesRequest.GetTaxes();
+            Discounts = await APISalesRequest.GetDiscounts();
 
             if (sender is TrnSales selectedSale)
             {
@@ -444,6 +460,7 @@ namespace mPOSv2.ViewModels
                 IsChanged = false;
                 SelectedItem = selectedItem;
                 SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
+                SelectedDiscount = Discounts.FirstOrDefault();
 
                 var taxAmount = 0m;
                 var amount = SelectedItem.Price;
@@ -489,6 +506,7 @@ namespace mPOSv2.ViewModels
 
                 SelectedSaleLine = sender as TrnSalesLine;
                 SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedSaleLine.TaxId);
+                SelectedDiscount = Discounts.SingleOrDefault(x => x.Id == SelectedSaleLine.DiscountId);
 
                 ExecuteRefreshSelectedSaleLine(new object());
 

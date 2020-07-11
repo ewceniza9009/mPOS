@@ -39,7 +39,6 @@
                 <StackLayout Orientation="Vertical">
                     <Label Text="Item Information:"/>
                     <Entry Text="{Binding SelectedSaleLine.ItemDescription, Mode=TwoWay}" IsReadOnly="True"/>
-                    <Entry Text="{Binding SelectedSaleLine.BarCode, Mode=TwoWay}" IsReadOnly="True"/>
                     <Entry Text="{Binding SelectedSaleLine.UnitName, Mode=TwoWay}" IsReadOnly="True"/>
                 </StackLayout>
 
@@ -56,9 +55,60 @@
                 </StackLayout>
 
                 <StackLayout Orientation="Vertical">
+                    <Label Text="Discount:" />
+                    <comboBox:SfComboBox x:Name="DiscountComboBox"
+                                         DataSource="{Binding Discounts}"
+                                         SelectedItem="{Binding SelectedDiscount}"
+                                         DisplayMemberPath="Discount"
+                                         IsEditableMode="true" 
+                                         AllowFiltering="true" 
+                                         MaximumDropDownHeight="300"
+                                         ComboBoxMode="SuggestAppend">
+                        <comboBox:SfComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Discount}"
+                                           WidthRequest="150"
+                                           Margin="5,10,0,0"/>
+                                    <Label Text="{Binding DiscountRate, StringFormat='{0:N2}'}"
+                                           WidthRequest="100"
+                                           FontAttributes="Bold"
+                                           TextColor="Blue"
+                                           HorizontalTextAlignment="End"
+                                           Margin="5,10,0,0"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </comboBox:SfComboBox.ItemTemplate>
+                    </comboBox:SfComboBox>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Discount Rate:"/>
+                        <Entry Text="{Binding SelectedSaleLine.DiscountRate, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                               IsReadOnly="True"
+                               WidthRequest="180"
+                               HorizontalTextAlignment="End">
+                        </Entry>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Discount Amount:"/>
+                        <Entry Text="{Binding SelectedSaleLine.DiscountAmount, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                               IsReadOnly="True"
+                               WidthRequest="180"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="End">
+                        </Entry>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical">
                     <Label Text="Net Price:"/>
                     <Entry Text="{Binding SelectedSaleLine.NetPrice, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
                        IsReadOnly="True"
+                       FontAttributes="Bold"
+                       TextColor="Blue"
                        HorizontalTextAlignment="End">
                     </Entry>
                 </StackLayout>
@@ -76,20 +126,25 @@
                                      IsEnabled="false"/>
                 </StackLayout>
 
-                <StackLayout Orientation="Vertical">
-                    <Label Text="Vat Rate:"/>
-                    <Entry Text="{Binding SelectedSaleLine.TaxRate, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
-                       IsReadOnly="True"
-                       HorizontalTextAlignment="End">
-                    </Entry>
-                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Vat Rate:"/>
+                        <Entry Text="{Binding SelectedSaleLine.TaxRate, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                               IsReadOnly="True"
+                               WidthRequest="180"
+                               HorizontalTextAlignment="End">
+                        </Entry>
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical">
-                    <Label Text="Vat Amount:"/>
-                    <Entry Text="{Binding SelectedSaleLine.TaxAmount, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
-                       IsReadOnly="True"
-                       HorizontalTextAlignment="End">
-                    </Entry>
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Vat Amount:"/>
+                        <Entry Text="{Binding SelectedSaleLine.TaxAmount, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                               IsReadOnly="True"
+                               WidthRequest="180"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="End">
+                        </Entry>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </StackLayout>
