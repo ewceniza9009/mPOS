@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using Xamarin.Forms;
 
 namespace mPOSv2.Converters
 {
-    class SelectedIndexChangedArgsConverter : IValueConverter
+    internal class SelectedIndexChangedArgsConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

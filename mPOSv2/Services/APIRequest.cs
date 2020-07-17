@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using mPOSv2.Services;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace mPOSv2.Services
 {
-    public class ApiRequest<T, TResult> where T: class
+    public class ApiRequest<T, TResult> where T : class
     {
         public static async Task<TResult> Read(string route, long id)
         {
@@ -44,19 +40,14 @@ namespace mPOSv2.Services
                 var typeParameterType = typeof(TResult);
 
                 if (typeParameterType.FullName != null && typeParameterType.FullName.Contains("TrnSales"))
-                {
                     result = JsonConvert.DeserializeObject<TResult>(response, new JsonSerializerSettings
                     {
                         DateFormatHandling = DateFormatHandling.IsoDateFormat,
                         DateTimeZoneHandling = DateTimeZoneHandling.Local,
                         DateParseHandling = DateParseHandling.DateTimeOffset
                     });
-                }
                 else
-                {
                     result = JsonConvert.DeserializeObject<TResult>(response);
-                }
-
             }
 
             return result;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace mPOSv2.Models.Page
+﻿namespace mPOSv2.Models.Page
 {
     public static class Pager
     {

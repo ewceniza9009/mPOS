@@ -1,29 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using mPOSv2.Models.Page;
 using mPOSv2.Services;
 using mPOSv2.ViewModels;
-using Syncfusion.ListView.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
-using ItemTappedEventArgs = Syncfusion.ListView.XForms.ItemTappedEventArgs;
+using SelectionChangedEventArgs = Syncfusion.XForms.ComboBox.SelectionChangedEventArgs;
 
 namespace mPOSv2.Views.Activity.Sales
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SalesDetailView : ContentPage
     {
-        //TODO : CachingStrategy="RecycleElement"
-
-        #region Properties
-        private SalesViewModel vm;
-        ZXingScannerPage scanPage;
-        #endregion
-        
         #region Initialize
+
         public SalesDetailView(SalesViewModel vm)
         {
             InitializeComponent();
@@ -31,17 +22,28 @@ namespace mPOSv2.Views.Activity.Sales
             BindingContext = this.vm = vm;
 
             CmdSearchBarcode.Clicked += CmdSearchBarcode_Clicked;
-        } 
+        }
+
+        #endregion
+
+        //TODO : CachingStrategy="RecycleElement"
+
+        #region Properties
+
+        private readonly SalesViewModel vm;
+        private ZXingScannerPage scanPage;
+
         #endregion
 
         #region Events
+
         private async void CmdSearchBarcode_Clicked(object sender, EventArgs e)
         {
             if (!SettingsRepository.GetSettings().ContinuesBarcode)
             {
                 scanPage = new ZXingScannerPage();
 
-                scanPage.OnScanResult += (result) =>
+                scanPage.OnScanResult += result =>
                 {
                     scanPage.IsScanning = false;
 
@@ -56,12 +58,12 @@ namespace mPOSv2.Views.Activity.Sales
             }
             else
             {
-                scanPage = new ZXingScannerPage(new ZXing.Mobile.MobileBarcodeScanningOptions
+                scanPage = new ZXingScannerPage(new MobileBarcodeScanningOptions
                 {
                     DelayBetweenContinuousScans = 1000
                 });
 
-                scanPage.OnScanResult += (result) =>
+                scanPage.OnScanResult += result =>
                 {
                     Device.BeginInvokeOnMainThread(async () =>
                         await DisplayAlert("Scanned Barcode", result.Text, "OK"));
@@ -80,29 +82,23 @@ namespace mPOSv2.Views.Activity.Sales
             vm.ExecuteShowItems();
         }
 
-        private void UnitComboBox_OnSelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
+        private void UnitComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             vm.ExecuteSelectCustomer(new object());
         }
 
         private void ButtonPagePrev_OnClicked(object sender, EventArgs e)
         {
-            if (Models.Page.Pager.CurrentPage != 1)
-            {
-                Models.Page.Pager.CurrentPage--;
-            }
+            if (Pager.CurrentPage != 1) Pager.CurrentPage--;
 
             vm.ReloadSalesLines();
         }
 
         private void ButtonPageNext_OnClicked(object sender, EventArgs e)
         {
-            var endPage = Models.Page.Pager.EndPage = vm.GetEndPage();
+            var endPage = Pager.EndPage = vm.GetEndPage();
 
-            if (Models.Page.Pager.CurrentPage != (int)endPage)
-            {
-                Models.Page.Pager.CurrentPage++;
-            }
+            if (Pager.CurrentPage != (int) endPage) Pager.CurrentPage++;
 
             vm.ReloadSalesLines();
         }

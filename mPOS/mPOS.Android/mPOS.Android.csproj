@@ -89,12 +89,6 @@
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\mPOS\mPOS.csproj">
-      <Project>{F5C9BD90-E573-40D8-8170-355891199DBD}</Project>
-      <Name>mPOS</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\app_ico.png" />
   </ItemGroup>
   <ItemGroup>

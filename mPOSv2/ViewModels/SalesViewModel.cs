@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using mPOSv2.Enums;
 using mPOS.POCO;
+using mPOSv2.Enums;
+using mPOSv2.Models.Page;
 using mPOSv2.Services;
 using mPOSv2.Views.Activity.Sales;
-using mPOSv2.Views.Start;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -18,9 +17,10 @@ namespace mPOSv2.ViewModels
     public class SalesViewModel : ViewModelBase
     {
         #region Initialize
+
         public void Load(object sender = null)
         {
-            string search = sender?.ToString() ?? string.Empty;
+            var search = sender?.ToString() ?? string.Empty;
 
             IsBusy = true;
 
@@ -29,21 +29,19 @@ namespace mPOSv2.ViewModels
                 TrnSalesFilter salesFilter = null;
 
                 if (!string.IsNullOrEmpty(search) || SearchSaleDate != null)
-                {
-                    salesFilter = new TrnSalesFilter()
+                    salesFilter = new TrnSalesFilter
                     {
                         SalesNumber = search,
                         SalesDate = SearchSaleDate ?? DateTime.Now.Date,
-                        filterMethods = new FilterMethods()
+                        filterMethods = new FilterMethods
                         {
-                            Operations = new List<FilterOperation>()
+                            Operations = new List<FilterOperation>
                             {
                                 new FilterOperation("SalesNumber", Operation.Contains),
                                 new FilterOperation("SalesDate", Operation.Equals)
                             }
                         }
                     };
-                }
 
                 Customers = await APISalesRequest.GetCustomers();
 
@@ -67,7 +65,7 @@ namespace mPOSv2.ViewModels
 
         public void LoadItems(object sender = null)
         {
-            string search = sender?.ToString() ?? string.Empty;
+            var search = sender?.ToString() ?? string.Empty;
 
             IsBusy = true;
 
@@ -76,19 +74,17 @@ namespace mPOSv2.ViewModels
                 MstItemFilter itemFilter = null;
 
                 if (!string.IsNullOrEmpty(search))
-                {
-                    itemFilter = new MstItemFilter()
+                    itemFilter = new MstItemFilter
                     {
                         ItemDescription = search,
-                        filterMethods = new FilterMethods()
+                        filterMethods = new FilterMethods
                         {
-                            Operations = new List<FilterOperation>()
+                            Operations = new List<FilterOperation>
                             {
                                 new FilterOperation("ItemDescription", Operation.Contains)
                             }
                         }
                     };
-                }
 
                 Items = await ApiRequest<MstItemFilter, ObservableCollection<MstItem>>
                     .PostRead("MstItem/BulkGet", itemFilter);
@@ -96,6 +92,7 @@ namespace mPOSv2.ViewModels
                 IsBusy = false;
             });
         }
+
         #endregion
 
         #region Properties
@@ -106,10 +103,7 @@ namespace mPOSv2.ViewModels
             {
                 var result = false;
 
-                if (Sales != null)
-                {
-                    result = !Sales.Any();
-                }
+                if (Sales != null) result = !Sales.Any();
 
                 return result;
             }
@@ -121,10 +115,7 @@ namespace mPOSv2.ViewModels
             {
                 var result = false;
 
-                if (Sales != null)
-                {
-                    result = Sales.Any();
-                }
+                if (Sales != null) result = Sales.Any();
 
                 return result;
             }
@@ -135,6 +126,7 @@ namespace mPOSv2.ViewModels
             get => _IsBusy;
             set => SetProperty(ref _IsBusy, value);
         }
+
         private bool _IsBusy;
 
         public bool IsProcessingAPI
@@ -142,6 +134,7 @@ namespace mPOSv2.ViewModels
             get => _IsProcessingApi;
             set => SetProperty(ref _IsProcessingApi, value);
         }
+
         private bool _IsProcessingApi;
 
         public string SearchSaleEntry
@@ -149,6 +142,7 @@ namespace mPOSv2.ViewModels
             get => _SearchSaleEntry;
             set => SetProperty(ref _SearchSaleEntry, value);
         }
+
         private string _SearchSaleEntry;
 
         public DateTime? SearchSaleDate
@@ -156,6 +150,7 @@ namespace mPOSv2.ViewModels
             get => _SearchSaleDate ?? DateTime.Now.Date;
             set => SetProperty(ref _SearchSaleDate, value);
         }
+
         private DateTime? _SearchSaleDate;
 
         public string SearchItemEntry
@@ -163,6 +158,7 @@ namespace mPOSv2.ViewModels
             get => _SearchItemEntry;
             set => SetProperty(ref _SearchItemEntry, value);
         }
+
         private string _SearchItemEntry;
 
         public string SearchBarcode { get; set; }
@@ -178,14 +174,15 @@ namespace mPOSv2.ViewModels
             get => _SelectedSaleId == 0 ? SelectedSale.Id : _SelectedSaleId;
             set => SetProperty(ref _SelectedSaleId, value);
         }
+
         private long _SelectedSaleId;
 
         public MstUnit SelectedUnit
         {
             get => _SelectedUnit;
             set => SetProperty(ref _SelectedUnit, value);
-
         }
+
         private MstUnit _SelectedUnit;
 
         public ObservableCollection<MstUnit> SaleUnits
@@ -193,14 +190,15 @@ namespace mPOSv2.ViewModels
             get => _SaleUnits;
             set => SetProperty(ref _SaleUnits, value);
         }
+
         private ObservableCollection<MstUnit> _SaleUnits;
 
         public MstTax SelectedTax
         {
             get => _SelectedTax;
             set => SetProperty(ref _SelectedTax, value);
-
         }
+
         private MstTax _SelectedTax;
 
         public ObservableCollection<MstTax> Taxes
@@ -208,14 +206,15 @@ namespace mPOSv2.ViewModels
             get => _Taxes;
             set => SetProperty(ref _Taxes, value);
         }
+
         private ObservableCollection<MstTax> _Taxes;
 
         public MstDiscount SelectedDiscount
         {
             get => _SelectedDiscount;
             set => SetProperty(ref _SelectedDiscount, value);
-
         }
+
         private MstDiscount _SelectedDiscount;
 
         public ObservableCollection<MstDiscount> Discounts
@@ -223,6 +222,7 @@ namespace mPOSv2.ViewModels
             get => _Discounts;
             set => SetProperty(ref _Discounts, value);
         }
+
         private ObservableCollection<MstDiscount> _Discounts;
 
         public MstCustomer SelectedCustomer
@@ -230,6 +230,7 @@ namespace mPOSv2.ViewModels
             get => _SelectedCustomer;
             set => SetProperty(ref _SelectedCustomer, value);
         }
+
         private MstCustomer _SelectedCustomer;
 
         public ObservableCollection<MstCustomer> Customers
@@ -237,6 +238,7 @@ namespace mPOSv2.ViewModels
             get => _Customers;
             set => SetProperty(ref _Customers, value);
         }
+
         private ObservableCollection<MstCustomer> _Customers;
 
         public MstItem SelectedItem
@@ -244,6 +246,7 @@ namespace mPOSv2.ViewModels
             get => _SelectedItem;
             set => SetProperty(ref _SelectedItem, value);
         }
+
         private MstItem _SelectedItem;
 
         public ObservableCollection<MstItem> Items
@@ -251,28 +254,19 @@ namespace mPOSv2.ViewModels
             get => _Items;
             set => SetProperty(ref _Items, value);
         }
+
         private ObservableCollection<MstItem> _Items;
 
-        public TrnSales SelectedSale
-        {
-            get => _SelectedSale;
-            set => _SelectedSale = value;
+        public TrnSales SelectedSale { get; set; }
 
-        }
-        private TrnSales _SelectedSale;
-
-        public TrnSalesLine SelectedSaleLine
-        {
-            get => _SelectedSaleLine;
-            set => _SelectedSaleLine = value;
-        }
-        private TrnSalesLine _SelectedSaleLine;
+        public TrnSalesLine SelectedSaleLine { get; set; }
 
         public ObservableCollection<TrnSales> Sales
         {
             get => _Sales;
             set => SetProperty(ref _Sales, value);
         }
+
         private ObservableCollection<TrnSales> _Sales;
 
         public ObservableCollection<TrnSalesLine> SalesLines
@@ -280,77 +274,89 @@ namespace mPOSv2.ViewModels
             get => _SalesLines;
             set => SetProperty(ref _SalesLines, value);
         }
+
         private ObservableCollection<TrnSalesLine> _SalesLines;
+
         #endregion
 
         #region Commands
+
         public Command RefreshSales
         {
-            get => _RefreshSales ?? (_RefreshSales = new Command(Load, (x) => true));
+            get => _RefreshSales ?? (_RefreshSales = new Command(Load, x => true));
             set => SetProperty(ref _RefreshSales, value);
         }
+
         private Command _RefreshSales;
 
         public Command RefreshItems
         {
-            get => _RefreshItems ?? (_RefreshItems = new Command(LoadItems, (x) => true));
+            get => _RefreshItems ?? (_RefreshItems = new Command(LoadItems, x => true));
             set => SetProperty(ref _RefreshItems, value);
         }
+
         private Command _RefreshItems;
 
         public Command RefreshSelectedSale
         {
             get => _RefreshSelectedSale ??
-                   (_RefreshSelectedSale = new Command(ExecuteRefreshSelectedSale, (x) => true));
+                   (_RefreshSelectedSale = new Command(ExecuteRefreshSelectedSale, x => true));
             set => SetProperty(ref _RefreshSelectedSale, value);
         }
+
         private Command _RefreshSelectedSale;
 
         public Command SelectCustomer
         {
-            get => _SelectCustomer ?? (_SelectCustomer = new Command(ExecuteSelectCustomer, (x) => true));
+            get => _SelectCustomer ?? (_SelectCustomer = new Command(ExecuteSelectCustomer, x => true));
             set => SetProperty(ref _SelectCustomer, value);
         }
+
         private Command _SelectCustomer;
 
         public Command Add
         {
-            get => _Add ?? (_Add = new Command(ExecuteAdd, (x) => true));
+            get => _Add ?? (_Add = new Command(ExecuteAdd, x => true));
             set => SetProperty(ref _Add, value);
         }
+
         private Command _Add;
 
         public Command Search
         {
-            get => _Search ?? (_Search = new Command(ExecuteSearch, (x) => true));
+            get => _Search ?? (_Search = new Command(ExecuteSearch, x => true));
             set => SetProperty(ref _Search, value);
         }
+
         private Command _Search;
 
         public Command SearchItem
         {
-            get => _SearchItem ?? (_SearchItem = new Command(ExecuteSearchItem, (x) => true));
+            get => _SearchItem ?? (_SearchItem = new Command(ExecuteSearchItem, x => true));
             set => SetProperty(ref _SearchItem, value);
         }
+
         private Command _SearchItem;
 
         public Command SelectSale
         {
-            get => _SelectSale ?? (_SelectSale = new Command(ExecuteSelectSale, (x) => true));
+            get => _SelectSale ?? (_SelectSale = new Command(ExecuteSelectSale, x => true));
             set => SetProperty(ref _SelectSale, value);
         }
+
         private Command _SelectSale;
 
         public Command SelectSaleLine
         {
-            get => _SelectSaleLine ?? (_SelectSaleLine = new Command(ExecuteSelectItem, (x) => true));
+            get => _SelectSaleLine ?? (_SelectSaleLine = new Command(ExecuteSelectItem, x => true));
             set => SetProperty(ref _SelectSaleLine, value);
         }
+
         private Command _SelectSaleLine;
 
         public Command DeleteSaleLine
         {
-            get => _DeleteSaleLine ?? (_DeleteSaleLine = new Command(ExecuteDeleteSaleLine, (x) => true));
+            get => _DeleteSaleLine ?? (_DeleteSaleLine = new Command(ExecuteDeleteSaleLine, x => true));
             set => SetProperty(ref _DeleteSaleLine, value);
         }
 
@@ -358,9 +364,10 @@ namespace mPOSv2.ViewModels
 
         public Command SelectItem
         {
-            get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, (x) => true));
+            get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, x => true));
             set => SetProperty(ref _SelectItem, value);
         }
+
         private Command _SelectItem;
 
         public Command Save
@@ -368,6 +375,7 @@ namespace mPOSv2.ViewModels
             get => _Save ?? (_Save = new Command(ExecuteSave, () => true));
             set => SetProperty(ref _Save, value);
         }
+
         private Command _Save;
 
         public Command Delete
@@ -375,10 +383,13 @@ namespace mPOSv2.ViewModels
             get => _Delete ?? (_Delete = new Command(ExecuteDelete, () => true));
             set => SetProperty(ref _Delete, value);
         }
+
         private Command _Delete;
+
         #endregion
 
         #region Methods
+
         public void ExecuteRefreshSelectedSale(object sender)
         {
             OnPropertyChanged(nameof(SelectedSale));
@@ -397,8 +408,9 @@ namespace mPOSv2.ViewModels
             Items = await APISalesRequest.GetItems();
             SaleUnits = await APISalesRequest.GetUnits();
             Taxes = await APISalesRequest.GetTaxes();
+            Discounts = await APISalesRequest.GetDiscounts();
 
-            var newSale = new TrnSales()
+            var newSale = new TrnSales
             {
                 SalesDate = DateTime.Now.Date,
                 CustomerId = 5451,
@@ -467,7 +479,8 @@ namespace mPOSv2.ViewModels
 
                 if (SelectedTax.Code == "INCLUSIVE")
                 {
-                    taxAmount = Math.Round((SelectedItem.Price / (1 + SelectedTax.Rate / 100))  * (SelectedTax.Rate / 100), 2);
+                    taxAmount = Math.Round(SelectedItem.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100),
+                        2);
                 }
                 else
                 {
@@ -475,7 +488,7 @@ namespace mPOSv2.ViewModels
                     amount = Math.Round(SelectedItem.Price + taxAmount, 2);
                 }
 
-                SelectedSaleLine = new TrnSalesLine()
+                SelectedSaleLine = new TrnSalesLine
                 {
                     ItemId = SelectedItem.Id,
                     ItemDescription = SelectedItem.ItemDescription,
@@ -511,22 +524,19 @@ namespace mPOSv2.ViewModels
                 ExecuteRefreshSelectedSaleLine(new object());
 
                 Device.BeginInvokeOnMainThread(async () =>
-                await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
         }
 
         private void ExecuteDeleteSaleLine(object sender)
         {
-            ((TrnSalesLine) sender).IsDeleted = true; 
+            ((TrnSalesLine) sender).IsDeleted = true;
             ReloadSalesLines();
         }
 
         public void ExecuteSelectCustomer(object obj)
         {
-            if (SelectedCustomer != null)
-            {
-                SelectedSale.CustomerId = SelectedCustomer.Id;
-            }
+            if (SelectedCustomer != null) SelectedSale.CustomerId = SelectedCustomer.Id;
         }
 
         private void ExecuteSave()
@@ -553,7 +563,6 @@ namespace mPOSv2.ViewModels
             });
 
             if (!isTaskRun)
-            {
                 if ((SelectedSale.SalesNumber?.Length ?? 0) < 2)
                 {
                     SelectedSale.SalesNumber = "NA";
@@ -561,7 +570,6 @@ namespace mPOSv2.ViewModels
 
                     IsProcessingAPI = false;
                 }
-            }
         }
 
         private void ExecuteDelete()
@@ -584,18 +592,22 @@ namespace mPOSv2.ViewModels
 
                                     IsProcessingAPI = false;
 
-                                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.",
+                                    Device.BeginInvokeOnMainThread(async () =>
+                                        await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.",
                                             "Ok"));
-                                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
+                                    Device.BeginInvokeOnMainThread(async () =>
+                                        await Application.Current.MainPage.Navigation.PopAsync());
                                 });
                             }
                         },
                         TaskScheduler.FromCurrentSynchronizationContext())
-                    );
+            );
         }
+
         #endregion
 
         #region Other Methods
+
         public void ExecuteShowItems()
         {
             Device.BeginInvokeOnMainThread(async () =>
@@ -617,7 +629,8 @@ namespace mPOSv2.ViewModels
 
                 if (SelectedTax.Code == "INCLUSIVE")
                 {
-                    taxAmount = Math.Round((SelectedItem.Price / (1 + SelectedTax.Rate / 100)) * (SelectedTax.Rate / 100), 2);
+                    taxAmount = Math.Round(SelectedItem.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100),
+                        2);
                 }
                 else
                 {
@@ -625,7 +638,7 @@ namespace mPOSv2.ViewModels
                     amount = Math.Round(SelectedItem.Price + taxAmount, 2);
                 }
 
-                SelectedSaleLine = new TrnSalesLine()
+                SelectedSaleLine = new TrnSalesLine
                 {
                     ItemId = SelectedItem.Id,
                     ItemDescription = SelectedItem.ItemDescription,
@@ -645,7 +658,8 @@ namespace mPOSv2.ViewModels
 
                 ExecuteRefreshSelectedSaleLine(new object());
 
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
         }
 
@@ -665,7 +679,8 @@ namespace mPOSv2.ViewModels
 
                     if (SelectedTax.Code == "INCLUSIVE")
                     {
-                        taxAmount = Math.Round((SelectedItem.Price / (1 + SelectedTax.Rate / 100)) * (SelectedTax.Rate / 100), 2);
+                        taxAmount = Math.Round(
+                            SelectedItem.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
                     }
                     else
                     {
@@ -673,7 +688,7 @@ namespace mPOSv2.ViewModels
                         amount = Math.Round(SelectedItem.Price + taxAmount, 2);
                     }
 
-                    SelectedSaleLine = new TrnSalesLine()
+                    SelectedSaleLine = new TrnSalesLine
                     {
                         ItemId = SelectedItem.Id,
                         ItemDescription = SelectedItem.ItemDescription,
@@ -703,7 +718,7 @@ namespace mPOSv2.ViewModels
 
                     if (SelectedTax.Code == "INCLUSIVE")
                     {
-                        taxAmount = Math.Round((amount / (1 + SelectedTax.Rate / 100)) * (SelectedTax.Rate / 100), 2);
+                        taxAmount = Math.Round(amount / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
                     }
                     else
                     {
@@ -743,9 +758,9 @@ namespace mPOSv2.ViewModels
                 y.UnitName = unit?.Unit;
             });
 
-            Models.Page.Pager.EndPage = GetEndPage();
+            Pager.EndPage = GetEndPage();
 
-            SalesLines = GetSalesLines(Models.Page.Pager.Start ,Models.Page.Pager.PageSize);
+            SalesLines = GetSalesLines(Pager.Start, Pager.PageSize);
         }
 
         public ObservableCollection<TrnSalesLine> GetSalesLines(int start, int pageSize)
@@ -753,10 +768,7 @@ namespace mPOSv2.ViewModels
             var result = new ObservableCollection<TrnSalesLine>();
             var data = SelectedSale.TrnSalesLines.Skip(start).Take(pageSize);
 
-            data.ForEach(salesLine =>
-            {
-                result.Add(salesLine);
-            });
+            data.ForEach(salesLine => { result.Add(salesLine); });
 
             return result;
         }
@@ -768,27 +780,23 @@ namespace mPOSv2.ViewModels
                 .ToList();
             SelectedSale.TrnSalesLines = new List<TrnSalesLine>();
 
-            saleLines.ForEach(line =>
-            {
-                SelectedSale.TrnSalesLines.Add(line);
-            });
-             
+            saleLines.ForEach(line => { SelectedSale.TrnSalesLines.Add(line); });
+
             ExecuteRefreshSelectedSale(new object());
 
-            Models.Page.Pager.EndPage = GetEndPage();
+            Pager.EndPage = GetEndPage();
 
-            SalesLines = GetSalesLines(Models.Page.Pager.Start, Models.Page.Pager.PageSize);
+            SalesLines = GetSalesLines(Pager.Start, Pager.PageSize);
         }
 
         public double GetEndPage()
         {
             var result = SelectedSale.TrnSalesLines.Any()
-                ? SelectedSale.TrnSalesLines.Count() / (double) Models.Page.Pager.PageSize
+                ? SelectedSale.TrnSalesLines.Count() / (double) Pager.PageSize
                 : 0;
 
             return Math.Ceiling(result);
         }
-
         #endregion
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using Syncfusion.Licensing;
 using Xamarin.Forms;
 
 namespace mPOSv2
@@ -10,9 +6,10 @@ namespace mPOSv2
     public partial class App : Application
     {
         public static string FilePath;
+
         public App()
         {
-            Device.SetFlags(new[] { "SwipeView_Experimental" });
+            Device.SetFlags(new[] {"SwipeView_Experimental"});
 
             InitializeComponent();
 
@@ -21,9 +18,10 @@ namespace mPOSv2
 
         public App(string filePath)
         {
-            Device.SetFlags(new[] { "SwipeView_Experimental" });
+            Device.SetFlags(new[] {"SwipeView_Experimental"});
 
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTMzN0AzMTM4MmUzMTJlMzBYTml4RFZ2ZmVsRmlNbmdCcDNjVG9naS9qWEFzVXJvL0FkSmlJbnkzVHV3PQ==");
+            SyncfusionLicenseProvider.RegisterLicense(
+                "MTMzN0AzMTM4MmUzMTJlMzBYTml4RFZ2ZmVsRmlNbmdCcDNjVG9naS9qWEFzVXJvL0FkSmlJbnkzVHV3PQ==");
 
             FilePath = filePath;
 

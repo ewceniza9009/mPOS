@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using mPOSv2.MenuItems;
 using mPOSv2.Services;
+using mPOSv2.Views.Activity.Sales;
+using mPOSv2.Views.Setup.Customer;
+using mPOSv2.Views.Setup.Item;
 using mPOSv2.Views.Start;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,33 +15,34 @@ namespace mPOSv2
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AppMenu
     {
-        public List<MenuItems.MenuPageItem> MenuList { get; set; }
         public AppMenu()
         {
             InitializeComponent();
 
-            MenuList = new List<MenuItems.MenuPageItem>
+            MenuList = new List<MenuPageItem>
             {
-                new MenuItems.MenuPageItem { Title = "Sales", Icon = "sales.png", TargetType = typeof(Views.Activity.Sales.SalesView)},
-                new MenuItems.MenuPageItem { Title = "Customer", Icon = "customer.png", TargetType = typeof(Views.Setup.Customer.CustomerView) },
-                new MenuItems.MenuPageItem { Title = "Item", Icon = "product.png", TargetType = typeof(Views.Setup.Item.ItemView) },
-                new MenuItems.MenuPageItem { Title = "Settings", Icon = "setting.png", TargetType = typeof(Views.Start.Settings) },
-                new MenuItems.MenuPageItem { Title = "Logout", Icon = "logout.png", TargetType = typeof(Views.Start.LogoutPage) }
+                new MenuPageItem {Title = "Sales", Icon = "sales.png", TargetType = typeof(SalesView)},
+                new MenuPageItem {Title = "Customer", Icon = "customer.png", TargetType = typeof(CustomerView)},
+                new MenuPageItem {Title = "Item", Icon = "product.png", TargetType = typeof(ItemView)},
+                new MenuPageItem {Title = "Settings", Icon = "setting.png", TargetType = typeof(Settings)},
+                new MenuPageItem {Title = "Logout", Icon = "logout.png", TargetType = typeof(LogoutPage)}
             };
 
             NavigationDrawerList.ItemsSource = MenuList;
 
-            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(Views.Start.StartPage)));
+            Detail = new NavigationPage((Page) Activator.CreateInstance(typeof(StartPage)));
         }
+
+        public List<MenuPageItem> MenuList { get; set; }
 
         private async void NavigationDrawerList_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var item = (MenuItems.MenuPageItem)e.ItemData;
+            var item = (MenuPageItem) e.ItemData;
             var page = item.TargetType;
 
-            if (page != typeof(Views.Start.LogoutPage))
+            if (page != typeof(LogoutPage))
             {
-                Detail = new NavigationPage((Page)Activator.CreateInstance(page));
+                Detail = new NavigationPage((Page) Activator.CreateInstance(page));
                 IsPresented = false;
             }
             else

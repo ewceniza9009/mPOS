@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace mPOSv2.Enums
+﻿namespace mPOSv2.Enums
 {
-    public enum ItemFrom{
+    public enum ItemFrom
+    {
         SaleLine,
         Item
     }

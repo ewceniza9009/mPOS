@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using mPOS.POCO;
 using mPOSv2.Services;
-using mPOSv2.Views.Setup;
 using mPOSv2.Views.Setup.Item;
 using Xamarin.Forms;
 
@@ -16,9 +13,10 @@ namespace mPOSv2.ViewModels
     public class ItemViewModel : ViewModelBase
     {
         #region Initialize
+
         public void Load(object sender = null)
         {
-            string search = sender?.ToString() ?? string.Empty;
+            var search = sender?.ToString() ?? string.Empty;
 
             IsBusy = true;
 
@@ -27,19 +25,17 @@ namespace mPOSv2.ViewModels
                 MstItemFilter itemFilter = null;
 
                 if (!string.IsNullOrEmpty(search))
-                {
-                    itemFilter = new MstItemFilter()
+                    itemFilter = new MstItemFilter
                     {
                         ItemDescription = search,
-                        filterMethods = new FilterMethods()
+                        filterMethods = new FilterMethods
                         {
-                            Operations = new List<FilterOperation>()
+                            Operations = new List<FilterOperation>
                             {
                                 new FilterOperation("ItemDescription", Operation.Contains)
                             }
                         }
                     };
-                }
 
                 Items = await ApiRequest<MstItemFilter, ObservableCollection<MstItem>>
                     .PostRead("MstItem/BulkGet", itemFilter);
@@ -47,14 +43,17 @@ namespace mPOSv2.ViewModels
                 IsBusy = false;
             });
         }
+
         #endregion
 
         #region Properties
+
         public bool IsHideCategory
         {
             get => _IsHideCategory;
             set => SetProperty(ref _IsHideCategory, value);
         }
+
         private bool _IsHideCategory;
 
         public bool IsBusy
@@ -62,6 +61,7 @@ namespace mPOSv2.ViewModels
             get => _IsBusy;
             set => SetProperty(ref _IsBusy, value);
         }
+
         private bool _IsBusy;
 
         public bool IsProcessingAPI
@@ -69,6 +69,7 @@ namespace mPOSv2.ViewModels
             get => _IsProcessingApi;
             set => SetProperty(ref _IsProcessingApi, value);
         }
+
         private bool _IsProcessingApi;
 
         public string SearchItemEntry
@@ -76,6 +77,7 @@ namespace mPOSv2.ViewModels
             get => _SearchItemEntry;
             set => SetProperty(ref _SearchItemEntry, value);
         }
+
         private string _SearchItemEntry;
 
         public bool IsChanged { get; set; }
@@ -87,14 +89,15 @@ namespace mPOSv2.ViewModels
             get => _SelectedItemId == 0 ? SelectedItem.Id : _SelectedItemId;
             set => SetProperty(ref _SelectedItemId, value);
         }
+
         private long _SelectedItemId;
 
         public string SelectedCategory
         {
             get => _SelectedCategory;
             set => SetProperty(ref _SelectedCategory, value);
-
         }
+
         private string _SelectedCategory;
 
         public ObservableCollection<string> ItemCategories
@@ -102,14 +105,15 @@ namespace mPOSv2.ViewModels
             get => _ItemCategories;
             set => SetProperty(ref _ItemCategories, value);
         }
+
         private ObservableCollection<string> _ItemCategories;
 
         public MstUnit SelectedUnit
         {
             get => _SelectedUnit;
             set => SetProperty(ref _SelectedUnit, value);
-
         }
+
         private MstUnit _SelectedUnit;
 
         public ObservableCollection<MstUnit> ItemUnits
@@ -117,14 +121,15 @@ namespace mPOSv2.ViewModels
             get => _ItemUnits;
             set => SetProperty(ref _ItemUnits, value);
         }
+
         private ObservableCollection<MstUnit> _ItemUnits;
 
         public MstTax SelectedTax
         {
             get => _SelectedTax;
             set => SetProperty(ref _SelectedTax, value);
-
         }
+
         private MstTax _SelectedTax;
 
         public ObservableCollection<MstTax> Taxes
@@ -132,64 +137,69 @@ namespace mPOSv2.ViewModels
             get => _Taxes;
             set => SetProperty(ref _Taxes, value);
         }
+
         private ObservableCollection<MstTax> _Taxes;
 
-        public MstItem SelectedItem
-        {
-            get => _SelectedItem;
-            set => _SelectedItem = value;
+        public MstItem SelectedItem { get; set; }
 
-        }
-        private MstItem _SelectedItem;
         public ObservableCollection<MstItem> Items
         {
             get => _Items;
             set => SetProperty(ref _Items, value);
         }
+
         private ObservableCollection<MstItem> _Items;
+
         #endregion
 
         #region Commands
+
         public Command RefreshItems
         {
-            get => _RefreshItems ?? (_RefreshItems = new Command(Load, (x) => true));
+            get => _RefreshItems ?? (_RefreshItems = new Command(Load, x => true));
             set => SetProperty(ref _RefreshItems, value);
         }
+
         private Command _RefreshItems;
 
         public Command RefreshSelectedItem
         {
-            get => _RefreshSelectedItem ?? (_RefreshSelectedItem = new Command(ExecuteRefreshSelectedItem, (x) => true));
+            get => _RefreshSelectedItem ?? (_RefreshSelectedItem = new Command(ExecuteRefreshSelectedItem, x => true));
             set => SetProperty(ref _RefreshSelectedItem, value);
         }
+
         private Command _RefreshSelectedItem;
 
         public Command Add
         {
-            get => _Add ?? (_Add = new Command(ExecuteAdd, (x) => true));
+            get => _Add ?? (_Add = new Command(ExecuteAdd, x => true));
             set => SetProperty(ref _Add, value);
         }
+
         private Command _Add;
 
         public Command Search
         {
-            get => _Search ?? (_Search = new Command(ExecuteSearch, (x) => true));
+            get => _Search ?? (_Search = new Command(ExecuteSearch, x => true));
             set => SetProperty(ref _Search, value);
         }
+
         private Command _Search;
 
         public Command SelectUnit
         {
-            get => _SelectUnit ?? (_SelectUnit = new Command(ExecuteSelectUnit, (x) => true));
+            get => _SelectUnit ?? (_SelectUnit = new Command(ExecuteSelectUnit, x => true));
             set => SetProperty(ref _SelectUnit, value);
         }
+
         private Command _SelectUnit;
 
         public Command SelectItem
         {
-            get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, (x) => true));
+            get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, x => true));
             set => SetProperty(ref _SelectItem, value);
         }
+
         private Command _SelectItem;
 
         public Command Save
@@ -197,6 +207,7 @@ namespace mPOSv2.ViewModels
             get => _Save ?? (_Save = new Command(ExecuteSave, () => true));
             set => SetProperty(ref _Save, value);
         }
+
         private Command _Save;
 
         public Command Delete
@@ -204,10 +215,13 @@ namespace mPOSv2.ViewModels
             get => _Delete ?? (_Delete = new Command(ExecuteDelete, () => true));
             set => SetProperty(ref _Delete, value);
         }
+
         private Command _Delete;
+
         #endregion
 
         #region Methods
+
         public void ExecuteRefreshSelectedItem(object sender)
         {
             OnPropertyChanged(nameof(SelectedItem));
@@ -216,7 +230,7 @@ namespace mPOSv2.ViewModels
 
         private async void ExecuteAdd(object sender)
         {
-            var newItem = new MstItem()
+            var newItem = new MstItem
             {
                 ItemDescription = "NA",
                 BarCode = "NA",
@@ -241,7 +255,8 @@ namespace mPOSv2.ViewModels
             SelectedUnit = ItemUnits.SingleOrDefault(x => x.Id == SelectedItem.UnitId);
             SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
 
-            Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new ItemDetailView(this)));
+            Device.BeginInvokeOnMainThread(async () =>
+                await Application.Current.MainPage.Navigation.PushAsync(new ItemDetailView(this)));
         }
 
         private void ExecuteSearch(object sender)
@@ -251,10 +266,7 @@ namespace mPOSv2.ViewModels
 
         public void ExecuteSelectUnit(object sender)
         {
-            if (SelectedUnit != null)
-            {
-                SelectedItem.UnitId = SelectedUnit.Id;
-            }
+            if (SelectedUnit != null) SelectedItem.UnitId = SelectedUnit.Id;
         }
 
         private async void ExecuteSelectItem(object sender)
@@ -270,7 +282,8 @@ namespace mPOSv2.ViewModels
                 SelectedUnit = ItemUnits.SingleOrDefault(x => x.Id == SelectedItem.UnitId);
                 SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
 
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new ItemDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new ItemDetailView(this)));
             }
         }
 
@@ -289,13 +302,13 @@ namespace mPOSv2.ViewModels
 
                 IsProcessingAPI = false;
 
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record saved.", "Ok"));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.DisplayAlert(Title, "Record saved.", "Ok"));
 
                 isTaskRun = true;
             });
 
             if (!isTaskRun)
-            {
                 if ((SelectedItem.ItemCode?.Length ?? 0) < 2)
                 {
                     SelectedItem.ItemCode = "NA";
@@ -303,7 +316,6 @@ namespace mPOSv2.ViewModels
 
                     IsProcessingAPI = false;
                 }
-            }
         }
 
         private void ExecuteDelete()
@@ -312,27 +324,30 @@ namespace mPOSv2.ViewModels
                 await Application.Current.MainPage
                     .DisplayAlert(Title, "Do you want to delete this record?.", "Yes", "No")
                     .ContinueWith(x =>
-                    {
-                        if (x.Result)
                         {
-                            IsProcessingAPI = true;
-
-                            Task.Run(async () =>
+                            if (x.Result)
                             {
-                                Thread.Sleep(1000);
+                                IsProcessingAPI = true;
 
-                                await ApiRequest<MstItem, MstItem>
-                                    .Delete("MstItem/Delete", SelectedItem.Id);
+                                Task.Run(async () =>
+                                {
+                                    Thread.Sleep(1000);
 
-                                IsProcessingAPI = false;
+                                    await ApiRequest<MstItem, MstItem>
+                                        .Delete("MstItem/Delete", SelectedItem.Id);
 
-                                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.", "Ok"));
-                                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
-                            });
-                        }
-                    },
-                    TaskScheduler.FromCurrentSynchronizationContext())
-                );
+                                    IsProcessingAPI = false;
+
+                                    Device.BeginInvokeOnMainThread(async () =>
+                                        await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.",
+                                            "Ok"));
+                                    Device.BeginInvokeOnMainThread(async () =>
+                                        await Application.Current.MainPage.Navigation.PopAsync());
+                                });
+                            }
+                        },
+                        TaskScheduler.FromCurrentSynchronizationContext())
+            );
         }
         #endregion
     }

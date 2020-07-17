@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using mPOSv2.Models;
 using SQLite;
 
 namespace mPOSv2.Services
@@ -16,7 +14,7 @@ namespace mPOSv2.Services
 
             using (var conn = new SQLiteConnection(App.FilePath))
             {
-                result = conn.Table<Models.Settings>()
+                result = conn.Table<Settings>()
                     .FirstOrDefault()
                     .ServerName;
             }

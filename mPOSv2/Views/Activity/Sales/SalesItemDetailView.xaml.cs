@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using mPOSv2.Enums;
 using mPOSv2.ViewModels;
 using Syncfusion.SfNumericUpDown.XForms;
@@ -14,7 +10,8 @@ namespace mPOSv2.Views.Activity.Sales
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SalesItemDetailView : ContentPage
     {
-        private SalesViewModel vm;
+        private readonly SalesViewModel vm;
+
         public SalesItemDetailView(SalesViewModel vm)
         {
             InitializeComponent();
@@ -29,7 +26,8 @@ namespace mPOSv2.Views.Activity.Sales
 
             if (vm.SelectedTax.Code == "INCLUSIVE")
             {
-                taxAmount = Math.Round((amount/ (1 + vm.SelectedSaleLine.TaxRate / 100)) * (vm.SelectedSaleLine.TaxRate / 100), 2);
+                taxAmount = Math.Round(
+                    amount / (1 + vm.SelectedSaleLine.TaxRate / 100) * (vm.SelectedSaleLine.TaxRate / 100), 2);
             }
             else
             {
@@ -46,15 +44,10 @@ namespace mPOSv2.Views.Activity.Sales
         {
             Navigation.PopAsync().ContinueWith(x =>
             {
-                if (vm.ItemFrom == ItemFrom.Item)
-                {
-                    vm.SelectedSale.TrnSalesLines.Add(vm.SelectedSaleLine);
-                }
+                if (vm.ItemFrom == ItemFrom.Item) vm.SelectedSale.TrnSalesLines.Add(vm.SelectedSaleLine);
 
                 vm.ReloadSalesLines();
             });
         }
-
-        
     }
 }

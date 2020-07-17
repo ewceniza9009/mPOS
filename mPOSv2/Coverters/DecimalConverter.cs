@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace mPOSv2.Converters
 {
-    class DecimalConverter : IValueConverter
+    internal class DecimalConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return $"{Decimal.Parse(value.ToString()):N2}";
+            return $"{decimal.Parse(value.ToString()):N2}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string valueFromString = Regex.Replace(value.ToString(), @"\D", "");
+            var valueFromString = Regex.Replace(value.ToString(), @"\D", "");
 
             if (valueFromString.Length <= 0)
                 return 0m;

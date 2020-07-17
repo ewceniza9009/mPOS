@@ -1,31 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
+using mPOSv2.Models;
 using SQLite;
 
 namespace mPOSv2.Services
 {
     public static class SettingsRepository
     {
-        public static Models.Settings GetSettings()
+        public static Settings GetSettings()
         {
-            Models.Settings result;
+            Settings result;
 
             using (var conn = new SQLiteConnection(App.FilePath))
             {
-
-                result = conn.Table<Models.Settings>().FirstOrDefault();
+                result = conn.Table<Settings>().FirstOrDefault();
             }
 
             return result;
         }
 
-        public static void Save(Models.Settings settings)
+        public static void Save(Settings settings)
         {
             using (var conn = new SQLiteConnection(App.FilePath))
             {
-                var _settings = conn.Query<Models.Settings>("SELECT * FROM Settings WHERE Id = ?", 1).FirstOrDefault();
+                var _settings = conn.Query<Settings>("SELECT * FROM Settings WHERE Id = ?", 1).FirstOrDefault();
 
                 if (_settings != null)
                 {
@@ -48,8 +45,7 @@ namespace mPOSv2.Services
 
             using (var conn = new SQLiteConnection(App.FilePath))
             {
-
-                result = conn.Table<Models.Settings>()
+                result = conn.Table<Settings>()
                     .FirstOrDefault()
                     .UserFullName;
             }

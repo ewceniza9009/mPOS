@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using mPOSv2.ViewModels;
+﻿using mPOSv2.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,7 +7,8 @@ namespace mPOSv2.Views.Activity.Sales
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SalesItemView : ContentPage
     {
-        private SalesViewModel vm;
+        private readonly SalesViewModel vm;
+
         public SalesItemView(SalesViewModel vm)
         {
             InitializeComponent();
@@ -22,10 +18,7 @@ namespace mPOSv2.Views.Activity.Sales
 
         private void SearchItem_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(SearchItem.Text))
-            {
-                vm.ExecuteSearchItem(new object());
-            }
+            if (string.IsNullOrEmpty(SearchItem.Text)) vm.ExecuteSearchItem(new object());
         }
     }
 }

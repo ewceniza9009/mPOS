@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -22,23 +20,26 @@ namespace mPOSv2.Commands
             BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(EventToCommandBehavior));
 
         public static readonly BindableProperty EventArgsConverterProperty =
-            BindableProperty.Create(nameof(EventArgsConverter), typeof(IValueConverter), typeof(EventToCommandBehavior));
+            BindableProperty.Create(nameof(EventArgsConverter), typeof(IValueConverter),
+                typeof(EventToCommandBehavior));
 
         public static readonly BindableProperty EventArgsConverterParameterProperty =
-            BindableProperty.Create(nameof(EventArgsConverterParameter), typeof(object), typeof(EventToCommandBehavior));
+            BindableProperty.Create(nameof(EventArgsConverterParameter), typeof(object),
+                typeof(EventToCommandBehavior));
+
+        private EventInfo _eventInfo;
 
         private Delegate _handler;
-        private EventInfo _eventInfo;
 
         public string EventName
         {
-            get => (string)GetValue(EventNameProperty);
+            get => (string) GetValue(EventNameProperty);
             set => SetValue(EventNameProperty, value);
         }
 
         public ICommand Command
         {
-            get => (ICommand)GetValue(CommandProperty);
+            get => (ICommand) GetValue(CommandProperty);
             set => SetValue(CommandProperty, value);
         }
 
@@ -50,7 +51,7 @@ namespace mPOSv2.Commands
 
         public IValueConverter EventArgsConverter
         {
-            get => (IValueConverter)GetValue(EventArgsConverterProperty);
+            get => (IValueConverter) GetValue(EventArgsConverterProperty);
             set => SetValue(EventArgsConverterProperty, value);
         }
 
@@ -96,11 +97,11 @@ namespace mPOSv2.Commands
                 .GetRuntimeMethods().First(m => m.Name == "Invoke");
 
             _handler = Expression.Lambda(
-                eventInfo.EventHandlerType,
-                Expression.Call(Expression.Constant(action), actionInvoke, eventParameters[0], eventParameters[1]),
-                eventParameters
-            )
-            .Compile();
+                    eventInfo.EventHandlerType,
+                    Expression.Call(Expression.Constant(action), actionInvoke, eventParameters[0], eventParameters[1]),
+                    eventParameters
+                )
+                .Compile();
 
             eventInfo.AddEventHandler(item, _handler);
         }
@@ -117,15 +118,11 @@ namespace mPOSv2.Commands
                 parameter = eventArgs;
 
                 if (EventArgsConverter != null)
-                {
-                    parameter = EventArgsConverter.Convert(eventArgs, typeof(object), EventArgsConverterParameter, CultureInfo.CurrentUICulture);
-                }
+                    parameter = EventArgsConverter.Convert(eventArgs, typeof(object), EventArgsConverterParameter,
+                        CultureInfo.CurrentUICulture);
             }
 
-            if (Command.CanExecute(parameter))
-            {
-                Command.Execute(parameter);
-            }
+            if (Command.CanExecute(parameter)) Command.Execute(parameter);
         }
     }
 }

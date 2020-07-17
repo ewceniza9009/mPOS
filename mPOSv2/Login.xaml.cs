@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using mPOS.POCO;
 using mPOSv2.Services;
-using mPOSv2.Models;
+using mPOSv2.Views.Start;
 using SQLite;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,17 +13,22 @@ namespace mPOSv2
     public partial class Login : ContentPage
     {
         #region Properties
-        private int loginAttemptCount = 0;
+
+        private int loginAttemptCount;
+
         #endregion
 
         #region ctor
+
         public Login()
         {
             InitializeComponent();
         }
+
         #endregion
 
         #region Events
+
         private async void CmdLogin_Clicked(object sender, EventArgs e)
         {
             var user = new MstUser
@@ -37,7 +39,7 @@ namespace mPOSv2
 
             if (user.Password == "pass")
             {
-                await Navigation.PushAsync(new Views.Start.Settings());
+                await Navigation.PushAsync(new Settings());
 
                 return;
             }
@@ -47,17 +49,17 @@ namespace mPOSv2
                 LoginActivityIndicator.IsRunning = true;
                 LoginActivityIndicator.IsVisible = true;
 
-                LoginText.Text = $"Logging in, please wait for a moment!";
+                LoginText.Text = "Logging in, please wait for a moment!";
 
                 var login = await ApiRequest<MstUser, MstUser>.PostRead("MstUser/CanLogin", user);
 
                 if (login != null && login.Id != 0)
                 {
-                    Settings settings;
+                    Models.Settings settings;
 
                     using (var conn = new SQLiteConnection(App.FilePath))
                     {
-                        settings = new Models.Settings()
+                        settings = new Models.Settings
                         {
                             UserId = 1,
                             UserFullName = login.FullName,
@@ -111,7 +113,7 @@ namespace mPOSv2
                     }
                     else
                     {
-                        LoginText.Text = $"Invalid username or password!";
+                        LoginText.Text = "Invalid username or password!";
                     }
 
                     loginAttemptCount++;
@@ -134,6 +136,7 @@ namespace mPOSv2
             LoginText.Text = "";
             LoginText.TextColor = Color.Black;
         }
+
         #endregion
     }
 }

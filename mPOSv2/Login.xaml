@@ -30,7 +30,7 @@
             <button:SfButton x:Name="CmdLogin"
                              Text="LOGIN"
                              FontAttributes="Bold"
-                             Margin="30,0,30,0"
+                             Margin="30,20,30,0"
                              HeightRequest="50"
                              TextColor="White"
                              ImageSource="enter_key.png"

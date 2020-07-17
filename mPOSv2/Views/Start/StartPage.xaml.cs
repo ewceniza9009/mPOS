@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using mPOSv2.MenuItems;
 using mPOSv2.Services;
+using mPOSv2.Views.Activity.Sales;
+using mPOSv2.Views.Setup.Customer;
+using mPOSv2.Views.Setup.Item;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ItemTappedEventArgs = Syncfusion.ListView.XForms.ItemTappedEventArgs;
@@ -13,53 +14,53 @@ namespace mPOSv2.Views.Start
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StartPage : ContentPage
     {
-        public List<MenuItems.MenuPageItem> MenuList { get; set; }
         public StartPage()
         {
             InitializeComponent();
 
-            MenuList = new List<MenuItems.MenuPageItem>
+            MenuList = new List<MenuPageItem>
             {
-                new MenuItems.MenuPageItem
+                new MenuPageItem
                 {
-                    Title = "Sales", 
+                    Title = "Sales",
                     Description = "Sales transaction per day",
-                    Icon = "sales.png", 
-                    TargetType = typeof(Views.Activity.Sales.SalesView)
+                    Icon = "sales.png",
+                    TargetType = typeof(SalesView)
                 },
-                new MenuItems.MenuPageItem
+                new MenuPageItem
                 {
                     Title = "Customer",
                     Description = "All active and non-active customers",
-                    Icon = "customer.png", 
-                    TargetType = typeof(Views.Setup.Customer.CustomerView)
+                    Icon = "customer.png",
+                    TargetType = typeof(CustomerView)
                 },
-                new MenuItems.MenuPageItem 
-                { 
-                    Title = "Item", 
+                new MenuPageItem
+                {
+                    Title = "Item",
                     Description = " All inventory and non-inventory items",
-                    Icon = "product.png", 
-                    TargetType = typeof(Views.Setup.Item.ItemView)
+                    Icon = "product.png",
+                    TargetType = typeof(ItemView)
                 },
-                new MenuItems.MenuPageItem
+                new MenuPageItem
                 {
-                    Title = "Settings", 
+                    Title = "Settings",
                     Description = "POS Settings",
-                    Icon = "setting.png", 
-                    TargetType = typeof(Views.Start.Settings)
+                    Icon = "setting.png",
+                    TargetType = typeof(Settings)
                 },
-                new MenuItems.MenuPageItem
+                new MenuPageItem
                 {
-                    Title = "Logout", 
+                    Title = "Logout",
                     Description = "Login to other accounts",
-                    Icon = "logout.png", 
-                    TargetType = typeof(Views.Start.LogoutPage)
+                    Icon = "logout.png",
+                    TargetType = typeof(LogoutPage)
                 }
             };
 
             MenuItems.ItemsSource = MenuList;
-
         }
+
+        public List<MenuPageItem> MenuList { get; set; }
 
         private void StartPage_OnAppearing(object sender, EventArgs e)
         {
@@ -68,15 +69,15 @@ namespace mPOSv2.Views.Start
 
         private async void MenuItems_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var item = (MenuItems.MenuPageItem)e.ItemData;
+            var item = (MenuPageItem) e.ItemData;
             var page = item.TargetType;
             var appMenu = new AppMenu();
 
-            if (page != typeof(Views.Start.LogoutPage))
+            if (page != typeof(LogoutPage))
             {
                 await Navigation.PushAsync(appMenu);
 
-                appMenu.Detail = new NavigationPage((Page)Activator.CreateInstance(page));
+                appMenu.Detail = new NavigationPage((Page) Activator.CreateInstance(page));
                 appMenu.IsPresented = false;
             }
             else

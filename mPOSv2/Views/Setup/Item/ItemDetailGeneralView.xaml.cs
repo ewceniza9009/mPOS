@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using mPOSv2.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,7 +13,7 @@ namespace mPOSv2.Views.Setup.Item
     {
         #region Properties
         public ItemViewModel vm;
-        ZXingScannerPage scanPage;
+        private ZXingScannerPage scanPage;
         #endregion
 
         #region ctor
@@ -41,7 +37,7 @@ namespace mPOSv2.Views.Setup.Item
         private async void CmdScanBarcode_Clicked(object sender, EventArgs e)
         {
             scanPage = new ZXingScannerPage();
-            scanPage.OnScanResult += (result) =>
+            scanPage.OnScanResult += result =>
             {
                 scanPage.IsScanning = false;
 
@@ -71,7 +67,6 @@ namespace mPOSv2.Views.Setup.Item
                 vm.IsHideCategory = true;
                 CategoryComboBox.IsVisible = !vm.IsHideCategory;
                 CategoryEntry.IsVisible = vm.IsHideCategory;
-                
             }
             else
             {
@@ -87,6 +82,5 @@ namespace mPOSv2.Views.Setup.Item
             vm.ExecuteRefreshSelectedItem(new object());
         }
         #endregion
-
     }
 }
