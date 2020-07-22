@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using mPOS.POCO;
+using mPOS.WebAPI.Data;
+using mPOS.WebAPI.Mapping;
 using mPOS.WebAPI.Utilities;
 
 namespace mPOS.WebAPI.Repository
 {
-    public partial class MstItem : IRead<POCO.MstItem, POCO.MstItemFilter, POCO.FilterMethods>, IRepository<POCO.MstItem>
+    public partial class MstItem : IRead<POCO.MstItem, MstItemFilter, FilterMethods>, IRepository<POCO.MstItem>
     {
         public POCO.MstItem Read(long id)
         {
             POCO.MstItem result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstItem, POCO.MstItem>();
+            var mappingProfile = new MappingProfile<Data.MstItem, POCO.MstItem>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstItems
                     .SingleOrDefault(x => x.Id == id);
@@ -30,17 +31,17 @@ namespace mPOS.WebAPI.Repository
         {
             IEnumerable<POCO.MstItem> result;
 
-            var dynamicFilter = Utilities.Filterer<POCO.MstItemFilter>.GetFilter(filter, filterMethods);
-            var mappingProfile = new Mapping.MappingProfile<Data.MstItem, POCO.MstItem>();
+            var dynamicFilter = Filterer<MstItemFilter>.GetFilter(filter, filterMethods);
+            var mappingProfile = new MappingProfile<Data.MstItem, POCO.MstItem>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 IEnumerable<Data.MstItem> data;
 
                 if (filter != null)
                 {
                     var enumerable = dynamicFilter as Filter[] ?? dynamicFilter.ToArray();
-                    var filterExpression = Utilities.ExpressionBuilder
+                    var filterExpression = ExpressionBuilder
                         .GetExpression<Data.MstItem>(enumerable.ToList()).Compile();
 
                     data = ctx.MstItems.Where(filterExpression);
@@ -59,11 +60,10 @@ namespace mPOS.WebAPI.Repository
         public long Save(POCO.MstItem t)
         {
             Data.MstItem result;
-            var mappingProfile = new Mapping.MappingProfile<POCO.MstItem, Data.MstItem>();
+            var mappingProfile = new MappingProfile<POCO.MstItem, Data.MstItem>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
-
                 if (t.Id != 0)
                 {
                     result = ctx.MstItems.SingleOrDefault(x => x.Id == t.Id);
@@ -98,7 +98,7 @@ namespace mPOS.WebAPI.Repository
 
         public void Delete(long id)
         {
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 if (id > 0)
                 {

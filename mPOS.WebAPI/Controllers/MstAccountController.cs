@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using mPOS.POCO;
+using MstAccount = mPOS.WebAPI.Repository.MstAccount;
 
 namespace mPOS.WebAPI.Controllers
 {
@@ -14,12 +12,12 @@ namespace mPOS.WebAPI.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetAccounts(POCO.MstAccountFilter filter)
+        public JsonResult GetAccounts(MstAccountFilter filter)
         {
-            var account = new Repository.MstAccount();
-            var result = filter.filterMethods == null ? 
-                account.BulkRead() : 
-                account.BulkRead(filter, filter.filterMethods);
+            var account = new MstAccount();
+            var result = filter.filterMethods == null
+                ? account.BulkRead()
+                : account.BulkRead(filter, filter.filterMethods);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

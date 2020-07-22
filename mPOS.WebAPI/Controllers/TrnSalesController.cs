@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using mPOS.POCO;
 
 namespace mPOS.WebAPI.Controllers
 {
@@ -18,18 +15,18 @@ namespace mPOS.WebAPI.Controllers
         }
 
         [HttpPost]
-        public JsonResult BulkGet(POCO.TrnSalesFilter content)
+        public JsonResult BulkGet(TrnSalesFilter content)
         {
             var repos = new Repository.TrnSales();
-            var result = content.filterMethods == null ?
-                repos.BulkRead() :
-                repos.BulkRead(content, content.filterMethods);
+            var result = content.filterMethods == null
+                ? repos.BulkRead()
+                : repos.BulkRead(content, content.filterMethods);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult Save(POCO.TrnSales content)
+        public JsonResult Save(TrnSales content)
         {
             var repos = new Repository.TrnSales();
             var result = repos.Save(content);

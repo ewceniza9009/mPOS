@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using mPOS.POCO;
+using mPOS.WebAPI.Data;
+using mPOS.WebAPI.Mapping;
 using mPOS.WebAPI.Utilities;
 
 namespace mPOS.WebAPI.Repository
 {
-    public partial class TrnSales : IRead<POCO.TrnSales, POCO.TrnSalesFilter, POCO.FilterMethods>, IRepository<POCO.TrnSales>
+    public partial class TrnSales : IRead<POCO.TrnSales, TrnSalesFilter, FilterMethods>, IRepository<POCO.TrnSales>
     {
         public POCO.TrnSales Read(long id)
         {
             POCO.TrnSales result;
 
-            var mappingProfile = new Mapping.MappingProfileForTrnSales(); ;
+            var mappingProfile = new MappingProfileForTrnSales();
+            ;
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.TrnSales
                     .SingleOrDefault(x => x.Id == id);
@@ -30,18 +32,18 @@ namespace mPOS.WebAPI.Repository
         {
             IEnumerable<POCO.TrnSales> result;
 
-            var dynamicFilter = Utilities.Filterer<POCO.TrnSalesFilter>.GetFilter(filter, filterMethods);
-            var mappingProfile = new Mapping.MappingProfileForTrnSales();
+            var dynamicFilter = Filterer<TrnSalesFilter>.GetFilter(filter, filterMethods);
+            var mappingProfile = new MappingProfileForTrnSales();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
-                IEnumerable<Data.TrnSale> data;
+                IEnumerable<TrnSale> data;
 
                 if (filter != null)
                 {
                     var enumerable = dynamicFilter as Filter[] ?? dynamicFilter.ToArray();
-                    var filterExpression = Utilities.ExpressionBuilder
-                        .GetExpression<Data.TrnSale>(enumerable.ToList()).Compile();
+                    var filterExpression = ExpressionBuilder
+                        .GetExpression<TrnSale>(enumerable.ToList()).Compile();
 
                     data = ctx.TrnSales.Where(filterExpression);
                 }
@@ -58,10 +60,10 @@ namespace mPOS.WebAPI.Repository
 
         public long Save(POCO.TrnSales t)
         {
-            Data.TrnSale result;
-            var mappingProfile = new Mapping.MappingProfileForTrnSalesReverse();
+            TrnSale result;
+            var mappingProfile = new MappingProfileForTrnSalesReverse();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 if (t.Id != 0)
                 {
@@ -91,7 +93,7 @@ namespace mPOS.WebAPI.Repository
                 {
                     var preSalesNumber = ctx.TrnSales?.Max(x => x.SalesNumber) ?? "0001-000000";
                     var splitSalesNumber = preSalesNumber.Split('-');
-                    var maxSalesNumber = Int64.Parse(splitSalesNumber[1]);
+                    var maxSalesNumber = long.Parse(splitSalesNumber[1]);
                     var newSalesNumberLng = maxSalesNumber + 1000001;
 
                     var newSalesNumber = $"0001-{newSalesNumberLng.ToString().Substring(1, 6)}";
@@ -127,7 +129,7 @@ namespace mPOS.WebAPI.Repository
                         tLine.SalesLineTimeStamp = DateTime.Now;
                     }
 
-                    result = mappingProfile.mapper.Map<Data.TrnSale>(t);
+                    result = mappingProfile.mapper.Map<TrnSale>(t);
 
                     ctx.TrnSales?.InsertOnSubmit(result);
                 }
@@ -140,7 +142,7 @@ namespace mPOS.WebAPI.Repository
 
         public void Delete(long id)
         {
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 if (id > 0)
                 {

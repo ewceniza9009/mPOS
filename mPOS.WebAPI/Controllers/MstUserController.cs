@@ -1,16 +1,12 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using mPOS.POCO;
 
 namespace mPOS.WebAPI.Controllers
 {
     public class MstUserController : Controller
     {
         [HttpPost]
-        public JsonResult CanLogin(POCO.MstUser user)
+        public JsonResult CanLogin(MstUser user)
         {
             var userRepos = new Repository.MstUser();
             var result = userRepos.IsLoginSuccess(user.UserName, user.Password);

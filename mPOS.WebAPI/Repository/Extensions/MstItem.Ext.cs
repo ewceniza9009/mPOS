@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using mPOS.WebAPI.Data;
+using MstTax = mPOS.POCO.MstTax;
+using MstUnit = mPOS.POCO.MstUnit;
 
 namespace mPOS.WebAPI.Repository
 {
     public partial class MstItem
     {
-        public List<POCO.MstUnit> GetUnits()
+        public List<MstUnit> GetUnits()
         {
             return Common.GetUnits();
         }
@@ -16,7 +17,7 @@ namespace mPOS.WebAPI.Repository
         {
             List<string> result;
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 result = ctx.MstItems
                     .GroupBy(x => x.Category).ToList()
@@ -27,7 +28,7 @@ namespace mPOS.WebAPI.Repository
             return result.ToList();
         }
 
-        public List<POCO.MstTax> GetTaxes()
+        public List<MstTax> GetTaxes()
         {
             return Common.GetTaxes();
         }

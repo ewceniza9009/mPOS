@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using mPOS.POCO;
 
 namespace mPOS.WebAPI.Utilities
 {
     public static class ExpressionBuilder
     {
         private static readonly MethodInfo containsMethod = typeof(string).GetMethod("Contains");
-        private static readonly MethodInfo startsWithMethod = typeof(string).GetMethod("StartsWith", new[] { typeof(string) });
-        private static readonly MethodInfo endsWithMethod = typeof(string).GetMethod("EndsWith", new[] { typeof(string) });
+
+        private static readonly MethodInfo startsWithMethod =
+            typeof(string).GetMethod("StartsWith", new[] {typeof(string)});
+
+        private static readonly MethodInfo
+            endsWithMethod = typeof(string).GetMethod("EndsWith", new[] {typeof(string)});
 
         public static Expression<Func<T, bool>> GetExpression<T>(IList<Filter> filters)
         {
             if (filters.Count == 0)
                 return null;
 
-            ParameterExpression param = Expression.Parameter(typeof(T), "t");
+            var param = Expression.Parameter(typeof(T), "t");
             Expression exp = null;
 
             switch (filters.Count)
@@ -60,36 +65,39 @@ namespace mPOS.WebAPI.Utilities
 
             switch (filter.Operation)
             {
-                case POCO.Operation.Equals:
+                case Operation.Equals:
                     return Expression.Equal(member, constant);
 
-                case POCO.Operation.GreaterThan:
+                case Operation.GreaterThan:
                     return Expression.GreaterThan(member, constant);
 
-                case POCO.Operation.GreaterThanOrEqual:
+                case Operation.GreaterThanOrEqual:
                     return Expression.GreaterThanOrEqual(member, constant);
 
-                case POCO.Operation.LessThan:
+                case Operation.LessThan:
                     return Expression.LessThan(member, constant);
 
-                case POCO.Operation.LessThanOrEqual:
+                case Operation.LessThanOrEqual:
                     return Expression.LessThanOrEqual(member, constant);
 
-                case POCO.Operation.Contains:
-                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, containsMethod, constant));
+                case Operation.Contains:
+                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, containsMethod,
+                        constant));
 
-                case POCO.Operation.StartsWith:
-                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, startsWithMethod, constant));
+                case Operation.StartsWith:
+                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, startsWithMethod,
+                        constant));
 
-                case POCO.Operation.EndsWith:
-                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, endsWithMethod, constant));
+                case Operation.EndsWith:
+                    return new CaseInsensitiveExpressionVisitor().Visit(Expression.Call(member, endsWithMethod,
+                        constant));
                 default:
                     return null;
             }
         }
 
         private static BinaryExpression GetExpression<T>
-        (ParameterExpression param, Filter filter1, Filter filter2)
+            (ParameterExpression param, Filter filter1, Filter filter2)
         {
             var bin1 = GetExpression<T>(param, filter1);
             var bin2 = GetExpression<T>(param, filter2);
@@ -97,27 +105,28 @@ namespace mPOS.WebAPI.Utilities
             return Expression.AndAlso(bin1, bin2);
         }
     }
+
     public class Filter
     {
         public string PropertyName { get; set; }
-        public POCO.Operation Operation { get; set; }
+        public Operation Operation { get; set; }
         public object Value { get; set; }
     }
 
     public class CaseInsensitiveExpressionVisitor : ExpressionVisitor
     {
-        private Boolean insideContains = false;
+        private bool insideContains;
+
         protected override Expression VisitMember(MemberExpression node)
         {
             if (insideContains)
-            {
-                if (node.Type == typeof(String))
+                if (node.Type == typeof(string))
                 {
-                    var methodInfo = typeof(String).GetMethod("ToLower", new Type[] { });
+                    var methodInfo = typeof(string).GetMethod("ToLower", new Type[] { });
                     var expression = Expression.Call(node, methodInfo);
                     return expression;
                 }
-            }
+
             return base.VisitMember(node);
         }
 
@@ -131,19 +140,8 @@ namespace mPOS.WebAPI.Utilities
                 insideContains = false;
                 return result;
             }
+
             return base.VisitMethodCall(node);
         }
     }
-
-    /*Usage
-    static void Main(string[] args)
-    {
-        Expression<Func<Test, bool>> expr = (t) => t.Name.Contains("a");
-        var expr1 = (Expression<Func<Test, bool>>)new CaseInsensitiveExpressionVisitor().Visit(expr);
-        var test = new[] { new Test { Name = "A" } };
-        var length = test.Where(expr1.Compile()).ToArray().Length;
-        Debug.Assert(length == 1);
-        Debug.Assert(test.Where(expr.Compile()).ToArray().Length == 0);
-    }
-    */
 }

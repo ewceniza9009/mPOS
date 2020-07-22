@@ -10,7 +10,7 @@ namespace mPOS.WebAPI.Utilities
         {
             var filterType = typeof(T);
             var filterProperties = filterType.GetProperties();
-            
+
             foreach (var prop in filterProperties)
             {
                 var propValue = prop.GetValue(filter);
@@ -21,14 +21,12 @@ namespace mPOS.WebAPI.Utilities
                 if (propValue == null) continue;
                 if (prop.Name == "filterMethods") break;
                 if (operation != null)
-                {
-                    yield return new Filter()
+                    yield return new Filter
                     {
                         PropertyName = prop.Name,
                         Operation = operation.Operation,
                         Value = propValue
                     };
-                }
             }
         }
     }

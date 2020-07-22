@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using mPOS.POCO;
+using mPOS.WebAPI.Data;
+using mPOS.WebAPI.Mapping;
 using mPOS.WebAPI.Utilities;
 
 namespace mPOS.WebAPI.Repository
 {
-    public class MstUser : IRead<POCO.MstUser, POCO.MstUserFilter, POCO.FilterMethods>, IRepository<POCO.MstUser>
+    public class MstUser : IRead<POCO.MstUser, MstUserFilter, FilterMethods>, IRepository<POCO.MstUser>
     {
         public POCO.MstUser Read(long id)
         {
             POCO.MstUser result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstUser, POCO.MstUser>();
+            var mappingProfile = new MappingProfile<Data.MstUser, POCO.MstUser>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstUsers
                     .SingleOrDefault(x => x.Id == id);
@@ -24,21 +27,21 @@ namespace mPOS.WebAPI.Repository
             return result;
         }
 
-        public IEnumerable<POCO.MstUser> BulkRead(POCO.MstUserFilter filter = null, POCO.FilterMethods filterMethods = null)
+        public IEnumerable<POCO.MstUser> BulkRead(MstUserFilter filter = null, FilterMethods filterMethods = null)
         {
             IEnumerable<POCO.MstUser> result;
 
-            var dynamicFilter = Utilities.Filterer<POCO.MstUserFilter>.GetFilter(filter, filterMethods);
-            var mappingProfile = new Mapping.MappingProfile<Data.MstUser, POCO.MstUser>();
+            var dynamicFilter = Filterer<MstUserFilter>.GetFilter(filter, filterMethods);
+            var mappingProfile = new MappingProfile<Data.MstUser, POCO.MstUser>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 IEnumerable<Data.MstUser> data;
 
                 if (filter != null)
                 {
                     var enumerable = dynamicFilter as Filter[] ?? dynamicFilter.ToArray();
-                    var filterExpression = Utilities.ExpressionBuilder
+                    var filterExpression = ExpressionBuilder
                         .GetExpression<Data.MstUser>(enumerable.ToList()).Compile();
 
                     data = ctx.MstUsers.Where(filterExpression);
@@ -66,15 +69,16 @@ namespace mPOS.WebAPI.Repository
 
         public POCO.MstUser IsLoginSuccess(string user, string password)
         {
-            var result = new POCO.MstUser();
+            POCO.MstUser result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstUser, POCO.MstUser>();
+            var mappingProfile = new MappingProfile<Data.MstUser, POCO.MstUser>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstUsers.SingleOrDefault(x =>
                     x.UserName == user &&
-                    x.Password == password); ;
+                    x.Password == password);
+                ;
 
                 result = mappingProfile.mapper.Map<Data.MstUser, POCO.MstUser>(data);
             }

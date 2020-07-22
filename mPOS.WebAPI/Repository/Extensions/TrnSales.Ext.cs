@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using mPOS.POCO;
+using mPOS.WebAPI.Data;
+using mPOS.WebAPI.Mapping;
+using MstDiscount = mPOS.POCO.MstDiscount;
+using MstTax = mPOS.POCO.MstTax;
 
 namespace mPOS.WebAPI.Repository
 {
@@ -18,22 +19,22 @@ namespace mPOS.WebAPI.Repository
             return Common.GetItems();
         }
 
-        public List<POCO.MstTax> GetTaxes()
+        public List<MstTax> GetTaxes()
         {
             return Common.GetTaxes();
         }
 
-        public List<POCO.MstDiscount> GetDiscounts()
+        public List<MstDiscount> GetDiscounts()
         {
-            IEnumerable<POCO.MstDiscount> result;
+            IEnumerable<MstDiscount> result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstDiscount, POCO.MstDiscount>();
+            var mappingProfile = new MappingProfile<Data.MstDiscount, MstDiscount>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstDiscounts;
 
-                result = mappingProfile.mapper.Map<IEnumerable<Data.MstDiscount>, IEnumerable<POCO.MstDiscount>>(data);
+                result = mappingProfile.mapper.Map<IEnumerable<Data.MstDiscount>, IEnumerable<MstDiscount>>(data);
             }
 
             return result.ToList();

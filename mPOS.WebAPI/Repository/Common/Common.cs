@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using mPOS.POCO;
+using mPOS.WebAPI.Data;
+using mPOS.WebAPI.Mapping;
+using MstTax = mPOS.POCO.MstTax;
+using MstUnit = mPOS.POCO.MstUnit;
 
 namespace mPOS.WebAPI.Repository
 {
     public static class Common
     {
-        public static List<POCO.MstUnit> GetUnits()
+        public static List<MstUnit> GetUnits()
         {
-            IEnumerable<POCO.MstUnit> result;
+            IEnumerable<MstUnit> result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstUnit, POCO.MstUnit>();
+            var mappingProfile = new MappingProfile<Data.MstUnit, MstUnit>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstUnits;
 
-                result = mappingProfile.mapper.Map<IEnumerable<Data.MstUnit>, IEnumerable<POCO.MstUnit>>(data);
+                result = mappingProfile.mapper.Map<IEnumerable<Data.MstUnit>, IEnumerable<MstUnit>>(data);
             }
 
             return result.ToList();
@@ -28,9 +29,9 @@ namespace mPOS.WebAPI.Repository
         {
             IEnumerable<POCO.MstCustomer> result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstCustomer, POCO.MstCustomer>();
+            var mappingProfile = new MappingProfile<Data.MstCustomer, POCO.MstCustomer>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstCustomers;
 
@@ -44,9 +45,9 @@ namespace mPOS.WebAPI.Repository
         {
             IEnumerable<POCO.MstItem> result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstItem, POCO.MstItem>();
+            var mappingProfile = new MappingProfile<Data.MstItem, POCO.MstItem>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstItems;
 
@@ -58,15 +59,15 @@ namespace mPOS.WebAPI.Repository
 
         public static List<MstTax> GetTaxes()
         {
-            IEnumerable<POCO.MstTax> result;
+            IEnumerable<MstTax> result;
 
-            var mappingProfile = new Mapping.MappingProfile<Data.MstTax, POCO.MstTax>();
+            var mappingProfile = new MappingProfile<Data.MstTax, MstTax>();
 
-            using (var ctx = new Data.posDataContext())
+            using (var ctx = new posDataContext())
             {
                 var data = ctx.MstTaxes;
 
-                result = mappingProfile.mapper.Map<IEnumerable<Data.MstTax>, IEnumerable<POCO.MstTax>>(data);
+                result = mappingProfile.mapper.Map<IEnumerable<Data.MstTax>, IEnumerable<MstTax>>(data);
             }
 
             return result.ToList();
