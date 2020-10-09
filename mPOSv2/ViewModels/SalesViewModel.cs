@@ -17,7 +17,6 @@ namespace mPOSv2.ViewModels
     public class SalesViewModel : ViewModelBase
     {
         #region Initialize
-
         public void Load(object sender = null)
         {
             var search = sender?.ToString() ?? string.Empty;
@@ -92,11 +91,9 @@ namespace mPOSv2.ViewModels
                 IsBusy = false;
             });
         }
-
         #endregion
 
         #region Properties
-
         public bool IsListEmpty
         {
             get
@@ -276,11 +273,9 @@ namespace mPOSv2.ViewModels
         }
 
         private ObservableCollection<TrnSalesLine> _SalesLines;
-
         #endregion
 
         #region Commands
-
         public Command RefreshSales
         {
             get => _RefreshSales ?? (_RefreshSales = new Command(Load, x => true));
@@ -385,11 +380,9 @@ namespace mPOSv2.ViewModels
         }
 
         private Command _Delete;
-
         #endregion
 
         #region Methods
-
         public void ExecuteRefreshSelectedSale(object sender)
         {
             OnPropertyChanged(nameof(SelectedSale));
@@ -603,11 +596,9 @@ namespace mPOSv2.ViewModels
                         TaskScheduler.FromCurrentSynchronizationContext())
             );
         }
-
         #endregion
 
         #region Other Methods
-
         public void ExecuteShowItems()
         {
             Device.BeginInvokeOnMainThread(async () =>
@@ -768,7 +759,7 @@ namespace mPOSv2.ViewModels
             var result = new ObservableCollection<TrnSalesLine>();
             var data = SelectedSale.TrnSalesLines.Skip(start).Take(pageSize);
 
-            data.ForEach(salesLine => { result.Add(salesLine); });
+            data.ForEach(salesLine => result.Add(salesLine));
 
             return result;
         }
@@ -780,7 +771,7 @@ namespace mPOSv2.ViewModels
                 .ToList();
             SelectedSale.TrnSalesLines = new List<TrnSalesLine>();
 
-            saleLines.ForEach(line => { SelectedSale.TrnSalesLines.Add(line); });
+            saleLines.ForEach(line => SelectedSale.TrnSalesLines.Add(line));
 
             ExecuteRefreshSelectedSale(new object());
 
@@ -791,9 +782,9 @@ namespace mPOSv2.ViewModels
 
         public double GetEndPage()
         {
-            var result = SelectedSale.TrnSalesLines.Any()
-                ? SelectedSale.TrnSalesLines.Count() / (double) Pager.PageSize
-                : 0;
+            var result = SelectedSale.TrnSalesLines.Any() ? 
+                SelectedSale.TrnSalesLines.Count() / (double) Pager.PageSize : 
+                0;
 
             return Math.Ceiling(result);
         }
