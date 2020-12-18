@@ -616,33 +616,33 @@ namespace mPOSv2.ViewModels
                 SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
 
                 var taxAmount = 0m;
-                var amount = SelectedItem.Price;
+                var amount = SelectedItem?.Price ?? 0;
 
-                if (SelectedTax.Code == "INCLUSIVE")
+                if (SelectedTax != null && SelectedTax.Code == "INCLUSIVE")
                 {
-                    taxAmount = Math.Round(SelectedItem.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100),
+                    taxAmount = Math.Round(SelectedItem?.Price ?? 0 / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100),
                         2);
                 }
                 else
                 {
-                    taxAmount = Math.Round(SelectedItem.Price * (SelectedTax.Rate / 100), 2);
-                    amount = Math.Round(SelectedItem.Price + taxAmount, 2);
+                    taxAmount = Math.Round(SelectedItem?.Price ?? 0 * ((SelectedTax?.Rate ?? 0)/ 100), 2);
+                    amount = Math.Round(SelectedItem?.Price ?? 0 + taxAmount, 2);
                 }
 
                 SelectedSaleLine = new TrnSalesLine
                 {
-                    ItemId = SelectedItem.Id,
-                    ItemDescription = SelectedItem.ItemDescription,
-                    BarCode = SelectedItem.BarCode,
-                    UnitId = SelectedItem.UnitId,
+                    ItemId = SelectedItem?.Id ?? 0,
+                    ItemDescription = SelectedItem?.ItemDescription,
+                    BarCode = SelectedItem?.BarCode,
+                    UnitId = SelectedItem?.UnitId ?? 0,
                     UnitName = SaleUnits?.SingleOrDefault(x => x.Id == SelectedItem.UnitId)?.Unit ?? "Unit(s)",
                     Quantity = 1,
-                    Price = SelectedItem.Price,
-                    NetPrice = SelectedItem.Price,
-                    TaxId = SelectedTax.Id,
-                    TaxRate = SelectedTax.Rate,
+                    Price = SelectedItem?.Price ?? 0,
+                    NetPrice = SelectedItem?.Price ?? 0,
+                    TaxId = SelectedTax?.Id ?? 0,
+                    TaxRate = SelectedTax?.Rate ?? 0,
                     TaxAmount = taxAmount,
-                    TaxAccountId = SelectedTax.AccountId,
+                    TaxAccountId = SelectedTax?.AccountId ?? 0,
                     Amount = amount,
                     SalesLineTimeStamp = DateTime.Now
                 };
@@ -666,33 +666,33 @@ namespace mPOSv2.ViewModels
                 if (!isItemPunchedIn)
                 {
                     var taxAmount = 0m;
-                    var amount = SelectedItem.Price;
+                    var amount = SelectedItem?.Price ?? 0;
 
-                    if (SelectedTax.Code == "INCLUSIVE")
+                    if (SelectedTax?.Code == "INCLUSIVE")
                     {
                         taxAmount = Math.Round(
-                            SelectedItem.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
+                            SelectedItem?.Price ?? 0 / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
                     }
                     else
                     {
-                        taxAmount = Math.Round(SelectedItem.Price * (SelectedTax.Rate / 100), 2);
-                        amount = Math.Round(SelectedItem.Price + taxAmount, 2);
+                        taxAmount = Math.Round(SelectedItem?.Price ?? 0 * ((SelectedTax?.Rate ?? 0) / 100), 2);
+                        amount = Math.Round((SelectedItem?.Price ?? 0) + taxAmount, 2);
                     }
 
                     SelectedSaleLine = new TrnSalesLine
                     {
-                        ItemId = SelectedItem.Id,
-                        ItemDescription = SelectedItem.ItemDescription,
-                        BarCode = SelectedItem.BarCode,
-                        UnitId = SelectedItem.UnitId,
+                        ItemId = SelectedItem?.Id ?? 0,
+                        ItemDescription = SelectedItem?.ItemDescription,
+                        BarCode = SelectedItem?.BarCode,
+                        UnitId = SelectedItem?.UnitId ?? 0,
                         UnitName = SaleUnits?.SingleOrDefault(x => x.Id == SelectedItem.UnitId)?.Unit ?? "Unit(s)",
                         Quantity = 1,
-                        Price = SelectedItem.Price,
-                        NetPrice = SelectedItem.Price,
-                        TaxId = SelectedTax.Id,
-                        TaxRate = SelectedTax.Rate,
+                        Price = SelectedItem?.Price ?? 0,
+                        NetPrice = SelectedItem?.Price ?? 0,
+                        TaxId = SelectedTax?.Id ?? 0,
+                        TaxRate = SelectedTax?.Rate ?? 0,
                         TaxAmount = taxAmount,
-                        TaxAccountId = SelectedTax.AccountId,
+                        TaxAccountId = SelectedTax?.AccountId ?? 0,
                         Amount = amount,
                         SalesLineTimeStamp = DateTime.Now
                     };
@@ -704,16 +704,16 @@ namespace mPOSv2.ViewModels
                     SelectedSaleLine = SelectedSale.TrnSalesLines.SingleOrDefault(x => x.ItemId == SelectedItem.Id);
 
                     var taxAmount = 0m;
-                    var quantity = SelectedSaleLine.Quantity + 1;
-                    var amount = quantity * SelectedSaleLine.NetPrice;
+                    var quantity = SelectedSaleLine?.Quantity ?? 0 + 1;
+                    var amount = quantity * SelectedSaleLine?.NetPrice ?? 0;
 
-                    if (SelectedTax.Code == "INCLUSIVE")
+                    if (SelectedTax?.Code == "INCLUSIVE")
                     {
                         taxAmount = Math.Round(amount / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
                     }
                     else
                     {
-                        taxAmount = Math.Round(amount * (SelectedTax.Rate / 100), 2);
+                        taxAmount = Math.Round(amount * ((SelectedTax?.Rate ?? 0) / 100), 2);
                         amount = Math.Round(amount + taxAmount, 2);
                     }
 
