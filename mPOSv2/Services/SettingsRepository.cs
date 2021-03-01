@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using mPOSv2.Models;
 using SQLite;
 
@@ -6,6 +7,8 @@ namespace mPOSv2.Services
 {
     public static class SettingsRepository
     {
+        private static Models.Settings Settings;
+
         public static Settings GetSettings()
         {
             Settings result;
@@ -51,6 +54,51 @@ namespace mPOSv2.Services
             }
 
             return result;
+        }
+
+        public static void CreateLocalSettingsDB()
+        {
+            using (var conn = new SQLiteConnection(App.FilePath)) 
+            {
+                Settings = new Models.Settings
+                {
+                    UserId = 1,
+                    UserFullName = "NotFound",
+                    ServerName = GlobalVariables.UriBase,
+                    LoginDate = DateTime.Now,
+                    ContinuesBarcode = false
+                };
+
+                var tableExistsQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='Settings';";
+                var result = conn.ExecuteScalar<string>(tableExistsQuery);
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    conn.CreateTable<Models.Settings>();
+                    conn.Insert(Settings);
+                }
+            }
+        }
+
+        public static void UpdateLocalSettingsDB(mPOS.POCO.MstUser login)
+        {
+            using (var conn = new SQLiteConnection(App.FilePath)) 
+            {
+                Settings = conn.Query<Models.Settings>("SELECT * FROM Settings WHERE Id = ?", 1)
+                    .FirstOrDefault();
+
+                if (Settings != null)
+                {
+                    Settings.UserId = login.Id;
+                    Settings.UserFullName = login.FullName;
+                    Settings.LoginDate = DateTime.Now;
+
+                    conn.RunInTransaction(() =>
+                    {
+                        if (conn != null) conn.Update(Settings);
+                    });
+                }
+            }
         }
     }
 }
