@@ -1,5 +1,6 @@
 ﻿using mPOSv2.Models;
 using SQLite;
+using System;
 
 namespace mPOSv2.Services
 {
@@ -21,5 +22,7 @@ namespace mPOSv2.Services
 
             return result;
         }
+
+        public static DateTime? TempSearchSalesDate { get; set; } = null;
     }
 }

@@ -23,6 +23,8 @@ namespace mPOSv2.ViewModels
 
             IsBusy = true;
 
+            if (SearchSaleDate == null) SearchSaleDate = GlobalVariables.TempSearchSalesDate ?? DateTime.Now.Date;
+
             Task.Run(async () =>
             {
                 TrnSalesFilter salesFilter = null;
@@ -31,7 +33,7 @@ namespace mPOSv2.ViewModels
                     salesFilter = new TrnSalesFilter
                     {
                         SalesNumber = search,
-                        SalesDate = SearchSaleDate ?? DateTime.Now.Date,
+                        SalesDate = (DateTime)SearchSaleDate,
                         filterMethods = new FilterMethods
                         {
                             Operations = new List<FilterOperation>
@@ -164,7 +166,7 @@ namespace mPOSv2.ViewModels
 
         public bool IsChanged { get; set; }
 
-        public string Title => $"INV #: {SelectedSale.SalesNumber ?? "New"}";
+        public string Title => $"INV #: {(SelectedSale.SalesNumber ?? "New")}";
 
         public long SelectedSaleId
         {
@@ -448,6 +450,8 @@ namespace mPOSv2.ViewModels
                 IsChanged = false;
                 SelectedSale = selectedSale;
                 SelectedCustomer = Customers.SingleOrDefault(y => y.Id == SelectedSale.CustomerId);
+
+                GlobalVariables.TempSearchSalesDate = SearchSaleDate;
 
                 LoadSalesLine();
 

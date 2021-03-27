@@ -30,7 +30,7 @@
                    WidthRequest="1000">
                 <Label Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
                        TextColor="DodgerBlue"
-                       FontSize="50"
+                       FontSize="30"
                        HorizontalTextAlignment="End">
                 </Label>
             </Frame>

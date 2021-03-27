@@ -10,7 +10,8 @@ namespace mPOSv2.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             //return Decimal.Parse(value.ToString()).ToString("N2", culture);
-            return $"{NumberFormatInfo.CurrentInfo.CurrencySymbol}{decimal.Parse(value.ToString()):N2}";
+            //return $"{NumberFormatInfo.CurrentInfo.CurrencySymbol}{decimal.Parse(value.ToString()):N2}";
+            return $"₱{decimal.Parse(value.ToString()):N2}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -22,6 +22,7 @@ namespace mPOSv2.Android
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             Platform.Init();
 
@@ -32,6 +33,15 @@ namespace mPOSv2.Android
             var dbFileCompletePath = Path.Combine(folderPath, dbFile);
 
             LoadApplication(new App(dbFileCompletePath));
+
+            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+
+            uiOptions |= (int)SystemUiFlags.LowProfile;
+            uiOptions |= (int)SystemUiFlags.Fullscreen;
+            uiOptions |= (int)SystemUiFlags.HideNavigation;
+            uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+
+            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
 
             Window.SetSoftInputMode(SoftInput.AdjustResize);
         }
