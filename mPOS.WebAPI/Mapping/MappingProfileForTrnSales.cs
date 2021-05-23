@@ -20,7 +20,12 @@ namespace mPOS.WebAPI.Mapping
         {
             CreateMap<Data.TrnSale, POCO.TrnSales>()
                 .ForMember(dest => dest.TrnSalesLines, conf => conf.MapFrom(value => value.TrnSalesLines));
+            CreateMap<Data.TrnSale, POCO.TrnSales>()
+                .ForMember(dest => dest.CustomerName, conf => conf.MapFrom(value => value.MstCustomer.Customer));
             CreateMap<Data.TrnSalesLine, POCO.TrnSalesLine>();
+            CreateMap<Data.TrnSalesLine, POCO.TrnSalesLine>()
+                .ForMember(dest => dest.MstItem, conf => conf.MapFrom(value => value.MstItem));
+            CreateMap<Data.MstItem, POCO.MstItem>();                
         }
     }
 

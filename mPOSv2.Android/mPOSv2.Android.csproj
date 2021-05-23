@@ -79,6 +79,9 @@
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.7.335</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfChart">
+      <Version>18.1.0.59</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfKanban">
       <Version>18.1.0.59</Version>
     </PackageReference>
@@ -338,7 +341,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadDebuggerTimeoutExceptionmPOSv2AndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionmPOSv2AndroidHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

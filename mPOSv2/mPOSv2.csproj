@@ -7,6 +7,7 @@
 <ItemGroup>
 <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+<PackageReference Include="Syncfusion.Xamarin.SfChart" Version="18.1.0.59" />
 <PackageReference Include="Syncfusion.Xamarin.SfKanban" Version="18.1.0.59" />
 <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
 <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
@@ -86,6 +87,9 @@
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="MainPage.xaml.cs">
       <DependentUpon>Login</DependentUpon>
     </Compile>
+    <Compile Update="Views\Report\Sales\SalesReportChart.xaml.cs">
+      <DependentUpon>SalesReportChart.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -105,6 +109,15 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Activity\Sales\SalesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Report\Reports.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Report\Sales\SalesReportByCustomerInAMonth.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Report\Sales\SalesReportChart.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Setup\Customer\CustomerView.xaml">

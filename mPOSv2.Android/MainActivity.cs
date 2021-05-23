@@ -46,6 +46,33 @@ namespace mPOSv2.Android
             Window.SetSoftInputMode(SoftInput.AdjustResize);
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+
+            uiOptions |= (int)SystemUiFlags.LowProfile;
+            uiOptions |= (int)SystemUiFlags.Fullscreen;
+            uiOptions |= (int)SystemUiFlags.HideNavigation;
+            uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+
+            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+
+            uiOptions |= (int)SystemUiFlags.LowProfile;
+            uiOptions |= (int)SystemUiFlags.Fullscreen;
+            uiOptions |= (int)SystemUiFlags.HideNavigation;
+            uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+
+            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+        }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions,
             [GeneratedEnum] Permission[] grantResults)
         {

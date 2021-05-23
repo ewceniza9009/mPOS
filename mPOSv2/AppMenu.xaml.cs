@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using mPOSv2.MenuItems;
 using mPOSv2.Services;
 using mPOSv2.Views.Activity.Sales;
+using mPOSv2.Views.Report;
 using mPOSv2.Views.Setup.Customer;
 using mPOSv2.Views.Setup.Item;
 using mPOSv2.Views.Start;
@@ -24,6 +25,7 @@ namespace mPOSv2
                 new MenuPageItem {Title = "Sales", Icon = "sales.png", TargetType = typeof(SalesView)},
                 new MenuPageItem {Title = "Customer", Icon = "customer.png", TargetType = typeof(CustomerView)},
                 new MenuPageItem {Title = "Item", Icon = "product.png", TargetType = typeof(ItemView)},
+                new MenuPageItem {Title = "Reports", Icon = "purchase_order.png", TargetType = typeof(Reports)},
                 new MenuPageItem {Title = "Settings", Icon = "setting.png", TargetType = typeof(Settings)},
                 new MenuPageItem {Title = "Logout", Icon = "logout.png", TargetType = typeof(LogoutPage)}
             };

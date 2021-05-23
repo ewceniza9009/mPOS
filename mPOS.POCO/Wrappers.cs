@@ -552,7 +552,6 @@ namespace mPOS.POCO
         public int UpdateUserId { get; set; }
         public DateTime UpdateDateTime { get; set; }
         public int? Pax { get; set; }
-        public List<TrnSalesLine> TrnSalesLines { get; set; }
     }
 
     public partial class TrnSalesLine

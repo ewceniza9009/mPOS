@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xForms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             x:Class="mPOSv2.Views.Report.Reports"
+             xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
+             xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
+             Title="Reports">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout x:Name="MainStackLayout">
+            <StackLayout x:Name="SearchStackLayout"
+                         Orientation="Vertical">
+                <SearchBar x:Name="SearchSale"
+                           Text="{Binding SearchSaleEntry}"
+                           SearchCommand="{Binding Search}"
+                           Placeholder="Search"
+                           HorizontalOptions="FillAndExpand"
+                           Margin="-20,0,0,0"/>
+            </StackLayout>
+            <StackLayout x:Name="ReportStackLayout">
+                <ListView x:Name="NavigationDrawerList"
+                           ItemsSource="{Binding ReportList}">
+                    <ListView.Behaviors>
+                        <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding CmdOpenSalesReportByCustomerInAMonth}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <StackLayout VerticalOptions="FillAndExpand"
+                                                     Orientation="Horizontal"
+                                                     Padding="10,10,0,10"
+                                                     Spacing="10">
+
+                                        <Label Text="{Binding Text}"
+                                       FontSize="Medium"
+                                       VerticalOptions="Center"
+                                       TextColor="Black"/>
+                                    </StackLayout>
+                                    <BoxView HeightRequest="1" BackgroundColor="Gray"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:mPOSv2.Views.Report.Sales"
+             xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+             x:Class="mPOSv2.Views.Report.Sales.RptSales">
+    <ContentPage.BindingContext>
+        <local:SalesReportChartViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <chart:SfChart>
+            <chart:SfChart.PrimaryAxis>
+                <chart:CategoryAxis>
+                </chart:CategoryAxis>
+            </chart:SfChart.PrimaryAxis>
+            <chart:SfChart.SecondaryAxis>
+                <chart:NumericalAxis>
+                </chart:NumericalAxis>
+            </chart:SfChart.SecondaryAxis>
+            <chart:ColumnSeries ItemsSource="{Binding Data}" XBindingPath="Month" YBindingPath="Target"/>
+        </chart:SfChart>
+    </ContentPage.Content>
+</ContentPage>

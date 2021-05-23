@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using mPOS.POCO;
 
 namespace mPOS.WebAPI.Controllers
@@ -39,6 +40,16 @@ namespace mPOS.WebAPI.Controllers
         {
             var repos = new Repository.TrnSales();
             repos.Delete(id);
+        }
+
+        public JsonResult GetSalesReport()
+        {
+            var date = Convert.ToDateTime("2020-07-05");
+
+            var report = new Repository.Reports.SalesReport(new Repository.TrnSales());
+            var result = report.GetSalesReport(date);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetCustomers()

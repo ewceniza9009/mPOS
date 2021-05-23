@@ -223,6 +223,7 @@
     <Compile Include="Repository\MstCustomer.cs" />
     <Compile Include="Repository\MstItem.cs" />
     <Compile Include="Repository\MstUser.cs" />
+    <Compile Include="Repository\Reports\SalesReport.cs" />
     <Compile Include="Repository\TrnSales.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\ExpressionBuilder.cs" />

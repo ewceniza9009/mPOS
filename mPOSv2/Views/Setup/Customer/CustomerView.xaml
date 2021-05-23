@@ -42,8 +42,7 @@ xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusi
                           SelectedItem="{Binding SelectedCustomer}"
                           RefreshCommand="{Binding RefreshCustomers}"
                           IsPullToRefreshEnabled="True"
-                          IsRefreshing="{Binding IsBusy}"
-                          >
+                          IsRefreshing="{Binding IsBusy}">
                     <ListView.Behaviors>
                         <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectCustomer}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                     </ListView.Behaviors>

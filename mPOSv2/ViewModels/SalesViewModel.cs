@@ -23,7 +23,7 @@ namespace mPOSv2.ViewModels
 
             IsBusy = true;
 
-            if (SearchSaleDate == null) SearchSaleDate = GlobalVariables.TempSearchSalesDate ?? DateTime.Now.Date;
+            SearchSaleDate = GlobalVariables.TempSearchSalesDate ?? DateTime.Now.Date;
 
             Task.Run(async () =>
             {
@@ -426,6 +426,8 @@ namespace mPOSv2.ViewModels
 
         public void ExecuteSearch(object sender)
         {
+            GlobalVariables.TempSearchSalesDate = SearchSaleDate;
+
             Load(SearchSaleEntry);
 
             OnPropertyChanged(nameof(Sales));

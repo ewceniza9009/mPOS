@@ -9,6 +9,7 @@ namespace mPOS.POCO
     public partial class TrnSales
     {
         public string CustomerName { get; set; }
+        public List<TrnSalesLine> TrnSalesLines { get; set; }
 
         public decimal SalesAmount
         {
