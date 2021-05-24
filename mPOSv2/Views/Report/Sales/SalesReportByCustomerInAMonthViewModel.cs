@@ -53,6 +53,20 @@ namespace mPOSv2.Views.Report.Sales
         }
         private YearWrapper _SelectedYear;
 
+        public bool ShowReport
+        {
+            get => _ShowReport;
+            set => SetProperty(ref _ShowReport, value);
+        }
+        private bool _ShowReport;
+
+        public bool ShowNoData
+        {
+            get => _ShowNoData;
+            set => SetProperty(ref _ShowNoData, value);
+        }
+        private bool _ShowNoData;
+
         public SalesReportByCustomerInAMonthViewModel()
         {          
             LoadMonths();
@@ -74,6 +88,9 @@ namespace mPOSv2.Views.Report.Sales
                 var convertedOutput = Utilities.Util<mPOS.POCO.TrnSales>.ConvertToList(input);
 
                 CustomerSales = GetWrappedOutput(convertedOutput);
+
+                ShowReport = CustomerSales.Count > 0 ? true : false;
+                ShowNoData = CustomerSales.Count == 0 ? true : false;
             });
         }
 

@@ -27,7 +27,7 @@
                                      DisplayMemberPath="Value"
                                      IsEditableMode="true" 
                                      AllowFiltering="true" 
-                                     MaximumDropDownHeight="300"
+                                     MaximumDropDownHeight="290"
                                      HorizontalOptions="EndAndExpand"
                                      ComboBoxMode="SuggestAppend">
                     </combobox:SfComboBox>
@@ -35,13 +35,14 @@
                 <Button Text="Go"
                         Clicked="SfButton_Clicked"
                         TextColor="Black"
-                        WidthRequest="70"/>
+                        WidthRequest="60"/>
             </StackLayout>
             <ListView x:Name="CustomerView"
                       ItemsSource="{Binding CustomerSales}"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
-                      SelectionMode="None">
+                      SelectionMode="None"
+                      IsVisible="{Binding ShowReport}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -64,7 +65,7 @@
                                                            LineBreakMode="NoWrap"
                                                            MaxLines="1"
                                                            Text="{Binding CustomerName}"
-                                                           WidthRequest="300"
+                                                           WidthRequest="290"
                                                            TextColor="Black"
                                                            VerticalOptions="Center" 
                                                            HeightRequest="25"/>
@@ -85,13 +86,13 @@
                                             </StackLayout>
                                             <StackLayout Orientation="Vertical">
                                                 <Label Text="{Binding TotalCustomerSales, StringFormat='₱{0:N2}'}"
-                                                       WidthRequest="80"
+                                                       WidthRequest="75"
                                                        HorizontalTextAlignment="End"
                                                        FontAttributes="Bold"
                                                        TextDecorations="Underline"
                                                        TextColor="DeepSkyBlue"/>
                                                 <Label Text="Total ⤴"  
-                                                       WidthRequest="80"
+                                                       WidthRequest="75"
                                                        HorizontalTextAlignment="End"
                                                        FontSize="15"
                                                        FontAttributes="Bold"
@@ -119,7 +120,7 @@
                                                             <StackLayout HorizontalOptions="End"
                                                                          Orientation="Horizontal">
                                                                 <Label Text="{Binding ItemSalesAmount, StringFormat='₱{0:N2}'}"
-                                                                       WidthRequest="80"
+                                                                       WidthRequest="75"
                                                                        HorizontalTextAlignment="End"/>
                                                             </StackLayout>
                                                         </StackLayout>
@@ -134,6 +135,14 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <StackLayout x:Name="NoData"
+                         IsVisible="{Binding ShowNoData}"
+                         HeightRequest="500"
+                         WidthRequest="500">
+                <Label Text="No Data" 
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

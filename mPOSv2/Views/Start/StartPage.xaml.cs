@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using mPOSv2.MenuItems;
 using mPOSv2.Services;
 using mPOSv2.Views.Activity.Sales;
+using mPOSv2.Views.Report;
 using mPOSv2.Views.Setup.Customer;
 using mPOSv2.Views.Setup.Item;
 using Xamarin.Forms;
@@ -40,6 +41,13 @@ namespace mPOSv2.Views.Start
                     Description = " All inventory and non-inventory items",
                     Icon = "product.png",
                     TargetType = typeof(ItemView)
+                },
+                new MenuPageItem
+                {
+                    Title = "Report",
+                    Description = " All reports for POS",
+                    Icon = "purchase_order.png",
+                    TargetType = typeof(Reports)
                 },
                 new MenuPageItem
                 {
