@@ -30,18 +30,29 @@ namespace mPOSv2.Views.Report
         }
 
 
-        public Command CmdOpenSalesReportByCustomerInAMonth
+        public Command CmdOpenSalesReport
         {
-            get => _CmdOpenSalesReportByCustomerInAMonth ?? (_CmdOpenSalesReportByCustomerInAMonth = new Command(ExecuteSalesReportByCustomerInAMonth, x => true));
-            set => SetProperty(ref _CmdOpenSalesReportByCustomerInAMonth, value);
+            get => _CmdOpenSalesReport ?? (_CmdOpenSalesReport = new Command(ExecutOpeneSalesReport, x => true));
+            set => SetProperty(ref _CmdOpenSalesReport, value);
         }
 
-        private Command _CmdOpenSalesReportByCustomerInAMonth;
+        private Command _CmdOpenSalesReport;
 
-        private void ExecuteSalesReportByCustomerInAMonth(object sender)
+        private void ExecutOpeneSalesReport(object sender)
         {
-            Device.BeginInvokeOnMainThread(async () =>
+            var selected = sender as ReportItem;
+
+            switch (selected.SortOrder) 
+            {
+                case 1:
+                    Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.Navigation.PushAsync(new SalesReportByCustomerInAMonth()));
+                    break;
+                case 2:
+                    Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesReportChart()));
+                    break;
+            }
         }
     }
 

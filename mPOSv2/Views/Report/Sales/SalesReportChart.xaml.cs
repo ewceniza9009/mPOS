@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace mPOSv2.Views.Report.Sales
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RptSales : ContentPage
+    public partial class SalesReportChart : ContentPage
     {
-        public RptSales()
+        public SalesReportChart()
         {
             InitializeComponent();
         }

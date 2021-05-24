@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,27 @@ namespace mPOSv2.Views.Report.Sales
         }
         private List<Models.Wrappers.Report.SalesReportByCustomerInAMonthWrapper> _CustomerSales;
 
+        public List<MonthWrapper> Months 
+        {
+            get => _Months;
+            private set => SetProperty(ref _Months, value);
+        }
+        private List<MonthWrapper> _Months;
+
+        public string CurrentMonth 
+        {
+            get => _CurrentMonth;
+            private set => SetProperty(ref _CurrentMonth, value);
+        }
+        private string _CurrentMonth;
+
+        public MonthWrapper SelectedMonth
+        {
+            get => _SelectedMonth;
+            set => SetProperty(ref _SelectedMonth, value);
+        }
+        private MonthWrapper _SelectedMonth;
+
         public SalesReportByCustomerInAMonthViewModel()
         {
             Task.Run(async () =>
@@ -24,8 +46,13 @@ namespace mPOSv2.Views.Report.Sales
                 var input = await Services.APISalesReportRequest.GetSalesReport();
                 var convertedOutput = Utilities.Util<mPOS.POCO.TrnSales>.ConvertToList(input);
 
-                CustomerSales = GetWrappedOutput(convertedOutput);
-            });            
+                CustomerSales = GetWrappedOutput(convertedOutput);               
+            });
+
+            LoadMonths();
+
+            _CurrentMonth = Months.ElementAt(DateTime.Now.Month).Value;
+            _SelectedMonth = Months.ElementAt(DateTime.Now.Month - 1);
         }
 
         private List<Models.Wrappers.Report.SalesReportByCustomerInAMonthWrapper> GetWrappedOutput(List<mPOS.POCO.TrnSales> convertedOutput) 
@@ -72,5 +99,23 @@ namespace mPOSv2.Views.Report.Sales
 
             return result.OrderBy(x => x.CustomerName).ToList();
         }
+
+        private void LoadMonths()
+        {
+            _Months = new List<MonthWrapper>();
+            int ctr = 0;
+
+            foreach (var month in DateTimeFormatInfo.CurrentInfo.MonthNames) 
+            {
+                _Months.Add(new MonthWrapper() { Key = ctr, Value = month });
+                ctr++;
+            }
+        }
+    }
+
+    public class MonthWrapper
+    {
+        public int Key{ get; set; }
+        public string Value { get; set; }
     }
 }

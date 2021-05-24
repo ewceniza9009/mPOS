@@ -120,7 +120,7 @@
                                              DisplayMemberPath="Tax"
                                              IsEditableMode="true" 
                                              AllowFiltering="true" 
-                                             MaximumDropDownHeight="300"
+                                             MaximumDropDownHeight="200"
                                              ComboBoxMode="SuggestAppend"
                                              SelectionChanged="OutputTaxComboBox_OnSelectionChanged">
                             <combobox:SfComboBox.ItemTemplate>

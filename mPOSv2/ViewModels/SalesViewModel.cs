@@ -146,7 +146,7 @@ namespace mPOSv2.ViewModels
 
         public DateTime? SearchSaleDate
         {
-            get => _SearchSaleDate ?? DateTime.Now.Date;
+            get => _SearchSaleDate;
             set => SetProperty(ref _SearchSaleDate, value);
         }
 
