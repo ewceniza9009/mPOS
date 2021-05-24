@@ -9,16 +9,33 @@
              Title="Sales by customer for the month">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout>
-                <combobox:SfComboBox x:Name="CmbMonth"
+            <StackLayout Orientation="Horizontal" BackgroundColor="Beige">
+                <combobox:SfComboBox x:Name="CmbYear"
+                                     DataSource="{Binding Years}"
+                                     SelectedItem="{Binding SelectedYear}"
+                                     DisplayMemberPath="Value"
+                                     IsEditableMode="true" 
+                                     AllowFiltering="true" 
+                                     MaximumDropDownHeight="300"
+                                     ComboBoxMode="SuggestAppend"
+                                     WidthRequest="100">
+                </combobox:SfComboBox>
+                <StackLayout WidthRequest="230">
+                    <combobox:SfComboBox x:Name="CmbMonth"
                                      DataSource="{Binding Months}"
                                      SelectedItem="{Binding SelectedMonth}"
                                      DisplayMemberPath="Value"
                                      IsEditableMode="true" 
                                      AllowFiltering="true" 
                                      MaximumDropDownHeight="300"
+                                     HorizontalOptions="EndAndExpand"
                                      ComboBoxMode="SuggestAppend">
-                </combobox:SfComboBox>
+                    </combobox:SfComboBox>
+                </StackLayout>
+                <Button Text="Go"
+                        Clicked="SfButton_Clicked"
+                        TextColor="Black"
+                        WidthRequest="70"/>
             </StackLayout>
             <ListView x:Name="CustomerView"
                       ItemsSource="{Binding CustomerSales}"
@@ -29,7 +46,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <cards:SfCardView Margin="5,5,5,0"
-                                              BackgroundColor="WhiteSmoke" >
+                                              BackgroundColor="White" >
                                 <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                     <StackLayout Orientation="Vertical">
                                         <StackLayout Orientation="Horizontal">

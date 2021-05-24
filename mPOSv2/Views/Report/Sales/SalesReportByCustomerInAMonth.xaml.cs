@@ -18,8 +18,14 @@ namespace mPOSv2.Views.Report.Sales
             InitializeComponent();
 
             vm = new SalesReportByCustomerInAMonthViewModel();
+            vm.Load();
 
             BindingContext = vm;
+        }
+
+        private void SfButton_Clicked(object sender, EventArgs e)
+        {
+            vm.Load();
         }
     }
 }

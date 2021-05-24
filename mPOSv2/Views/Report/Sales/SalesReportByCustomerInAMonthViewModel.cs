@@ -39,20 +39,42 @@ namespace mPOSv2.Views.Report.Sales
         }
         private MonthWrapper _SelectedMonth;
 
+        public List<YearWrapper> Years 
+        {
+            get => _Years;
+            set => SetProperty(ref _Years, value);
+        }
+        private List<YearWrapper> _Years;
+
+        public YearWrapper SelectedYear
+        {
+            get => _SelectedYear;
+            set => SetProperty(ref _SelectedYear, value);
+        }
+        private YearWrapper _SelectedYear;
+
         public SalesReportByCustomerInAMonthViewModel()
+        {          
+            LoadMonths();
+            LoadYears();
+
+            _CurrentMonth = Months.ElementAt(DateTime.Now.Month).Value;
+
+            _SelectedYear = Years.SingleOrDefault(x => x.Value == DateTime.Now.Year);
+            _SelectedMonth = Months.ElementAt(DateTime.Now.Month - 1);
+        }
+
+        public void Load() 
         {
             Task.Run(async () =>
             {
-                var input = await Services.APISalesReportRequest.GetSalesReport();
+                var param = $"{_SelectedYear.Value}-{_SelectedMonth.Key.ToString().PadLeft(2, '0')}-01";
+
+                var input = await Services.APISalesReportRequest.GetSalesReport(param);
                 var convertedOutput = Utilities.Util<mPOS.POCO.TrnSales>.ConvertToList(input);
 
-                CustomerSales = GetWrappedOutput(convertedOutput);               
+                CustomerSales = GetWrappedOutput(convertedOutput);
             });
-
-            LoadMonths();
-
-            _CurrentMonth = Months.ElementAt(DateTime.Now.Month).Value;
-            _SelectedMonth = Months.ElementAt(DateTime.Now.Month - 1);
         }
 
         private List<Models.Wrappers.Report.SalesReportByCustomerInAMonthWrapper> GetWrappedOutput(List<mPOS.POCO.TrnSales> convertedOutput) 
@@ -100,10 +122,22 @@ namespace mPOSv2.Views.Report.Sales
             return result.OrderBy(x => x.CustomerName).ToList();
         }
 
+        private void LoadYears() 
+        {
+            _Years = new List<YearWrapper>();
+            int startYear = 2011;
+
+            for (int ctr = 1;  ctr <= 41; ctr++)
+            {
+                _Years.Add(new YearWrapper() { Key = ctr, Value = startYear });
+
+                startYear += 1;
+            }
+        }
         private void LoadMonths()
         {
             _Months = new List<MonthWrapper>();
-            int ctr = 0;
+            int ctr = 1;
 
             foreach (var month in DateTimeFormatInfo.CurrentInfo.MonthNames) 
             {
@@ -117,5 +151,11 @@ namespace mPOSv2.Views.Report.Sales
     {
         public int Key{ get; set; }
         public string Value { get; set; }
+    }
+
+    public class YearWrapper 
+    {
+        public int Key { get; set; }
+        public int Value { get; set; }
     }
 }

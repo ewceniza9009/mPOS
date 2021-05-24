@@ -47,7 +47,7 @@
                        Padding="0">
                     <StackLayout>
                         <StackLayout Orientation="Horizontal"
-                                     BackgroundColor="LightSkyBlue"
+                                     BackgroundColor="DodgerBlue"
                                      HeightRequest="40">
                             <Label HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
@@ -58,7 +58,7 @@
                             <Button x:Name="CmdMore"
                                     WidthRequest="50"
                                     HeightRequest="40"
-                                    BackgroundColor="LightSkyBlue"
+                                    BackgroundColor="DodgerBlue"
                                     ImageSource="view_more.png"/>
                         </StackLayout>
 
@@ -107,7 +107,7 @@
                          VerticalOptions="Center">
 
                         <StackLayout Orientation="Horizontal"
-                                     BackgroundColor="LightSkyBlue"
+                                     BackgroundColor="Beige"
                                      HeightRequest="40">
                             <Label HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
@@ -118,14 +118,14 @@
                             <Button x:Name="CmdSearchItem"
                                     WidthRequest="40"
                                     HeightRequest="35"
-                                    BackgroundColor="LightSkyBlue"
+                                    BackgroundColor="Beige"
                                     ImageSource="add_item.png"
                                     Clicked="CmdSearchItem_OnClicked"/>
 
                             <Button x:Name="CmdSearchBarcode"
                                     WidthRequest="40"
                                     HeightRequest="35"
-                                    BackgroundColor="LightSkyBlue"
+                                    BackgroundColor="Beige"
                                     ImageSource="barcode_scanner.png"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">

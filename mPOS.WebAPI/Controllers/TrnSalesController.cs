@@ -42,9 +42,9 @@ namespace mPOS.WebAPI.Controllers
             repos.Delete(id);
         }
 
-        public JsonResult GetSalesReport()
+        public JsonResult GetSalesReport(string param)
         {
-            var date = Convert.ToDateTime("2020-07-05");
+            var date = Convert.ToDateTime(param);
 
             var report = new Repository.Reports.SalesReport(new Repository.TrnSales());
             var result = report.GetSalesReport(date);

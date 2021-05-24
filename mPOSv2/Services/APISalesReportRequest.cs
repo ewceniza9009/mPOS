@@ -11,10 +11,10 @@ namespace mPOSv2.Services
 {
     public class APISalesReportRequest
     {
-        public static async Task<ObservableCollection<TrnSales>> GetSalesReport()
+        public static async Task<ObservableCollection<TrnSales>> GetSalesReport(string param)
         {
             ObservableCollection<TrnSales> result;
-            var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetSalesReport";
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetSalesReport?param={param}";
 
             using (var client = new HttpClient())
             {
