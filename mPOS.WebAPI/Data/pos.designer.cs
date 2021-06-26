@@ -4410,8 +4410,6 @@ namespace mPOS.WebAPI.Data
 		
 		private EntitySet<TrnStockInLine> _TrnStockInLines;
 		
-		private EntitySet<TrnSalesLine> _TrnSalesLines;
-		
 		private EntityRef<MstAccount> _MstAccount;
 		
 		private EntityRef<MstAccount> _MstAccount1;
@@ -4509,7 +4507,6 @@ namespace mPOS.WebAPI.Data
 			this._MstItemPrices = new EntitySet<MstItemPrice>(new Action<MstItemPrice>(this.attach_MstItemPrices), new Action<MstItemPrice>(this.detach_MstItemPrices));
 			this._TrnStockCountLines = new EntitySet<TrnStockCountLine>(new Action<TrnStockCountLine>(this.attach_TrnStockCountLines), new Action<TrnStockCountLine>(this.detach_TrnStockCountLines));
 			this._TrnStockInLines = new EntitySet<TrnStockInLine>(new Action<TrnStockInLine>(this.attach_TrnStockInLines), new Action<TrnStockInLine>(this.detach_TrnStockInLines));
-			this._TrnSalesLines = new EntitySet<TrnSalesLine>(new Action<TrnSalesLine>(this.attach_TrnSalesLines), new Action<TrnSalesLine>(this.detach_TrnSalesLines));
 			this._MstAccount = default(EntityRef<MstAccount>);
 			this._MstAccount1 = default(EntityRef<MstAccount>);
 			this._MstAccount2 = default(EntityRef<MstAccount>);
@@ -5316,19 +5313,6 @@ namespace mPOS.WebAPI.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MstItem_TrnSalesLine", Storage="_TrnSalesLines", ThisKey="Id", OtherKey="ItemId")]
-		public EntitySet<TrnSalesLine> TrnSalesLines
-		{
-			get
-			{
-				return this._TrnSalesLines;
-			}
-			set
-			{
-				this._TrnSalesLines.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MstAccount_MstItem", Storage="_MstAccount", ThisKey="CostAccountId", OtherKey="Id", IsForeignKey=true)]
 		public MstAccount MstAccount
 		{
@@ -5748,18 +5732,6 @@ namespace mPOS.WebAPI.Data
 		}
 		
 		private void detach_TrnStockInLines(TrnStockInLine entity)
-		{
-			this.SendPropertyChanging();
-			entity.MstItem = null;
-		}
-		
-		private void attach_TrnSalesLines(TrnSalesLine entity)
-		{
-			this.SendPropertyChanging();
-			entity.MstItem = this;
-		}
-		
-		private void detach_TrnSalesLines(TrnSalesLine entity)
 		{
 			this.SendPropertyChanging();
 			entity.MstItem = null;
@@ -20875,26 +20847,10 @@ namespace mPOS.WebAPI.Data
 			}
 			set
 			{
-				MstItem previousValue = this._MstItem.Entity;
-				if (((previousValue != value) 
-							|| (this._MstItem.HasLoadedOrAssignedValue == false)))
+				if ((this._MstItem.Entity != value))
 				{
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._MstItem.Entity = null;
-						previousValue.TrnSalesLines.Remove(this);
-					}
 					this._MstItem.Entity = value;
-					if ((value != null))
-					{
-						value.TrnSalesLines.Add(this);
-						this._ItemId = value.Id;
-					}
-					else
-					{
-						this._ItemId = default(int);
-					}
 					this.SendPropertyChanged("MstItem");
 				}
 			}

@@ -193,6 +193,9 @@
     <Compile Include="Controllers\MstItemController.cs" />
     <Compile Include="Controllers\MstUserController.cs" />
     <Compile Include="Controllers\TrnSalesController.cs" />
+    <Compile Include="Data\pos.cs">
+      <DependentUpon>pos.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Data\pos.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

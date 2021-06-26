@@ -48,6 +48,9 @@ namespace mPOS.WebAPI.Mapping
             CreateMap<POCO.TrnSales, Data.TrnSale>()
                 .ForMember(dest => dest.TrnSalesLines, conf => conf.MapFrom(value => value.TrnSalesLines));
             CreateMap<POCO.TrnSalesLine, Data.TrnSalesLine>();
+            //CreateMap<POCO.TrnSalesLine, Data.TrnSalesLine>()
+            //    .ForMember(dest => dest.MstItem, conf => conf.MapFrom(value => value.MstItem));
+            //CreateMap<POCO.MstItem, Data.MstItem>();
         }
     }
 }
