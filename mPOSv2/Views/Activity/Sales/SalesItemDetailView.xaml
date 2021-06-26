@@ -73,7 +73,7 @@
                                     <Label Text="{Binding DiscountRate, StringFormat='{0:N2}'}"
                                            WidthRequest="100"
                                            FontAttributes="Bold"
-                                           TextColor="Blue"
+                                           TextColor="DodgerBlue"
                                            HorizontalTextAlignment="End"
                                            Margin="5,10,0,0"/>
                                 </StackLayout>
@@ -108,7 +108,7 @@
                     <Entry Text="{Binding SelectedSaleLine.NetPrice, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
                        IsReadOnly="True"
                        FontAttributes="Bold"
-                       TextColor="Blue"
+                       TextColor="DodgerBlue"
                        HorizontalTextAlignment="End">
                     </Entry>
                 </StackLayout>

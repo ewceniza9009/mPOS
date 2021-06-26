@@ -16,7 +16,10 @@ namespace mPOSv2.Services
             ObservableCollection<TrnSales> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetSalesReport?param={param}";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<TrnSales>>(response);

@@ -13,7 +13,10 @@ namespace mPOSv2.Services
             ObservableCollection<MstCustomer> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetCustomers";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<MstCustomer>>(response);
@@ -27,7 +30,10 @@ namespace mPOSv2.Services
             ObservableCollection<MstItem> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetItems";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<MstItem>>(response);
@@ -41,7 +47,10 @@ namespace mPOSv2.Services
             ObservableCollection<MstUnit> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/MstItem/GetUnits";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<MstUnit>>(response);
@@ -55,7 +64,10 @@ namespace mPOSv2.Services
             ObservableCollection<MstTax> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetTaxes";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<MstTax>>(response);
@@ -69,7 +81,10 @@ namespace mPOSv2.Services
             ObservableCollection<MstDiscount> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetDiscounts";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<MstDiscount>>(response);

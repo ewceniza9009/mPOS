@@ -13,7 +13,10 @@ namespace mPOSv2.Services
             ObservableCollection<MstUnit> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/MstItem/GetUnits";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<MstUnit>>(response);
@@ -27,7 +30,10 @@ namespace mPOSv2.Services
             ObservableCollection<string> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/MstItem/GetItemCategories";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<string>>(response);
@@ -41,7 +47,10 @@ namespace mPOSv2.Services
             ObservableCollection<MstTax> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/MstItem/GetTaxes";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<ObservableCollection<MstTax>>(response);

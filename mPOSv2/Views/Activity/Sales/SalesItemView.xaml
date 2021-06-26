@@ -6,12 +6,14 @@
              xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
              xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
              mc:Ignorable="d"
-             x:Class="mPOSv2.Views.Activity.Sales.SalesItemView">
+             x:Class="mPOSv2.Views.Activity.Sales.SalesItemView"
+             Title="Item List">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout x:Name="MainStackLayout"
                      Margin="5">
@@ -83,7 +85,7 @@
                                                      Orientation="Horizontal"
                                                      HorizontalOptions="End">
                                                 <Label Text="{Binding Price, StringFormat='₱{0:N2}'}"
-                                                   TextColor="DarkBlue"
+                                                   TextColor="DimGray"
                                                    FontSize="15"
                                                    Margin="0,10,0,0"
                                                    HorizontalTextAlignment="End"

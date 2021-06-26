@@ -66,13 +66,6 @@ namespace mPOS.WebAPI.Repository
 
             using (var ctx = new posDataContext())
             {
-                ctx.DeferredLoadingEnabled = false;
-
-                var trnSalesIncludes = new DataLoadOptions();
-                trnSalesIncludes.LoadWith<Data.TrnSale>(x => x.TrnSalesLines);
-
-                ctx.LoadOptions = trnSalesIncludes;
-
                 if (t.Id != 0)
                 {
                     foreach (var tLine in t.TrnSalesLines.Where(x => x.Id == 0))

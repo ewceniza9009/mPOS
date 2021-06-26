@@ -13,7 +13,10 @@ namespace mPOSv2.Services
             TResult result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}?id={id}";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var response = await client.GetStringAsync(requestUri);
                 result = JsonConvert.DeserializeObject<TResult>(response);
@@ -27,8 +30,12 @@ namespace mPOSv2.Services
             TResult result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
+
                 var paramContent = JsonConvert.SerializeObject(arg);
                 var buffer = Encoding.UTF8.GetBytes(paramContent);
                 var byteContent = new ByteArrayContent(buffer);
@@ -58,7 +65,10 @@ namespace mPOSv2.Services
             long result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 var paramContent = JsonConvert.SerializeObject(arg);
                 var buffer = Encoding.UTF8.GetBytes(paramContent);
@@ -79,7 +89,10 @@ namespace mPOSv2.Services
         {
             var requestUri = $@"{GlobalVariables.GetUriBase()}/{route}?id={id}";
 
-            using (var client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
             {
                 await client.DeleteAsync(requestUri);
             }

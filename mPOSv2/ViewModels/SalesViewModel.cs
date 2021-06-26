@@ -508,7 +508,7 @@ namespace mPOSv2.ViewModels
                 ExecuteRefreshSelectedSaleLine(new object());
 
                 Device.BeginInvokeOnMainThread(
-                    async () => await Application.Current.MainPage.Navigation.PopModalAsync());
+                    async () => await Application.Current.MainPage.Navigation.PopAsync());
                 Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
@@ -608,7 +608,7 @@ namespace mPOSv2.ViewModels
         public void ExecuteShowItems()
         {
             Device.BeginInvokeOnMainThread(async () =>
-                await Application.Current.MainPage.Navigation.PushModalAsync(new SalesItemView(this)));
+                await Application.Current.MainPage.Navigation.PushAsync(new SalesItemView(this)));
         }
 
         public void ExecuteSelectItemByBarCode()
