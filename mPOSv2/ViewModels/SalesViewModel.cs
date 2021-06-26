@@ -548,7 +548,7 @@ namespace mPOSv2.ViewModels
             {
                 Thread.Sleep(1000);
 
-                SelectedSale.Amount = SelectedSale.TrnSalesLines.Sum(x => x.Amount);
+                RefreshSelectedSaleDuringSave();
 
                 SelectedSaleId = await ApiRequest<TrnSales, TrnSales>
                     .Save("TrnSales/Save", SelectedSale);
@@ -758,6 +758,16 @@ namespace mPOSv2.ViewModels
             Pager.EndPage = GetEndPage();
 
             SalesLines = GetSalesLines(Pager.Start, Pager.PageSize);
+        }
+
+        public void RefreshSelectedSaleDuringSave() 
+        {
+            SelectedSale.Amount = SelectedSale.TrnSalesLines.Sum(x => x.Amount);
+
+            if (SelectedSale.TrnSalesLines != null && SelectedSale.TrnSalesLines.Count > 0)
+            {
+                SelectedSale.TrnSalesLines.ForEach(x => x.MstItem = null);
+            }
         }
 
         public ObservableCollection<TrnSalesLine> GetSalesLines(int start, int pageSize)
