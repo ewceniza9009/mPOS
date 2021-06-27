@@ -776,10 +776,9 @@ namespace mPOSv2.ViewModels
             var result = new ObservableCollection<TrnSalesLine>();
             var data = SelectedSale.TrnSalesLines.Skip(start).Take(pageSize);
 
-
             data.ForEach(salesLine => 
             {
-                salesLine.ItemDescription = salesLine.ItemDescription.Truncate(20, "..");
+                salesLine.ItemDescription = salesLine.ItemDescription.Truncate(15, "..");
                 result.Add(salesLine);
             });
 
@@ -795,7 +794,7 @@ namespace mPOSv2.ViewModels
 
             saleLines.ForEach(line => 
             {
-                line.ItemDescription = line.ItemDescription.Truncate(18, "..");
+                line.ItemDescription = line.ItemDescription.Truncate(15, "..");
                 SelectedSale.TrnSalesLines.Add(line);
             });
 

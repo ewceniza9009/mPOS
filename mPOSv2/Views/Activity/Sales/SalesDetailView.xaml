@@ -184,12 +184,12 @@
                                                         <StackLayout x:Name="ItemInfo"
                                                                      Orientation="Vertical"
                                                                      Padding="10,0,0,0"
-                                                                     WidthRequest="160">
+                                                                     WidthRequest="140">
                                                             <Label Text="{Binding ItemDescription}"
                                                                    TextColor="Black"
                                                                    FontSize="17"
                                                                    HeightRequest="20"
-                                                                   WidthRequest="150"
+                                                                   WidthRequest="140"
                                                                    FontAttributes="Bold"
                                                                    Margin="0,0,0,-5"/>
                                                             <Label Text="{Binding BarCode}"
@@ -204,7 +204,7 @@
                                                                              HorizontalOptions="Start">
                                                                     <Label Text="{Binding Quantity, StringFormat='{0:N2}'}"
                                                                            TextColor="Black"
-                                                                           FontSize="15"
+                                                                           FontSize="12"
                                                                            HorizontalTextAlignment="End"
                                                                            FontAttributes="Bold"
                                                                            WidthRequest="50"/>
@@ -213,10 +213,11 @@
                                                                              Orientation="Horizontal"
                                                                              HorizontalOptions="Start">
                                                                     <Label Text="{Binding UnitName}"
-                                                                               TextColor="Black"
-                                                                               FontSize="15"
-                                                                               HorizontalTextAlignment="End"
-                                                                               FontAttributes="Bold">
+                                                                           TextColor="Black"
+                                                                           FontSize="12"
+                                                                           HorizontalTextAlignment="Start"
+                                                                           FontAttributes="Bold"
+                                                                           WidthRequest="50">
                                                                     </Label>
                                                                 </StackLayout>
                                                             </StackLayout>
@@ -225,7 +226,7 @@
                                                                          HorizontalOptions="Start">
                                                                 <Label Text="{Binding Amount, StringFormat='₱{0:N2}'}"
                                                                        TextColor="Black"
-                                                                       FontSize="15"
+                                                                       FontSize="12"
                                                                        HorizontalTextAlignment="End"
                                                                        FontAttributes="Bold"
                                                                        TextDecorations="Underline"
