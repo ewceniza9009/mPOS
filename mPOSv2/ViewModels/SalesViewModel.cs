@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Humanizer;
 using mPOS.POCO;
 using mPOSv2.Enums;
 using mPOSv2.Models.Page;
@@ -775,7 +776,12 @@ namespace mPOSv2.ViewModels
             var result = new ObservableCollection<TrnSalesLine>();
             var data = SelectedSale.TrnSalesLines.Skip(start).Take(pageSize);
 
-            data.ForEach(salesLine => result.Add(salesLine));
+
+            data.ForEach(salesLine => 
+            {
+                salesLine.ItemDescription = salesLine.ItemDescription.Truncate(20, "..");
+                result.Add(salesLine);
+            });
 
             return result;
         }
@@ -787,7 +793,11 @@ namespace mPOSv2.ViewModels
                 .ToList();
             SelectedSale.TrnSalesLines = new List<TrnSalesLine>();
 
-            saleLines.ForEach(line => SelectedSale.TrnSalesLines.Add(line));
+            saleLines.ForEach(line => 
+            {
+                line.ItemDescription = line.ItemDescription.Truncate(18, "..");
+                SelectedSale.TrnSalesLines.Add(line);
+            });
 
             ExecuteRefreshSelectedSale(new object());
 

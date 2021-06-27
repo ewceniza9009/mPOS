@@ -141,19 +141,21 @@
                                      Margin="0,-10,0,0">
                             <StackLayout Orientation="Horizontal">
                                 <buttons:SfButton x:Name="ButtonPagePrev"
-                                          Text="PREV"
-                                          FontAttributes="Bold"
-                                          WidthRequest="60"
-                                          TextColor="White"
-                                          CornerRadius="3"
-                                          Clicked="ButtonPagePrev_OnClicked"/>
+                                                  Text="PREV"
+                                                  FontAttributes="Bold"
+                                                  WidthRequest="60"
+                                                  TextColor="White"
+                                                  CornerRadius="3"
+                                                  Clicked="ButtonPagePrev_OnClicked"
+                                                  BackgroundColor="DimGray"/>
                                 <buttons:SfButton x:Name="ButtonPageNext"
-                                          Text="NEXT"
-                                          FontAttributes="Bold"
-                                          WidthRequest="60"
-                                          TextColor="White"
-                                          CornerRadius="3"
-                                          Clicked="ButtonPageNext_OnClicked"/>
+                                                  Text="NEXT"
+                                                  FontAttributes="Bold"
+                                                  WidthRequest="60"
+                                                  TextColor="White"
+                                                  CornerRadius="3"
+                                                  Clicked="ButtonPageNext_OnClicked"
+                                                  BackgroundColor="DimGray"/>
                             </StackLayout>
                         </StackLayout>
                         <RelativeLayout>
@@ -181,7 +183,8 @@
                                                         </StackLayout>-->
                                                         <StackLayout x:Name="ItemInfo"
                                                                      Orientation="Vertical"
-                                                                     Padding="10,0,0,0">
+                                                                     Padding="10,0,0,0"
+                                                                     WidthRequest="160">
                                                             <Label Text="{Binding ItemDescription}"
                                                                    TextColor="Black"
                                                                    FontSize="17"
@@ -203,7 +206,8 @@
                                                                            TextColor="Black"
                                                                            FontSize="15"
                                                                            HorizontalTextAlignment="End"
-                                                                           FontAttributes="Bold"/>
+                                                                           FontAttributes="Bold"
+                                                                           WidthRequest="50"/>
                                                                 </StackLayout>
                                                                 <StackLayout x:Name="Unit"
                                                                              Orientation="Horizontal"
@@ -222,9 +226,10 @@
                                                                 <Label Text="{Binding Amount, StringFormat='₱{0:N2}'}"
                                                                        TextColor="Black"
                                                                        FontSize="15"
-                                                                       HorizontalTextAlignment="Start"
+                                                                       HorizontalTextAlignment="End"
                                                                        FontAttributes="Bold"
-                                                                       TextDecorations="Underline"/>
+                                                                       TextDecorations="Underline"
+                                                                       WidthRequest="90"/>
                                                             </StackLayout>
                                                         </StackLayout>
                                                     </StackLayout>
