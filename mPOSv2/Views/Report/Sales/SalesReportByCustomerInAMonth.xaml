@@ -9,7 +9,9 @@
              Title="Sales by customer for the month">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout Orientation="Horizontal" BackgroundColor="Beige">
+            <StackLayout Orientation="Horizontal" 
+                         BackgroundColor="Beige"
+                         HeightRequest="40">
                 <combobox:SfComboBox x:Name="CmbYear"
                                      DataSource="{Binding Years}"
                                      SelectedItem="{Binding SelectedYear}"
@@ -20,8 +22,7 @@
                                      ComboBoxMode="SuggestAppend"
                                      WidthRequest="100">
                 </combobox:SfComboBox>
-                <StackLayout WidthRequest="230">
-                    <combobox:SfComboBox x:Name="CmbMonth"
+                <combobox:SfComboBox x:Name="CmbMonth"
                                      DataSource="{Binding Months}"
                                      SelectedItem="{Binding SelectedMonth}"
                                      DisplayMemberPath="Value"
@@ -29,13 +30,17 @@
                                      AllowFiltering="true" 
                                      MaximumDropDownHeight="290"
                                      HorizontalOptions="EndAndExpand"
-                                     ComboBoxMode="SuggestAppend">
-                    </combobox:SfComboBox>
+                                     ComboBoxMode="SuggestAppend"
+                                     WidthRequest="240">
+                </combobox:SfComboBox>
+                <StackLayout>
+                    <button:SfButton Text="OK"
+                                     Clicked="SfButton_Clicked"
+                                     BackgroundColor="Beige"
+                                     TextColor="Black"
+                                     WidthRequest="60"
+                                     HeightRequest="40"/>
                 </StackLayout>
-                <Button Text="Go"
-                        Clicked="SfButton_Clicked"
-                        TextColor="Black"
-                        WidthRequest="60"/>
             </StackLayout>
             <ListView x:Name="CustomerView"
                       ItemsSource="{Binding CustomerSales}"

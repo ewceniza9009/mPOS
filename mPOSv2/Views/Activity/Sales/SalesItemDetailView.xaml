@@ -60,7 +60,7 @@
                                          DataSource="{Binding Discounts}"
                                          SelectedItem="{Binding SelectedDiscount}"
                                          DisplayMemberPath="Discount"
-                                         IsEditableMode="true" 
+                                         IsEditableMode="False" 
                                          AllowFiltering="true" 
                                          MaximumDropDownHeight="300"
                                          ComboBoxMode="SuggestAppend">

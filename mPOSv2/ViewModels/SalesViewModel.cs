@@ -108,7 +108,6 @@ namespace mPOSv2.ViewModels
                 return result;
             }
         }
-
         public bool IsListNotEmpty
         {
             get
@@ -126,7 +125,6 @@ namespace mPOSv2.ViewModels
             get => _IsBusy;
             set => SetProperty(ref _IsBusy, value);
         }
-
         private bool _IsBusy;
 
         public bool IsProcessingAPI
@@ -134,7 +132,6 @@ namespace mPOSv2.ViewModels
             get => _IsProcessingApi;
             set => SetProperty(ref _IsProcessingApi, value);
         }
-
         private bool _IsProcessingApi;
 
         public string SearchSaleEntry
@@ -142,7 +139,6 @@ namespace mPOSv2.ViewModels
             get => _SearchSaleEntry;
             set => SetProperty(ref _SearchSaleEntry, value);
         }
-
         private string _SearchSaleEntry;
 
         public DateTime? SearchSaleDate
@@ -150,7 +146,6 @@ namespace mPOSv2.ViewModels
             get => _SearchSaleDate;
             set => SetProperty(ref _SearchSaleDate, value);
         }
-
         private DateTime? _SearchSaleDate;
 
         public string SearchItemEntry
@@ -158,7 +153,6 @@ namespace mPOSv2.ViewModels
             get => _SearchItemEntry;
             set => SetProperty(ref _SearchItemEntry, value);
         }
-
         private string _SearchItemEntry;
 
         public string SearchBarcode { get; set; }
@@ -167,14 +161,15 @@ namespace mPOSv2.ViewModels
 
         public bool IsChanged { get; set; }
 
-        public string Title => $"INV #: {(SelectedSale.SalesNumber ?? "New")}";
+        public string Title => $"INV #: {(SelectedSale.SalesNumber ?? "(New)")}";
+
+        public bool ShowLinePagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
         public long SelectedSaleId
         {
             get => _SelectedSaleId == 0 ? SelectedSale.Id : _SelectedSaleId;
             set => SetProperty(ref _SelectedSaleId, value);
         }
-
         private long _SelectedSaleId;
 
         public MstUnit SelectedUnit
@@ -182,7 +177,6 @@ namespace mPOSv2.ViewModels
             get => _SelectedUnit;
             set => SetProperty(ref _SelectedUnit, value);
         }
-
         private MstUnit _SelectedUnit;
 
         public ObservableCollection<MstUnit> SaleUnits
@@ -190,7 +184,6 @@ namespace mPOSv2.ViewModels
             get => _SaleUnits;
             set => SetProperty(ref _SaleUnits, value);
         }
-
         private ObservableCollection<MstUnit> _SaleUnits;
 
         public MstTax SelectedTax
@@ -198,7 +191,6 @@ namespace mPOSv2.ViewModels
             get => _SelectedTax;
             set => SetProperty(ref _SelectedTax, value);
         }
-
         private MstTax _SelectedTax;
 
         public ObservableCollection<MstTax> Taxes
@@ -206,7 +198,6 @@ namespace mPOSv2.ViewModels
             get => _Taxes;
             set => SetProperty(ref _Taxes, value);
         }
-
         private ObservableCollection<MstTax> _Taxes;
 
         public MstDiscount SelectedDiscount
@@ -214,7 +205,6 @@ namespace mPOSv2.ViewModels
             get => _SelectedDiscount;
             set => SetProperty(ref _SelectedDiscount, value);
         }
-
         private MstDiscount _SelectedDiscount;
 
         public ObservableCollection<MstDiscount> Discounts
@@ -222,7 +212,6 @@ namespace mPOSv2.ViewModels
             get => _Discounts;
             set => SetProperty(ref _Discounts, value);
         }
-
         private ObservableCollection<MstDiscount> _Discounts;
 
         public MstCustomer SelectedCustomer
@@ -230,7 +219,6 @@ namespace mPOSv2.ViewModels
             get => _SelectedCustomer;
             set => SetProperty(ref _SelectedCustomer, value);
         }
-
         private MstCustomer _SelectedCustomer;
 
         public ObservableCollection<MstCustomer> Customers
@@ -238,7 +226,6 @@ namespace mPOSv2.ViewModels
             get => _Customers;
             set => SetProperty(ref _Customers, value);
         }
-
         private ObservableCollection<MstCustomer> _Customers;
 
         public MstItem SelectedItem
@@ -246,7 +233,6 @@ namespace mPOSv2.ViewModels
             get => _SelectedItem;
             set => SetProperty(ref _SelectedItem, value);
         }
-
         private MstItem _SelectedItem;
 
         public ObservableCollection<MstItem> Items
@@ -254,7 +240,6 @@ namespace mPOSv2.ViewModels
             get => _Items;
             set => SetProperty(ref _Items, value);
         }
-
         private ObservableCollection<MstItem> _Items;
 
         public TrnSales SelectedSale { get; set; }
@@ -266,7 +251,6 @@ namespace mPOSv2.ViewModels
             get => _Sales;
             set => SetProperty(ref _Sales, value);
         }
-
         private ObservableCollection<TrnSales> _Sales;
 
         public ObservableCollection<TrnSalesLine> SalesLines
@@ -274,7 +258,6 @@ namespace mPOSv2.ViewModels
             get => _SalesLines;
             set => SetProperty(ref _SalesLines, value);
         }
-
         private ObservableCollection<TrnSalesLine> _SalesLines;
         #endregion
 
@@ -778,7 +761,7 @@ namespace mPOSv2.ViewModels
 
             data.ForEach(salesLine => 
             {
-                salesLine.ItemDescription = salesLine.ItemDescription.Truncate(15, "..");
+                salesLine.ItemDescriptionDisplay = salesLine.ItemDescription.Truncate(15, "..");
                 result.Add(salesLine);
             });
 

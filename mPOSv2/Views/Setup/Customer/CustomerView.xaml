@@ -58,7 +58,7 @@ xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusi
                                                                    WidthRequest="45"
                                                                    FontAttributes="Bold"                     
                                                                    CornerRadius="25"                        
-                                                                   BackgroundColor="DodgerBlue"/>
+                                                                   BackgroundColor="Beige"/>
                                         <Label Text="{Binding Customer, Mode=TwoWay}" 
                                                TextColor="Black"
                                                FontSize="16"

@@ -7,7 +7,7 @@
             mc:Ignorable="d"
             x:Class="mPOSv2.Views.Setup.Item.ItemDetailView"
             Title="{Binding Title, Mode=TwoWay}"
-            BarBackgroundColor="LightSkyBlue">
+            BarBackgroundColor="Beige">
     <TabbedPage.ToolbarItems>
     <ToolbarItem x:Name="CmdDelete"
                  Text="Delete"

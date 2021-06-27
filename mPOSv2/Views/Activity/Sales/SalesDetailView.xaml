@@ -47,7 +47,7 @@
                        Padding="0">
                     <StackLayout>
                         <StackLayout Orientation="Horizontal"
-                                     BackgroundColor="DodgerBlue"
+                                     BackgroundColor="Beige"
                                      HeightRequest="40">
                             <Label HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
@@ -56,9 +56,9 @@
                                    VerticalTextAlignment="End"
                                    Margin="5"/>
                             <Button x:Name="CmdMore"
-                                    WidthRequest="50"
+                                    WidthRequest="40"
                                     HeightRequest="40"
-                                    BackgroundColor="DodgerBlue"
+                                    BackgroundColor="Orange"
                                     ImageSource="view_more.png"/>
                         </StackLayout>
 
@@ -147,7 +147,8 @@
                                                   TextColor="White"
                                                   CornerRadius="3"
                                                   Clicked="ButtonPagePrev_OnClicked"
-                                                  BackgroundColor="DimGray"/>
+                                                  BackgroundColor="DimGray"
+                                                  IsVisible="{Binding ShowLinePagerButtons}"/>
                                 <buttons:SfButton x:Name="ButtonPageNext"
                                                   Text="NEXT"
                                                   FontAttributes="Bold"
@@ -155,7 +156,8 @@
                                                   TextColor="White"
                                                   CornerRadius="3"
                                                   Clicked="ButtonPageNext_OnClicked"
-                                                  BackgroundColor="DimGray"/>
+                                                  BackgroundColor="DimGray"
+                                                  IsVisible="{Binding ShowLinePagerButtons}"/>
                             </StackLayout>
                         </StackLayout>
                         <RelativeLayout>
@@ -185,7 +187,7 @@
                                                                      Orientation="Vertical"
                                                                      Padding="10,0,0,0"
                                                                      WidthRequest="140">
-                                                            <Label Text="{Binding ItemDescription}"
+                                                            <Label Text="{Binding ItemDescriptionDisplay}"
                                                                    TextColor="Black"
                                                                    FontSize="17"
                                                                    HeightRequest="20"

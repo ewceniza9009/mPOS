@@ -9,6 +9,7 @@ namespace mPOS.POCO
     public partial class TrnSalesLine
     {
         public string ItemDescription { get; set; }
+        public string ItemDescriptionDisplay { get; set; }
         public string BarCode { get; set; }
         public string UnitName { get; set; }
         public bool IsDeleted { get; set; }
