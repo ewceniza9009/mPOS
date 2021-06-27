@@ -148,7 +148,7 @@
                                                   CornerRadius="3"
                                                   Clicked="ButtonPagePrev_OnClicked"
                                                   BackgroundColor="DimGray"
-                                                  IsVisible="{Binding ShowLinePagerButtons}"/>
+                                                  IsVisible="{Binding ShowSalesLinesPagerButtons}"/>
                                 <buttons:SfButton x:Name="ButtonPageNext"
                                                   Text="NEXT"
                                                   FontAttributes="Bold"
@@ -157,7 +157,7 @@
                                                   CornerRadius="3"
                                                   Clicked="ButtonPageNext_OnClicked"
                                                   BackgroundColor="DimGray"
-                                                  IsVisible="{Binding ShowLinePagerButtons}"/>
+                                                  IsVisible="{Binding ShowSalesLinesPagerButtons}"/>
                             </StackLayout>
                         </StackLayout>
                         <RelativeLayout>

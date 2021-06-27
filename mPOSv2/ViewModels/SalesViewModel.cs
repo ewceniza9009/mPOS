@@ -163,7 +163,7 @@ namespace mPOSv2.ViewModels
 
         public string Title => $"INV #: {(SelectedSale.SalesNumber ?? "(New)")}";
 
-        public bool ShowLinePagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
+        public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
         public long SelectedSaleId
         {
@@ -267,7 +267,6 @@ namespace mPOSv2.ViewModels
             get => _RefreshSales ?? (_RefreshSales = new Command(Load, x => true));
             set => SetProperty(ref _RefreshSales, value);
         }
-
         private Command _RefreshSales;
 
         public Command RefreshItems
@@ -275,7 +274,6 @@ namespace mPOSv2.ViewModels
             get => _RefreshItems ?? (_RefreshItems = new Command(LoadItems, x => true));
             set => SetProperty(ref _RefreshItems, value);
         }
-
         private Command _RefreshItems;
 
         public Command RefreshSelectedSale
@@ -284,7 +282,6 @@ namespace mPOSv2.ViewModels
                    (_RefreshSelectedSale = new Command(ExecuteRefreshSelectedSale, x => true));
             set => SetProperty(ref _RefreshSelectedSale, value);
         }
-
         private Command _RefreshSelectedSale;
 
         public Command SelectCustomer
@@ -292,7 +289,6 @@ namespace mPOSv2.ViewModels
             get => _SelectCustomer ?? (_SelectCustomer = new Command(ExecuteSelectCustomer, x => true));
             set => SetProperty(ref _SelectCustomer, value);
         }
-
         private Command _SelectCustomer;
 
         public Command Add
@@ -300,7 +296,6 @@ namespace mPOSv2.ViewModels
             get => _Add ?? (_Add = new Command(ExecuteAdd, x => true));
             set => SetProperty(ref _Add, value);
         }
-
         private Command _Add;
 
         public Command Search
@@ -308,7 +303,6 @@ namespace mPOSv2.ViewModels
             get => _Search ?? (_Search = new Command(ExecuteSearch, x => true));
             set => SetProperty(ref _Search, value);
         }
-
         private Command _Search;
 
         public Command SearchItem
@@ -316,7 +310,6 @@ namespace mPOSv2.ViewModels
             get => _SearchItem ?? (_SearchItem = new Command(ExecuteSearchItem, x => true));
             set => SetProperty(ref _SearchItem, value);
         }
-
         private Command _SearchItem;
 
         public Command SelectSale
@@ -324,7 +317,6 @@ namespace mPOSv2.ViewModels
             get => _SelectSale ?? (_SelectSale = new Command(ExecuteSelectSale, x => true));
             set => SetProperty(ref _SelectSale, value);
         }
-
         private Command _SelectSale;
 
         public Command SelectSaleLine
@@ -332,7 +324,6 @@ namespace mPOSv2.ViewModels
             get => _SelectSaleLine ?? (_SelectSaleLine = new Command(ExecuteSelectItem, x => true));
             set => SetProperty(ref _SelectSaleLine, value);
         }
-
         private Command _SelectSaleLine;
 
         public Command DeleteSaleLine
@@ -340,7 +331,6 @@ namespace mPOSv2.ViewModels
             get => _DeleteSaleLine ?? (_DeleteSaleLine = new Command(ExecuteDeleteSaleLine, x => true));
             set => SetProperty(ref _DeleteSaleLine, value);
         }
-
         private Command _DeleteSaleLine;
 
         public Command SelectItem
@@ -348,7 +338,6 @@ namespace mPOSv2.ViewModels
             get => _SelectItem ?? (_SelectItem = new Command(ExecuteSelectItem, x => true));
             set => SetProperty(ref _SelectItem, value);
         }
-
         private Command _SelectItem;
 
         public Command Save
@@ -356,7 +345,6 @@ namespace mPOSv2.ViewModels
             get => _Save ?? (_Save = new Command(ExecuteSave, () => true));
             set => SetProperty(ref _Save, value);
         }
-
         private Command _Save;
 
         public Command Delete
@@ -364,7 +352,6 @@ namespace mPOSv2.ViewModels
             get => _Delete ?? (_Delete = new Command(ExecuteDelete, () => true));
             set => SetProperty(ref _Delete, value);
         }
-
         private Command _Delete;
         #endregion
 
@@ -537,6 +524,16 @@ namespace mPOSv2.ViewModels
                 SelectedSaleId = await ApiRequest<TrnSales, TrnSales>
                     .Save("TrnSales/Save", SelectedSale);
 
+                if (SelectedSale.Id == 0) 
+                {
+                    var sale = await ApiRequest<TrnSales, TrnSales>
+                        .Read("TrnSales/Get", SelectedSaleId);
+
+                    SelectedSale = sale;
+
+                    OnPropertyChanged(nameof(Title));
+                }
+
                 IsProcessingAPI = false;
 
                 Device.BeginInvokeOnMainThread(async () =>
@@ -548,7 +545,6 @@ namespace mPOSv2.ViewModels
             if (!isTaskRun)
                 if ((SelectedSale.SalesNumber?.Length ?? 0) < 2)
                 {
-                    SelectedSale.SalesNumber = "NA";
                     OnPropertyChanged(nameof(SelectedSale));
 
                     IsProcessingAPI = false;
@@ -786,6 +782,8 @@ namespace mPOSv2.ViewModels
             Pager.EndPage = GetEndPage();
 
             SalesLines = GetSalesLines(Pager.Start, Pager.PageSize);
+
+            OnPropertyChanged(nameof(ShowSalesLinesPagerButtons));
         }
 
         public double GetEndPage()
