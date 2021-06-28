@@ -261,6 +261,7 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _SalesLines, value);
         }
         private ObservableCollection<TrnSalesLine> _SalesLines;
+
         #endregion
 
         #region Commands
@@ -344,14 +345,14 @@ namespace mPOSv2.ViewModels
 
         public Command Save
         {
-            get => _Save ?? (_Save = new Command(ExecuteSave, () => true));
+            get => _Save ?? (_Save = new Command(ExecuteSave, () => SelectedSale?.IsNotTendered ?? true));
             set => SetProperty(ref _Save, value);
         }
         private Command _Save;
 
         public Command Delete
         {
-            get => _Delete ?? (_Delete = new Command(ExecuteDelete, () => true));
+            get => _Delete ?? (_Delete = new Command(ExecuteDelete, () => SelectedSale?.IsNotTendered ?? true));
             set => SetProperty(ref _Delete, value);
         }
         private Command _Delete;
@@ -775,7 +776,7 @@ namespace mPOSv2.ViewModels
 
             saleLines.ForEach(line => 
             {
-                line.ItemDescription = line.ItemDescription.Truncate(15, "..");
+                line.ItemDescription = line.ItemDescription.Truncate(15, "...");
                 SelectedSale.TrnSalesLines.Add(line);
             });
 

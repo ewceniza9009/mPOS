@@ -60,6 +60,7 @@
                     <ListView.Behaviors>
                         <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSale}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                     </ListView.Behaviors>
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -82,8 +83,8 @@
 
                                         <StackLayout x:Name="ItemInfo"
                                                      Orientation="Vertical">
-                                            <Label Text="{Binding SalesNumber}"
-                                                   TextColor="Black"
+                                            <Label Text="{Binding SalesNumberDisplay}"
+                                                   TextColor="{Binding InvColor}"
                                                    TextDecorations="Underline"
                                                    FontSize="15"
                                                    HeightRequest="20"
@@ -94,6 +95,7 @@
                                                    TextColor="Black"
                                                    FontSize="12"/>
                                         </StackLayout>
+                                        
                                         <StackLayout x:Name="ItemPrice"
                                                      Orientation="Horizontal"
                                                      HorizontalOptions="End">

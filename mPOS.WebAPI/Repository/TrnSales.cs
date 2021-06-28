@@ -24,6 +24,8 @@ namespace mPOS.WebAPI.Repository
                     .SingleOrDefault(x => x.Id == id);
 
                 result = mappingProfile.mapper.Map<POCO.TrnSales>(data);
+
+                result.IsNotTendered = !ctx.TrnCollections.Any(x => x.SalesId == data.Id);
             }
 
             return result;
@@ -54,6 +56,9 @@ namespace mPOS.WebAPI.Repository
                 }
 
                 result = mappingProfile.mapper.Map<List<POCO.TrnSales>>(data);
+
+                result.ToList()
+                    .ForEach(x => x.IsNotTendered = !ctx.TrnCollections.Any(y => y.SalesId == x.Id));
             }
 
             return result;

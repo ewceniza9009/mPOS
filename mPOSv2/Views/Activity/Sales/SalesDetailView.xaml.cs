@@ -17,11 +17,15 @@ namespace mPOSv2.Views.Activity.Sales
 
         public SalesDetailView(SalesViewModel vm)
         {
+            var isNotTendered = vm.SelectedSale.IsNotTendered;
+
             InitializeComponent();
 
             BindingContext = this.vm = vm;
 
             CmdSearchBarcode.Clicked += CmdSearchBarcode_Clicked;
+
+            vm.SelectedSale.IsNotTendered = isNotTendered;
         }
 
         #endregion

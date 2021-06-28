@@ -39,13 +39,13 @@
             <StackLayout Margin="10,-2,10,0">
                 <StackLayout HorizontalOptions="Center">
                     <ActivityIndicator IsRunning="{Binding IsProcessingAPI, Mode=TwoWay}" 
-                                   IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
-                                   HeightRequest="50"/>
+                                       IsVisible="{Binding IsProcessingAPI, Mode=TwoWay}"
+                                       HeightRequest="50"/>
                 </StackLayout>
 
                 <Frame CornerRadius="3"
                        Padding="0">
-                    <StackLayout>
+                    <StackLayout IsEnabled="{Binding SelectedSale.IsNotTendered}">
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="Beige"
                                      HeightRequest="40">
@@ -120,13 +120,15 @@
                                     HeightRequest="35"
                                     BackgroundColor="Beige"
                                     ImageSource="add_item.png"
-                                    Clicked="CmdSearchItem_OnClicked"/>
+                                    Clicked="CmdSearchItem_OnClicked"
+                                    IsEnabled="{Binding SelectedSale.IsNotTendered}"/>
 
                             <Button x:Name="CmdSearchBarcode"
                                     WidthRequest="40"
                                     HeightRequest="35"
                                     BackgroundColor="Beige"
-                                    ImageSource="barcode_scanner.png"/>
+                                    ImageSource="barcode_scanner.png"
+                                    IsEnabled="{Binding SelectedSale.IsNotTendered}"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Entry Placeholder="Last Barcode"
@@ -165,11 +167,12 @@
                                    VerticalOptions="CenterAndExpand" 
                                    HorizontalOptions="CenterAndExpand"/>
                             <ListView x:Name="SalesLineListView" 
-                                          ItemsSource="{Binding SalesLines}"
-                                          SelectedItem="{Binding SelectedSaleLine}"
-                                          HasUnevenRows="True"
-                                          HeightRequest="360"
-                                          SeparatorVisibility="None">
+                                      ItemsSource="{Binding SalesLines}"
+                                      SelectedItem="{Binding SelectedSaleLine}"
+                                      HasUnevenRows="True"
+                                      HeightRequest="360"
+                                      SeparatorVisibility="None"
+                                      IsEnabled="{Binding SelectedSale.IsNotTendered}">
                                 <ListView.Behaviors>
                                     <commands:EventToCommandBehavior EventName="ItemTapped" Command="{Binding SelectSaleLine}" EventArgsConverter="{StaticResource ItemTappedConverter}" />
                                 </ListView.Behaviors>
