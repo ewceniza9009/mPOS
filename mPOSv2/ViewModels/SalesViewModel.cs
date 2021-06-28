@@ -62,6 +62,8 @@ namespace mPOSv2.ViewModels
                 OnPropertyChanged(nameof(IsListNotEmpty));
 
                 IsBusy = false;
+
+                Pager.PageSize = Services.SettingsRepository.GetSalesLinePageSize();
             });
         }
 

@@ -58,7 +58,7 @@
                             <Button x:Name="CmdMore"
                                     WidthRequest="40"
                                     HeightRequest="40"
-                                    BackgroundColor="Orange"
+                                    BackgroundColor="Beige"
                                     ImageSource="view_more.png"/>
                         </StackLayout>
 
@@ -144,19 +144,19 @@
                                                   Text="PREV"
                                                   FontAttributes="Bold"
                                                   WidthRequest="60"
-                                                  TextColor="White"
+                                                  TextColor="DodgerBlue"
                                                   CornerRadius="3"
                                                   Clicked="ButtonPagePrev_OnClicked"
-                                                  BackgroundColor="DimGray"
+                                                  BackgroundColor="Beige"
                                                   IsVisible="{Binding ShowSalesLinesPagerButtons}"/>
                                 <buttons:SfButton x:Name="ButtonPageNext"
                                                   Text="NEXT"
                                                   FontAttributes="Bold"
                                                   WidthRequest="60"
-                                                  TextColor="White"
+                                                  TextColor="DodgerBlue"
                                                   CornerRadius="3"
                                                   Clicked="ButtonPageNext_OnClicked"
-                                                  BackgroundColor="DimGray"
+                                                  BackgroundColor="Beige"
                                                   IsVisible="{Binding ShowSalesLinesPagerButtons}"/>
                             </StackLayout>
                         </StackLayout>
@@ -179,10 +179,6 @@
                                             <ViewCell.View>
                                                 <SwipeView BackgroundColor="Transparent">
                                                     <StackLayout Orientation="Horizontal">
-                                                        <!--<StackLayout x:Name="ItemImagePlaceHolder"
-                                                                         Orientation="Vertical">
-                                                            <Image Source="product.png"></Image>
-                                                        </StackLayout>-->
                                                         <StackLayout x:Name="ItemInfo"
                                                                      Orientation="Vertical"
                                                                      Padding="10,0,0,0"

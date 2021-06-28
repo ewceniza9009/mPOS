@@ -5,7 +5,8 @@ namespace mPOSv2.Models
 {
     public class Settings
     {
-        [PrimaryKey] [AutoIncrement]
+        [PrimaryKey] 
+        [AutoIncrement]
         public int Id { get; set; }
 
         public int UserId { get; set; }
@@ -13,5 +14,6 @@ namespace mPOSv2.Models
         public string ServerName { get; set; }
         public DateTime LoginDate { get; set; }
         public bool ContinuesBarcode { get; set; }
+        public int SalesLinePageSize { get; set; }
     }
 }

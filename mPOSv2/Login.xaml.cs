@@ -58,9 +58,9 @@ namespace mPOSv2
                 if (login != null && login.Id != 0)
                 {
                     SettingsRepository.UpdateLocalSettingsDB(login);
-
-                    await Navigation.PopAsync();
+                    
                     await Navigation.PushAsync(new AppMenu());
+                    Navigation.RemovePage(this);
                 }
                 else
                 {

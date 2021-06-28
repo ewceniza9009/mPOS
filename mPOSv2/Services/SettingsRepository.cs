@@ -33,6 +33,7 @@ namespace mPOSv2.Services
                     _settings.UserFullName = settings.UserFullName;
                     _settings.ServerName = settings.ServerName;
                     _settings.ContinuesBarcode = settings.ContinuesBarcode;
+                    _settings.SalesLinePageSize = settings.SalesLinePageSize;
 
                     conn.RunInTransaction(() =>
                     {
@@ -56,6 +57,20 @@ namespace mPOSv2.Services
             return result;
         }
 
+        public static int GetSalesLinePageSize()
+        {
+            int result;
+
+            using (var conn = new SQLiteConnection(App.FilePath))
+            {
+                result = conn.Table<Settings>()
+                    .FirstOrDefault()
+                    .SalesLinePageSize;
+            }
+
+            return result;
+        }
+
         public static void CreateLocalSettingsDB()
         {
             using (var conn = new SQLiteConnection(App.FilePath)) 
@@ -66,7 +81,8 @@ namespace mPOSv2.Services
                     UserFullName = "NotFound",
                     ServerName = GlobalVariables.UriBase,
                     LoginDate = DateTime.Now,
-                    ContinuesBarcode = false
+                    ContinuesBarcode = false,
+                    SalesLinePageSize = Models.Page.Pager.PageSize
                 };
 
                 var tableExistsQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='Settings';";

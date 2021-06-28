@@ -54,7 +54,7 @@ xmlns:sfAvatarView="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusi
                                         <sfAvatarView:SfAvatarView ContentType="Initials"
                                                                    InitialsType="DoubleCharacter"
                                                                    AvatarName="{Binding Customer}"
-                                                                   InitialsColor="Black"                     
+                                                                   InitialsColor="DodgerBlue"                     
                                                                    WidthRequest="45"
                                                                    FontAttributes="Bold"                     
                                                                    CornerRadius="25"                        

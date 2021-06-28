@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:numericupdown="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Start.Settings"
              Title="Settings">
@@ -56,6 +57,15 @@
                         <Label Text="Continues Barcode:"/>
                         <Switch IsToggled="{Binding Settings.ContinuesBarcode, Mode=TwoWay}"
                                 HorizontalOptions="Start"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Sales line page size:"/>
+                        <numericupdown:SfNumericUpDown x:Name="SalesLinePageSize" 
+                                                       Value="{Binding Settings.SalesLinePageSize}"
+                                                       FormatString="N0"
+                                                       TextAlignment="End"
+                                                       Minimum="0"/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

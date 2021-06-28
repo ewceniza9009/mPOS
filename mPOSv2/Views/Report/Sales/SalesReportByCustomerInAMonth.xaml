@@ -36,9 +36,8 @@
                 <StackLayout>
                     <button:SfButton Text="OK"
                                      Clicked="SfButton_Clicked"
-                                     BackgroundColor="Beige"
-                                     TextColor="Black"
-                                     WidthRequest="60"
+                                     WidthRequest="40"
+                                     BackgroundColor="Transparent"
                                      HeightRequest="40"/>
                 </StackLayout>
             </StackLayout>

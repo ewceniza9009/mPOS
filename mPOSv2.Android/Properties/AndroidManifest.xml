@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="2.0" package="com.Syncfusion.mPOSv2" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="2.0" package="com.TechyDude.mPOSv2" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="28" android:targetSdkVersion="28" />
 	<application android:label="MPOS" android:icon="@drawable/mpos"></application>
 </manifest>
