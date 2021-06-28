@@ -17,7 +17,7 @@ namespace mPOS.POCO
             get => TrnSalesLines.Sum(x => x.Amount);
         }
 
-        public bool IsNotTendered { get; set; }
+        public bool IsNotTendered { get; set; } = true;
 
         public string InvColor
         {
