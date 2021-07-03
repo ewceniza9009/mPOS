@@ -53,7 +53,7 @@ namespace mPOS.TEST
                 var user = new MstUser()
                 {
                     UserName = "admin",
-                    Password = "innosoft"
+                    Password = "1234"
                 };
 
 

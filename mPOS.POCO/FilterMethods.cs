@@ -19,7 +19,9 @@ namespace mPOS.POCO
             FilterName = filterName;
             Operation = op;
         }
+
         public string FilterName { get; set; }
+
         public Operation Operation { get; set; } = Operation.Equals;
     }
 }

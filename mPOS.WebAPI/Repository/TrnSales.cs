@@ -16,7 +16,6 @@ namespace mPOS.WebAPI.Repository
             POCO.TrnSales result;
 
             var mappingProfile = new MappingProfileForTrnSales();
-            ;
 
             using (var ctx = new posDataContext())
             {
