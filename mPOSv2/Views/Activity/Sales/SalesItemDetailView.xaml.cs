@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using mPOSv2.Enums;
 using mPOSv2.ViewModels;
 using Syncfusion.SfNumericUpDown.XForms;
@@ -11,7 +13,6 @@ namespace mPOSv2.Views.Activity.Sales
     public partial class SalesItemDetailView : ContentPage
     {
         private readonly SalesViewModel vm;
-
         public SalesItemDetailView(SalesViewModel vm)
         {
             InitializeComponent();
@@ -86,18 +87,7 @@ namespace mPOSv2.Views.Activity.Sales
             vm.ExecuteRefreshSelectedSaleLine(new object());
         }
 
-
-        private void CmdOK_OnClicked(object sender, EventArgs e)
-        {
-            Navigation.PopAsync().ContinueWith(x =>
-            {
-                if (vm.ItemFrom == ItemFrom.Item) vm.SelectedSale.TrnSalesLines.Add(vm.SelectedSaleLine);
-
-                vm.ReloadSalesLines();
-            });
-        }
-
-        private void Entry_Completed(object sender, EventArgs e)
+        private void DiscountAmount_Completed(object sender, EventArgs e)
         {
             if (vm.SelectedSaleLine.DiscountAmount <= vm.SelectedSaleLine.Price)
             {
@@ -107,25 +97,31 @@ namespace mPOSv2.Views.Activity.Sales
                 vm.SelectedSaleLine.Amount = vm.ComputeAmount();
                 vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
 
-                if (vm.SelectedSaleLine.NetPrice < vm.SelectedItem.Cost)
+                if (vm.SelectedSaleLine.NetPrice < vm.Items.ToList().SingleOrDefault(x => x.Id == vm.SelectedSaleLine.ItemId).Cost)
                 {
-                    var res = Application.Current.MainPage.DisplayAlert(vm.Title, "Net price is now lesser than item cost.  Proceed anyway?.", "Yes", "No");
+                    Device.BeginInvokeOnMainThread(async () =>
+                        await Application.Current.MainPage.DisplayAlert(vm.Title, "Net price is now lesser than item cost.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
+                        {
+                            if (!x.Result)
+                            {
+                                vm.SelectedSaleLine.DiscountAmount = 0;
+                                vm.SelectedSaleLine.DiscountRate = 0;
 
-                    if (res.Result)
-                    {
-                        vm.SelectedSaleLine.DiscountAmount = 0;
-                        vm.SelectedSaleLine.DiscountRate = 0;
+                                vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(vm.SelectedSaleLine.DiscountAmount, 2);
 
-                        vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(vm.SelectedSaleLine.DiscountAmount, 2);
+                                vm.SelectedSaleLine.Amount = vm.ComputeAmount();
+                                vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
 
-                        vm.SelectedSaleLine.Amount = vm.ComputeAmount();
-                        vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
-                    }
+                                vm.ExecuteRefreshSelectedSaleLine(new object());
+                            }
+                        },
+                        TaskScheduler.FromCurrentSynchronizationContext())
+                    );
                 }
             }
             else
             {
-                Application.Current.MainPage.DisplayAlert(vm.Title, "Discount amount exceeds item price.", "Ok");
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(vm.Title, "Discount amount exceeds item price.", "Ok"));
 
                 vm.SelectedSaleLine.DiscountAmount = 0;
                 vm.SelectedSaleLine.DiscountRate = 0;
@@ -136,6 +132,16 @@ namespace mPOSv2.Views.Activity.Sales
             }
 
             vm.ExecuteRefreshSelectedSaleLine(new object());
+        }
+
+        private void CmdOK_OnClicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync().ContinueWith(x =>
+            {
+                if (vm.ItemFrom == ItemFrom.Item) vm.SelectedSale.TrnSalesLines.Add(vm.SelectedSaleLine);
+
+                vm.ReloadSalesLines();
+            });
         }
     }
 }

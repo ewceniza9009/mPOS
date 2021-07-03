@@ -10,6 +10,7 @@ using mPOSv2.Enums;
 using mPOSv2.Models.Page;
 using mPOSv2.Services;
 using mPOSv2.Views.Activity.Sales;
+using Syncfusion.Data;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -63,6 +64,8 @@ namespace mPOSv2.ViewModels
 
                 IsBusy = false;
 
+                Sales.CollectionChanged += Sales_CollectionChanged;
+
                 Pager.PageSize = Services.SettingsRepository.GetSalesLinePageSize();
             });
         }
@@ -95,6 +98,16 @@ namespace mPOSv2.ViewModels
 
                 IsBusy = false;
             });
+        }
+        #endregion
+
+        #region Events
+        private void Sales_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                IsCollectionChanged = true;
+            }
         }
         #endregion
 
@@ -251,7 +264,26 @@ namespace mPOSv2.ViewModels
         }
         private ObservableCollection<MstItem> _Items;
 
-        public TrnSales SelectedSale { get; set; }
+        public TrnSales SelectedSale 
+        {
+            get => _SelectedSale;
+            set => SetProperty(ref _SelectedSale, value);
+        }
+        private TrnSales _SelectedSale;
+
+        public PropertyChangeTracker SelectedSaleTracker 
+        {
+            get => _SelectedSaleTracker;
+            set => SetProperty(ref _SelectedSaleTracker, value);
+        }
+        private PropertyChangeTracker _SelectedSaleTracker;
+
+        public bool IsCollectionChanged 
+        {
+            get => _IsCollectionChanged;
+            set => SetProperty(ref _IsCollectionChanged, value);
+        }
+        private bool _IsCollectionChanged = false;
 
         public TrnSalesLine SelectedSaleLine { get; set; }
 
@@ -433,6 +465,8 @@ namespace mPOSv2.ViewModels
 
                 LoadSalesLine();
 
+                SelectedSaleTracker = new PropertyChangeTracker(SelectedSale);
+                
                 Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.Navigation.PushAsync(new SalesDetailView(this)));
             }
@@ -532,6 +566,9 @@ namespace mPOSv2.ViewModels
 
                 IsProcessingAPI = false;
 
+                IsCollectionChanged = false;
+                SelectedSaleTracker?.ChangedProperties?.Clear();
+
                 Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.DisplayAlert(Title, "Record saved.", "Ok"));
 
@@ -566,6 +603,9 @@ namespace mPOSv2.ViewModels
                                         .Delete("TrnSales/Delete", SelectedSale.Id);
 
                                     IsProcessingAPI = false;
+
+                                    IsCollectionChanged = false;
+                                    SelectedSaleTracker.ChangedProperties.Clear();
 
                                     Device.BeginInvokeOnMainThread(async () =>
                                         await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.",

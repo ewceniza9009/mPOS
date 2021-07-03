@@ -9,7 +9,8 @@
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesDetailView"
-             Title="{Binding Title, Mode=TwoWay}">
+             Title="{Binding Title, Mode=TwoWay}"
+             EnableBackButtonOverride="True">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
@@ -199,27 +200,38 @@
                                                         </StackLayout>
                                                         <StackLayout Orientation="Horizontal"
                                                                      Padding="0,5,0,0">
-                                                            <StackLayout Orientation="Horizontal">
-                                                                <StackLayout x:Name="Quantity"
+                                                            <StackLayout Orientation="Vertical" >
+                                                                <StackLayout Orientation="Horizontal"
+                                                                             Margin="0,0,0,-5">
+                                                                    <StackLayout x:Name="Quantity"
                                                                              Orientation="Horizontal"
                                                                              HorizontalOptions="Start">
-                                                                    <Label Text="{Binding Quantity, StringFormat='{0:N2}'}"
+                                                                        <Label Text="{Binding Quantity, StringFormat='{0:N2}'}"
                                                                            TextColor="Black"
                                                                            FontSize="12"
                                                                            HorizontalTextAlignment="End"
                                                                            FontAttributes="Bold"
                                                                            WidthRequest="50"/>
-                                                                </StackLayout>
-                                                                <StackLayout x:Name="Unit"
+                                                                    </StackLayout>
+                                                                    <StackLayout x:Name="Unit"
                                                                              Orientation="Horizontal"
                                                                              HorizontalOptions="Start">
-                                                                    <Label Text="{Binding UnitName}"
+                                                                        <Label Text="{Binding UnitName}"
                                                                            TextColor="Black"
                                                                            FontSize="12"
                                                                            HorizontalTextAlignment="Start"
                                                                            FontAttributes="Bold"
                                                                            WidthRequest="50">
-                                                                    </Label>
+                                                                        </Label>
+                                                                    </StackLayout>
+                                                                </StackLayout>
+                                                                <StackLayout Orientation="Horizontal" >
+                                                                    <Label Text="{Binding NetPrice, StringFormat='{0:N2}'}"
+                                                                           TextColor="Black"
+                                                                           FontSize="12"
+                                                                           HorizontalTextAlignment="End"
+                                                                           FontAttributes="Bold"
+                                                                           WidthRequest="100"/>
                                                                 </StackLayout>
                                                             </StackLayout>
                                                             <StackLayout x:Name="Amount"

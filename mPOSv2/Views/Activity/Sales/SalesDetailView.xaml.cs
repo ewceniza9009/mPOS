@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using mPOSv2.Models.Page;
 using mPOSv2.Services;
 using mPOSv2.ViewModels;
@@ -14,7 +15,6 @@ namespace mPOSv2.Views.Activity.Sales
     public partial class SalesDetailView : ContentPage
     {
         #region Initialize
-
         public SalesDetailView(SalesViewModel vm)
         {
             var isNotTendered = vm.SelectedSale.IsNotTendered;
@@ -26,21 +26,56 @@ namespace mPOSv2.Views.Activity.Sales
             CmdSearchBarcode.Clicked += CmdSearchBarcode_Clicked;
 
             vm.SelectedSale.IsNotTendered = isNotTendered;
-        }
 
+            if (EnableBackButtonOverride)
+            {
+                this.BackButtonAction = () =>
+                {
+                    var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
+
+                    if (isDirty)
+                    {
+                        Device.BeginInvokeOnMainThread(async () =>
+                            await Application.Current.MainPage.DisplayAlert(vm.Title, "Record has been changed.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
+                            {
+                                if (x.Result)
+                                {
+                                    Navigation.PopAsync(true);
+                                }
+                            },
+                            TaskScheduler.FromCurrentSynchronizationContext())
+                        );
+                    }
+                    else 
+                    {
+                        Navigation.PopAsync(true);
+                    }
+                };
+            }
+        }
         #endregion
 
-        //TODO : CachingStrategy="RecycleElement"
-
         #region Properties
-
         private readonly SalesViewModel vm;
         private ZXingScannerPage scanPage;
+        public Action BackButtonAction { get; set; }
+        public static readonly BindableProperty EnableBackButtonOverrideProperty =
+              BindableProperty.Create(nameof(EnableBackButtonOverride), typeof(bool), typeof(SalesDetailView), false);
 
+        public bool EnableBackButtonOverride
+        {
+            get
+            {
+                return (bool)GetValue(EnableBackButtonOverrideProperty);
+            }
+            set
+            {
+                SetValue(EnableBackButtonOverrideProperty, value);
+            }
+        }
         #endregion
 
         #region Events
-
         private async void CmdSearchBarcode_Clicked(object sender, EventArgs e)
         {
             if (!SettingsRepository.GetSettings().ContinuesBarcode)
@@ -105,6 +140,28 @@ namespace mPOSv2.Views.Activity.Sales
             if (Pager.CurrentPage != (int) endPage) Pager.CurrentPage++;
 
             vm.ReloadSalesLines();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            var result = false;
+            var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
+
+            if (isDirty)
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.DisplayAlert(vm.Title, "Record has been changed.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
+                    {
+                        if (x.Result)
+                        {
+                            result = true;
+                        }
+                    },
+                    TaskScheduler.FromCurrentSynchronizationContext())
+                );
+            }
+
+            return result;
         }
         #endregion
     }

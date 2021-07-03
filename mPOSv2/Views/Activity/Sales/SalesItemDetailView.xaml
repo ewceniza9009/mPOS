@@ -31,9 +31,9 @@
                    Padding="10"
                    WidthRequest="1000">
                         <Label Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
-                       TextColor="DodgerBlue"
-                       FontSize="30"
-                       HorizontalTextAlignment="End">
+                               TextColor="DodgerBlue"
+                               FontSize="30"
+                               HorizontalTextAlignment="End">
                         </Label>
                     </Frame>
 
@@ -103,7 +103,7 @@
                                        WidthRequest="180"
                                        FontAttributes="Bold"
                                        HorizontalTextAlignment="End"
-                                       Completed="Entry_Completed">
+                                       Completed="DiscountAmount_Completed">
                                 </Entry>
                             </StackLayout>
                         </StackLayout>

@@ -1,9 +1,12 @@
 ﻿using System.IO;
+using System.Linq;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.Widget;
 using Android.Views;
+using mPOSv2.Views.Activity.Sales;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using ZXing.Net.Mobile.Android;
@@ -34,6 +37,9 @@ namespace mPOSv2.Android
 
             LoadApplication(new App(dbFileCompletePath));
 
+            Toolbar toolbar = this.FindViewById<Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(toolbar);
+
             int uiOptions = (int)Window.DecorView.SystemUiVisibility;
 
             uiOptions |= (int)SystemUiFlags.LowProfile;
@@ -58,6 +64,28 @@ namespace mPOSv2.Android
             uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
 
             Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == 16908332)
+            {
+                if (Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault() is SalesDetailView) 
+                {
+                    var currentpage = (SalesDetailView)Xamarin.Forms.Application.Current.MainPage.Navigation. NavigationStack.LastOrDefault();
+
+                    if (currentpage?.BackButtonAction != null)
+                    {
+                        currentpage?.BackButtonAction.Invoke();
+                        return false;
+                    }
+                }
+                return base.OnOptionsItemSelected(item);
+            }
+            else
+            {
+                return base.OnOptionsItemSelected(item);
+            }
         }
 
         protected override void OnStart()

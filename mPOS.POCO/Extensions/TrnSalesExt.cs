@@ -10,7 +10,12 @@ namespace mPOS.POCO
     {
         public string CustomerName { get; set; }
 
-        public List<TrnSalesLine> TrnSalesLines { get; set; }
+        public List<TrnSalesLine> TrnSalesLines 
+        {
+            get => _TrnSalesLines; 
+            set => SetProperty(ref _TrnSalesLines, value);
+        }
+        private List<TrnSalesLine> _TrnSalesLines;
 
         public decimal SalesAmount
         {

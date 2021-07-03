@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -519,16 +521,54 @@ namespace mPOS.POCO
         public decimal Amount { get; set; }
     }
 
-    public partial class TrnSales
+    public partial class TrnSales : INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public int PeriodId { get; set; }
-        public DateTime SalesDate { get; set; }
-        public string SalesNumber { get; set; }
-        public string ManualInvoiceNumber { get; set; }
-        public decimal Amount { get; set; }
+
+        public int PeriodId 
+        {
+            get => _PeriodId; 
+            set => SetProperty(ref _PeriodId, value); 
+        }
+        private int _PeriodId;
+
+        public DateTime SalesDate 
+        {
+            get => _SalesDate; 
+            set => SetProperty(ref _SalesDate, value);
+        }
+        private DateTime _SalesDate;
+
+        public string SalesNumber 
+        { 
+            get => _SalesNumber; 
+            set => SetProperty(ref _SalesNumber, value);
+        }
+        private string _SalesNumber;
+
+        public string ManualInvoiceNumber 
+        {
+            get => _ManualInvoiceNumber; 
+            set => SetProperty(ref _ManualInvoiceNumber, value); 
+        }
+        private string _ManualInvoiceNumber;
+
+        public decimal Amount 
+        { 
+            get => _Amount;
+            set => SetProperty(ref _Amount, value); 
+        }
+        private decimal _Amount;
+
         public int? TableId { get; set; }
-        public int CustomerId { get; set; }
+
+        public int CustomerId 
+        {
+            get => _CustomerId; 
+            set => SetProperty(ref _CustomerId, value);
+        }
+        private int _CustomerId;
+
         public int AccountId { get; set; }
         public int TermId { get; set; }
         public int? DiscountId { get; set; }
@@ -552,6 +592,22 @@ namespace mPOS.POCO
         public int UpdateUserId { get; set; }
         public DateTime UpdateDateTime { get; set; }
         public int? Pax { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(storage, value)) return false;
+            storage = value;
+            OnPropertyChanged(propertyName);
+
+            return true;
+        }
     }
 
     public partial class TrnSalesLine
