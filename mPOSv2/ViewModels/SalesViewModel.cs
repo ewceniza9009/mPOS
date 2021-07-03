@@ -605,7 +605,7 @@ namespace mPOSv2.ViewModels
                                     IsProcessingAPI = false;
 
                                     IsCollectionChanged = false;
-                                    SelectedSaleTracker.ChangedProperties.Clear();
+                                    SelectedSaleTracker?.ChangedProperties?.Clear();
 
                                     Device.BeginInvokeOnMainThread(async () =>
                                         await Application.Current.MainPage.DisplayAlert(Title, "Record deleted.",
