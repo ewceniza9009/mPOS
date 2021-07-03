@@ -38,7 +38,54 @@ namespace mPOSv2.Views.Activity.Sales
             vm.SelectedSaleLine.Amount = amount;
             vm.SelectedSaleLine.TaxAmount = taxAmount;
             vm.ExecuteRefreshSelectedSaleLine(new object());
+        }     
+
+        private void DiscountComboBox_SelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
+        {
+            var discount = vm.SelectedDiscount;
+
+            if (discount.Discount == "Senior Citizen Discount")
+            {
+                var price = 0m;
+                var discountAmount = 0m;
+
+                vm.SelectedSaleLine.DiscountRate = discount.DiscountRate;
+
+                if (vm.SelectedSaleLine.TaxRate > 0)
+                {
+                    price = Math.Round(vm.SelectedSaleLine.Price - Math.Round(vm.SelectedSaleLine.Price / (1 + vm.SelectedSaleLine.TaxRate / 100) * (vm.SelectedSaleLine.TaxRate / 100), 2), 2);
+                }
+                else 
+                {
+                    price = Math.Round(vm.SelectedSaleLine.Price, 2);
+                }
+
+                discountAmount = Math.Round(price * Math.Round(discount.DiscountRate / 100, 2), 2);
+                vm.SelectedSaleLine.DiscountAmount = Math.Round(discountAmount, 2);
+                vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(discountAmount, 2);
+            }
+            else 
+            {
+                vm.SelectedSaleLine.DiscountRate = Math.Round(discount.DiscountRate, 2);
+                vm.SelectedSaleLine.DiscountAmount = Math.Round(vm.SelectedSaleLine.Price, 2) * Math.Round(discount.DiscountRate / 100, 2);
+                vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(vm.SelectedSaleLine.DiscountAmount, 2);
+
+                vm.SelectedSaleLine.Amount = vm.ComputeAmount();
+                vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
+
+                if (discount.Discount == "Variable Discount")
+                {
+                    vm.CanEditDiscount = false;
+                }
+                else 
+                {
+                    vm.CanEditDiscount = true;
+                }
+            }
+
+            vm.ExecuteRefreshSelectedSaleLine(new object());
         }
+
 
         private void CmdOK_OnClicked(object sender, EventArgs e)
         {
@@ -48,6 +95,47 @@ namespace mPOSv2.Views.Activity.Sales
 
                 vm.ReloadSalesLines();
             });
+        }
+
+        private void Entry_Completed(object sender, EventArgs e)
+        {
+            if (vm.SelectedSaleLine.DiscountAmount <= vm.SelectedSaleLine.Price)
+            {
+                vm.SelectedSaleLine.DiscountRate = Math.Round((vm.SelectedSaleLine.DiscountAmount / vm.SelectedSaleLine.Price) * 100, 2);
+                vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(vm.SelectedSaleLine.DiscountAmount, 2);
+
+                vm.SelectedSaleLine.Amount = vm.ComputeAmount();
+                vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
+
+                if (vm.SelectedSaleLine.NetPrice < vm.SelectedItem.Cost)
+                {
+                    var res = Application.Current.MainPage.DisplayAlert(vm.Title, "Net price is now lesser than item cost.  Proceed anyway?.", "Yes", "No");
+
+                    if (res.Result)
+                    {
+                        vm.SelectedSaleLine.DiscountAmount = 0;
+                        vm.SelectedSaleLine.DiscountRate = 0;
+
+                        vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(vm.SelectedSaleLine.DiscountAmount, 2);
+
+                        vm.SelectedSaleLine.Amount = vm.ComputeAmount();
+                        vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
+                    }
+                }
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert(vm.Title, "Discount amount exceeds item price.", "Ok");
+
+                vm.SelectedSaleLine.DiscountAmount = 0;
+                vm.SelectedSaleLine.DiscountRate = 0;
+
+                vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(vm.SelectedSaleLine.DiscountAmount, 2);
+
+                vm.ComputeAmount();
+            }
+
+            vm.ExecuteRefreshSelectedSaleLine(new object());
         }
     }
 }

@@ -167,6 +167,13 @@ namespace mPOSv2.ViewModels
 
         public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
+        public bool CanEditDiscount 
+        {
+            get => _IsDiscountAmountEnabled;
+            set => SetProperty(ref _IsDiscountAmountEnabled, value);
+        }
+        private bool _IsDiscountAmountEnabled;
+
         public long SelectedSaleId
         {
             get => _SelectedSaleId == 0 ? SelectedSale.Id : _SelectedSaleId;
@@ -359,6 +366,7 @@ namespace mPOSv2.ViewModels
         #endregion
 
         #region Methods
+        #region Executes
         public void ExecuteRefreshSelectedSale(object sender)
         {
             OnPropertyChanged(nameof(SelectedSale));
@@ -374,10 +382,7 @@ namespace mPOSv2.ViewModels
 
         private async void ExecuteAdd(object sender)
         {
-            Items = await APISalesRequest.GetItems();
-            SaleUnits = await APISalesRequest.GetUnits();
-            Taxes = await APISalesRequest.GetTaxes();
-            Discounts = await APISalesRequest.GetDiscounts();
+            await InitializeControlLookUpSource();
 
             var newSale = new TrnSales
             {
@@ -416,10 +421,7 @@ namespace mPOSv2.ViewModels
 
         private async void ExecuteSelectSale(object sender)
         {
-            Items = await APISalesRequest.GetItems();
-            SaleUnits = await APISalesRequest.GetUnits();
-            Taxes = await APISalesRequest.GetTaxes();
-            Discounts = await APISalesRequest.GetDiscounts();
+            await InitializeControlLookUpSource();
 
             if (sender is TrnSales selectedSale)
             {
@@ -448,18 +450,7 @@ namespace mPOSv2.ViewModels
                 SelectedDiscount = Discounts.FirstOrDefault();
 
                 var taxAmount = 0m;
-                var amount = SelectedItem.Price;
-
-                if (SelectedTax.Code == "INCLUSIVE")
-                {
-                    taxAmount = Math.Round(SelectedItem.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100),
-                        2);
-                }
-                else
-                {
-                    taxAmount = Math.Round(SelectedItem.Price * (SelectedTax.Rate / 100), 2);
-                    amount = Math.Round(SelectedItem.Price + taxAmount, 2);
-                }
+                var amount = selectedItem.Price;
 
                 SelectedSaleLine = new TrnSalesLine
                 {
@@ -478,6 +469,8 @@ namespace mPOSv2.ViewModels
                     Amount = amount,
                     SalesLineTimeStamp = DateTime.Now
                 };
+
+                ComputeVatAmount(lineSelect: true);
 
                 ExecuteRefreshSelectedSaleLine(new object());
 
@@ -503,7 +496,7 @@ namespace mPOSv2.ViewModels
 
         private void ExecuteDeleteSaleLine(object sender)
         {
-            ((TrnSalesLine) sender).IsDeleted = true;
+            ((TrnSalesLine)sender).IsDeleted = true;
             ReloadSalesLines();
         }
 
@@ -527,7 +520,7 @@ namespace mPOSv2.ViewModels
                 SelectedSaleId = await ApiRequest<TrnSales, TrnSales>
                     .Save("TrnSales/Save", SelectedSale);
 
-                if (SelectedSale.Id == 0) 
+                if (SelectedSale.Id == 0)
                 {
                     var sale = await ApiRequest<TrnSales, TrnSales>
                         .Read("TrnSales/Get", SelectedSaleId);
@@ -584,6 +577,52 @@ namespace mPOSv2.ViewModels
                         },
                         TaskScheduler.FromCurrentSynchronizationContext())
             );
+        }
+        #endregion
+
+        private async Task InitializeControlLookUpSource()
+        {
+            Items = await APISalesRequest.GetItems();
+            SaleUnits = await APISalesRequest.GetUnits();
+            Taxes = await APISalesRequest.GetTaxes();
+            Discounts = await APISalesRequest.GetDiscounts();
+        }
+
+        public decimal ComputeAmount()
+        {
+            return Math.Round(SelectedSaleLine.NetPrice, 2) * Math.Round(SelectedSaleLine.Quantity, 2);
+        }
+
+        public decimal ComputeVatAmount(bool lineSelect = false) 
+        {
+            var result = 0m;
+
+            if (lineSelect)
+            {
+                if (SelectedTax.Code == "INCLUSIVE")
+                {
+                    result = Math.Round(SelectedSaleLine.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
+                }
+                else
+                {
+                    result = Math.Round(SelectedSaleLine.Price * (SelectedTax.Rate / 100), 2);
+                    SelectedSaleLine.Amount = Math.Round(SelectedSaleLine.Price + result, 2);
+                }
+            }
+            else
+            {
+                if (SelectedTax.Code == "INCLUSIVE")
+                {
+                    result = Math.Round(SelectedSaleLine.Amount / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
+                }
+                else
+                {
+                    result = Math.Round(SelectedSaleLine.Amount * (SelectedTax.Rate / 100), 2);
+                    SelectedSaleLine.Amount = Math.Round(SelectedSaleLine.Amount + result, 2);
+                }
+            }
+
+            return result;
         }
         #endregion
 
