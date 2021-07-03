@@ -29,7 +29,7 @@ namespace mPOSv2.Views.Activity.Sales
 
             if (EnableBackButtonOverride)
             {
-                this.BackButtonAction = () =>
+                BackButtonAction = () =>
                 {
                     var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
 
@@ -140,28 +140,6 @@ namespace mPOSv2.Views.Activity.Sales
             if (Pager.CurrentPage != (int) endPage) Pager.CurrentPage++;
 
             vm.ReloadSalesLines();
-        }
-
-        protected override bool OnBackButtonPressed()
-        {
-            var result = false;
-            var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
-
-            if (isDirty)
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                    await Application.Current.MainPage.DisplayAlert(vm.Title, "Record has been changed.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
-                    {
-                        if (x.Result)
-                        {
-                            result = true;
-                        }
-                    },
-                    TaskScheduler.FromCurrentSynchronizationContext())
-                );
-            }
-
-            return result;
         }
         #endregion
     }

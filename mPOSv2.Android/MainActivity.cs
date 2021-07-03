@@ -88,6 +88,23 @@ namespace mPOSv2.Android
             }
         }
 
+        public override void OnBackPressed() 
+        {
+            if(Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault() is SalesDetailView)
+            {
+                var currentpage = (SalesDetailView)Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+
+                if (currentpage?.BackButtonAction != null)
+                {
+                    currentpage?.BackButtonAction.Invoke();
+                }
+                else
+                {
+                    base.OnBackPressed();
+                }
+            }            
+        }
+
         protected override void OnStart()
         {
             base.OnStart();

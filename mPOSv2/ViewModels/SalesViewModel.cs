@@ -10,7 +10,6 @@ using mPOSv2.Enums;
 using mPOSv2.Models.Page;
 using mPOSv2.Services;
 using mPOSv2.Views.Activity.Sales;
-using Syncfusion.Data;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
