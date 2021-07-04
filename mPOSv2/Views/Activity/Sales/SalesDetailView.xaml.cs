@@ -37,7 +37,7 @@ namespace mPOSv2.Views.Activity.Sales
                         vm.IsBarcodeModalShown = false;
                         Navigation.PopModalAsync();
                     }
-                    else 
+                    else
                     {
                         var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
 
@@ -113,8 +113,7 @@ namespace mPOSv2.Views.Activity.Sales
 
                 scanPage.OnScanResult += result =>
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
-                        await DisplayAlert("Scanned Barcode", result.Text, "OK"));
+                    Device.BeginInvokeOnMainThread(async () => await DisplayAlert("Scanned Barcode", result.Text, "OK"));
 
                     vm.SearchBarcode = result.Text;
                     vm.ExecuteSelectItemByContinuesBarCode();
