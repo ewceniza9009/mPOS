@@ -179,6 +179,8 @@ namespace mPOSv2.ViewModels
 
         public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
+        public bool IsBarcodeModalShown = false;
+
         public bool CanEditDiscount 
         {
             get => _IsDiscountAmountEnabled;
@@ -678,6 +680,8 @@ namespace mPOSv2.ViewModels
             {
                 ItemFrom = ItemFrom.Item;
 
+                IsBarcodeModalShown = false;
+
                 IsChanged = false;
                 SelectedItem = Items.SingleOrDefault(x => x.BarCode == SearchBarcode);
                 SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedItem.OutTaxId);
@@ -687,8 +691,7 @@ namespace mPOSv2.ViewModels
 
                 if (SelectedTax != null && SelectedTax.Code == "INCLUSIVE")
                 {
-                    taxAmount = Math.Round(SelectedItem?.Price ?? 0 / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100),
-                        2);
+                    taxAmount = Math.Round(SelectedItem?.Price ?? 0 / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
                 }
                 else
                 {

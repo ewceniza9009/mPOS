@@ -31,24 +31,33 @@ namespace mPOSv2.Views.Activity.Sales
             {
                 BackButtonAction = () =>
                 {
-                    var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
-
-                    if (isDirty)
+                    //Please check error on debug, stepper cannot proceed in this area
+                    if (vm.IsBarcodeModalShown)
                     {
-                        Device.BeginInvokeOnMainThread(async () =>
-                            await Application.Current.MainPage.DisplayAlert(vm.Title, "Record has been changed.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
-                            {
-                                if (x.Result)
-                                {
-                                    Navigation.PopAsync(true);
-                                }
-                            },
-                            TaskScheduler.FromCurrentSynchronizationContext())
-                        );
+                        vm.IsBarcodeModalShown = false;
+                        Navigation.PopModalAsync();
                     }
                     else 
                     {
-                        Navigation.PopAsync(true);
+                        var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
+
+                        if (isDirty)
+                        {
+                            Device.BeginInvokeOnMainThread(async () =>
+                                await Application.Current.MainPage.DisplayAlert(vm.Title, "Record has been changed.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
+                                {
+                                    if (x.Result)
+                                    {
+                                        Navigation.PopAsync(true);
+                                    }
+                                },
+                                TaskScheduler.FromCurrentSynchronizationContext())
+                            );
+                        }
+                        else
+                        {
+                            Navigation.PopAsync(true);
+                        }
                     }
                 };
             }
@@ -56,11 +65,10 @@ namespace mPOSv2.Views.Activity.Sales
         #endregion
 
         #region Properties
-        private readonly SalesViewModel vm;
+        public readonly SalesViewModel vm;
         private ZXingScannerPage scanPage;
         public Action BackButtonAction { get; set; }
-        public static readonly BindableProperty EnableBackButtonOverrideProperty =
-              BindableProperty.Create(nameof(EnableBackButtonOverride), typeof(bool), typeof(SalesDetailView), false);
+        public static readonly BindableProperty EnableBackButtonOverrideProperty = BindableProperty.Create(nameof(EnableBackButtonOverride), typeof(bool), typeof(SalesDetailView), false);
 
         public bool EnableBackButtonOverride
         {
@@ -94,6 +102,7 @@ namespace mPOSv2.Views.Activity.Sales
                 };
 
                 await Navigation.PushModalAsync(scanPage);
+                vm.IsBarcodeModalShown = true;
             }
             else
             {
@@ -113,6 +122,7 @@ namespace mPOSv2.Views.Activity.Sales
                 };
 
                 await Navigation.PushModalAsync(scanPage);
+                vm.IsBarcodeModalShown = true;
             }
         }
 
