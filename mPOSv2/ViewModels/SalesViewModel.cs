@@ -175,7 +175,7 @@ namespace mPOSv2.ViewModels
 
         public bool IsChanged { get; set; }
 
-        public string Title => $"INV #: {(SelectedSale.SalesNumber ?? "(New)")}";
+        public string Title => $"INV #: {SelectedSale.SalesNumber ?? "(New)"}";
 
         public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
@@ -301,7 +301,6 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _SalesLines, value);
         }
         private ObservableCollection<TrnSalesLine> _SalesLines;
-
         #endregion
 
         #region Commands
