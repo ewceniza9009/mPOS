@@ -841,7 +841,7 @@ namespace mPOSv2.ViewModels
 
             data.ForEach(salesLine => 
             {
-                salesLine.ItemDescriptionDisplay = salesLine.ItemDescription.Truncate(15, "..");
+                salesLine.ItemDescriptionDisplay = salesLine.ItemDescription.Truncate(15, "...");
                 result.Add(salesLine);
             });
 

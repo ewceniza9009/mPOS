@@ -31,11 +31,15 @@
             <Frame HorizontalOptions="End"
                          Padding="10"
                          WidthRequest="1000">
-                <Label Text="{Binding SelectedSale.SalesAmount, StringFormat='₱{0:N2}'}"
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="calculator.png" />
+                    <Label Text="{Binding SelectedSale.SalesAmount, StringFormat='₱{0:N2}'}"
                        HorizontalTextAlignment="End"
                        TextColor="DodgerBlue"
                        FontSize="30"
-                       />
+                       HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+                
             </Frame>
             <StackLayout Margin="10,-2,10,0">
                 <StackLayout HorizontalOptions="Center">
@@ -60,7 +64,7 @@
                                     WidthRequest="40"
                                     HeightRequest="40"
                                     BackgroundColor="Beige"
-                                    ImageSource="view_more.png"/>
+                                    ImageSource="more.png"/>
                         </StackLayout>
 
                         <StackLayout Margin="5">
@@ -189,7 +193,7 @@
                                                                      WidthRequest="140">
                                                             <Label Text="{Binding ItemDescriptionDisplay}"
                                                                    TextColor="Black"
-                                                                   FontSize="17"
+                                                                   FontSize="15"
                                                                    HeightRequest="20"
                                                                    WidthRequest="140"
                                                                    FontAttributes="Bold"

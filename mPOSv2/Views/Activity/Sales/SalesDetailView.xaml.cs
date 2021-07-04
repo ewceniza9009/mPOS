@@ -140,22 +140,55 @@ namespace mPOSv2.Views.Activity.Sales
 
         private void ButtonPagePrev_OnClicked(object sender, EventArgs e)
         {
+            var hasChanges = false;
+
             if (Pager.CurrentPage != 1) Pager.CurrentPage--;
 
+            if (vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties != null && vm.SelectedSaleTracker.ChangedProperties.Count > 0))
+            {
+                hasChanges = true;
+            }
+
             vm.ReloadSalesLines();
+
+            if (!vm.SelectedSale.IsNotTendered)
+            {
+                ClearChangeTracker();
+            }
+            else
+            {
+                if (!hasChanges)
+                {
+                    ClearChangeTracker();
+                }
+            }
+            
         }
 
         private void ButtonPageNext_OnClicked(object sender, EventArgs e)
         {
             var endPage = Pager.EndPage = vm.GetEndPage();
+            var hasChanges = false;
 
             if (Pager.CurrentPage != (int) endPage) Pager.CurrentPage++;
 
+            if (vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties != null && vm.SelectedSaleTracker.ChangedProperties.Count > 0))
+            {
+                hasChanges = true;
+            }
+
             vm.ReloadSalesLines();
 
-            if (!vm.SelectedSale.IsNotTendered) 
+            if (!vm.SelectedSale.IsNotTendered)
             {
                 ClearChangeTracker();
+            }
+            else
+            {
+                if (!hasChanges)
+                {
+                    ClearChangeTracker();
+                }
             }
         }
         #endregion

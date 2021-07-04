@@ -28,13 +28,17 @@
             <ScrollView>
                 <StackLayout>
                     <Frame HorizontalOptions="End"
-                   Padding="10"
-                   WidthRequest="1000">
-                        <Label Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
-                               TextColor="DodgerBlue"
-                               FontSize="30"
-                               HorizontalTextAlignment="End">
-                        </Label>
+                           Padding="10"
+                           WidthRequest="1000">
+                        <StackLayout Orientation="Horizontal" >
+                            <Image Source="calculator.png" />
+                            <Label Text="{Binding SelectedSaleLine.Amount, Mode=TwoWay, Converter={StaticResource currencyConverter}}"
+                                   TextColor="DodgerBlue"
+                                   FontSize="30"
+                                   HorizontalTextAlignment="End"
+                                   HorizontalOptions="EndAndExpand">
+                            </Label>
+                        </StackLayout>
                     </Frame>
 
                     <StackLayout Margin="10">
