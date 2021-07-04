@@ -44,6 +44,8 @@ namespace mPOSv2.Views.Activity.Sales
         {
             var discount = vm.SelectedDiscount;
 
+            vm.SelectedSaleLine.DiscountId = discount.Id;
+
             if (discount.Discount == "Senior Citizen Discount")
             {
                 var price = 0m;
@@ -63,6 +65,9 @@ namespace mPOSv2.Views.Activity.Sales
                 discountAmount = Math.Round(price * Math.Round(discount.DiscountRate / 100, 2), 2);
                 vm.SelectedSaleLine.DiscountAmount = Math.Round(discountAmount, 2);
                 vm.SelectedSaleLine.NetPrice = Math.Round(vm.SelectedSaleLine.Price, 2) - Math.Round(discountAmount, 2);
+
+                vm.SelectedSaleLine.Amount = vm.ComputeAmount();
+                vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
             }
             else 
             {
@@ -137,7 +142,27 @@ namespace mPOSv2.Views.Activity.Sales
         {
             Navigation.PopAsync().ContinueWith(x =>
             {
-                if (vm.ItemFrom == ItemFrom.Item) vm.SelectedSale.TrnSalesLines.Add(vm.SelectedSaleLine);
+                if (vm.ItemFrom == ItemFrom.Item)
+                {
+                    if (vm.SelectedSale.TrnSalesLines.Any(y => y.ItemId == vm.SelectedSaleLine.ItemId))
+                    {
+                        var qty = vm.SelectedSaleLine.Quantity;
+
+                        vm.SelectedSaleLine = vm.SelectedSale.TrnSalesLines.FirstOrDefault(y => y.ItemId == vm.SelectedSaleLine.ItemId);
+                        vm.SelectedSaleLine.Quantity += qty;
+
+                        vm.SelectedSaleLine.Amount = vm.ComputeAmount();
+                        vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
+                    }
+                    else
+                    {
+                        vm.SelectedSale.TrnSalesLines.Add(vm.SelectedSaleLine);
+                    }
+                }
+                else 
+                {
+                
+                }
 
                 vm.ReloadSalesLines();
             });

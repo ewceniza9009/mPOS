@@ -113,7 +113,10 @@ namespace mPOSv2.Views.Activity.Sales
 
                 scanPage.OnScanResult += result =>
                 {
-                    Device.BeginInvokeOnMainThread(async () => await DisplayAlert("Scanned Barcode", result.Text, "OK"));
+                    Device.BeginInvokeOnMainThread(async () => 
+                        await Application.Current.MainPage.DisplayAlert("Scanned Barcode", result.Text, "OK"));
+
+                    System.Threading.Thread.Sleep(1000);
 
                     vm.SearchBarcode = result.Text;
                     vm.ExecuteSelectItemByContinuesBarCode();
@@ -149,6 +152,19 @@ namespace mPOSv2.Views.Activity.Sales
             if (Pager.CurrentPage != (int) endPage) Pager.CurrentPage++;
 
             vm.ReloadSalesLines();
+
+            if (!vm.SelectedSale.IsNotTendered) 
+            {
+                ClearChangeTracker();
+            }
+        }
+        #endregion
+
+        #region Methods
+        public void ClearChangeTracker() 
+        {
+            vm.IsCollectionChanged = false;
+            if (vm.SelectedSaleTracker?.ChangedProperties != null) vm.SelectedSaleTracker.ChangedProperties.Clear();
         }
         #endregion
     }

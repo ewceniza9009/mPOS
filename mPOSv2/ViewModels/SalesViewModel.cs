@@ -491,6 +491,7 @@ namespace mPOSv2.ViewModels
                     ItemId = SelectedItem.Id,
                     ItemDescription = SelectedItem.ItemDescription,
                     BarCode = SelectedItem.BarCode,
+                    DiscountId = SelectedDiscount.Id,
                     UnitId = SelectedItem.UnitId,
                     UnitName = SaleUnits?.SingleOrDefault(x => x.Id == SelectedItem.UnitId)?.Unit ?? "Unit(s)",
                     Quantity = 1,
@@ -508,8 +509,7 @@ namespace mPOSv2.ViewModels
 
                 ExecuteRefreshSelectedSaleLine(new object());
 
-                Device.BeginInvokeOnMainThread(
-                    async () => await Application.Current.MainPage.Navigation.PopAsync());
+                Device.BeginInvokeOnMainThread( async () => await Application.Current.MainPage.Navigation.PopAsync());
                 Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
@@ -523,8 +523,7 @@ namespace mPOSv2.ViewModels
 
                 ExecuteRefreshSelectedSaleLine(new object());
 
-                Device.BeginInvokeOnMainThread(async () =>
-                    await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
         }
 
@@ -739,8 +738,7 @@ namespace mPOSv2.ViewModels
 
                     if (SelectedTax?.Code == "INCLUSIVE")
                     {
-                        taxAmount = Math.Round(
-                            SelectedItem?.Price ?? 0 / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
+                        taxAmount = Math.Round(SelectedItem?.Price ?? 0 / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
                     }
                     else
                     {
@@ -772,25 +770,28 @@ namespace mPOSv2.ViewModels
                 {
                     SelectedSaleLine = SelectedSale.TrnSalesLines.SingleOrDefault(x => x.ItemId == SelectedItem.Id);
 
-                    var taxAmount = 0m;
-                    var quantity = SelectedSaleLine?.Quantity ?? 0 + 1;
-                    var amount = quantity * SelectedSaleLine?.NetPrice ?? 0;
+                    if (SelectedSaleLine != null) 
+                    {
+                        var taxAmount = 0m;
+                        var quantity = SelectedSaleLine.Quantity + 1;
+                        var amount = quantity * SelectedSaleLine?.NetPrice ?? 0;
 
-                    if (SelectedTax?.Code == "INCLUSIVE")
-                    {
-                        taxAmount = Math.Round(amount / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
-                    }
-                    else
-                    {
-                        taxAmount = Math.Round(amount * ((SelectedTax?.Rate ?? 0) / 100), 2);
-                        amount = Math.Round(amount + taxAmount, 2);
-                    }
+                        if (SelectedTax?.Code == "INCLUSIVE")
+                        {
+                            taxAmount = Math.Round(amount / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
+                        }
+                        else
+                        {
+                            taxAmount = Math.Round(amount * ((SelectedTax?.Rate ?? 0) / 100), 2);
+                            amount = Math.Round(amount + taxAmount, 2);
+                        }
 
-                    if (SelectedSaleLine != null)
-                    {
-                        SelectedSaleLine.Quantity = quantity;
-                        SelectedSaleLine.TaxAmount = taxAmount;
-                        SelectedSaleLine.Amount = amount;
+                        if (SelectedSaleLine != null)
+                        {
+                            SelectedSaleLine.Quantity = quantity;
+                            SelectedSaleLine.TaxAmount = taxAmount;
+                            SelectedSaleLine.Amount = amount;
+                        }
                     }
                 }
 
