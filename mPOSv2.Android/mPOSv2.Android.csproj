@@ -350,10 +350,25 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\sales2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\prev.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\details.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\collected.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadGenericExceptionInfoBarmPOSv2AndroidHideInfoBar="True" TriggeredFromHotReload="False" XamarinHotReloadDebuggerTimeoutExceptionmPOSv2AndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionmPOSv2AndroidHideInfoBar="True" TriggeredFromHotReload="False" XamarinHotReloadGenericExceptionInfoBarmPOSv2AndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

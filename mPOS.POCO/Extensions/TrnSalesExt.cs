@@ -53,5 +53,20 @@ namespace mPOS.POCO
                 return display;
             }
         }
+
+        public string Icon 
+        {
+            get 
+            {
+                var icon = "sales2.png";
+
+                if (!IsNotTendered)
+                {
+                    icon = "collected.png";
+                }
+
+                return icon;
+            }
+        }
     }
 }

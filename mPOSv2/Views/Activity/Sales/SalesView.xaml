@@ -68,7 +68,7 @@
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout x:Name="ItemImagePlaceHolder"
                                                      Orientation="Vertical">
-                                            <Image Source="sales2.png"></Image>
+                                            <Image Source="{Binding Icon}"></Image>
                                         </StackLayout>
 
                                         <StackLayout x:Name="SalesDate"
