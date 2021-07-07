@@ -54,7 +54,10 @@
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="Beige"
                                      HeightRequest="40">
-                            <Image Source="details.png" />
+                            <Image Source="details.png" 
+                                   Margin="5,0,0,0"
+                                   HeightRequest="35"
+                                   WidthRequest="35"/>
                             <Label HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
                                    FontAttributes="Bold"
@@ -115,7 +118,10 @@
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="Beige"
                                      HeightRequest="40">
-                            <Image Source="list.png" />
+                            <Image Source="list.png" 
+                                   Margin="5,0,0,0"
+                                   HeightRequest="35"
+                                   WidthRequest="35"/>
                             <Label HorizontalOptions="FillAndExpand"
                                    HorizontalTextAlignment="Start"
                                    FontAttributes="Bold"
@@ -153,7 +159,7 @@
                                                 ImageSource="prev.png"
                                                 FontAttributes="Bold"
                                                 WidthRequest="60"
-                                                HeightRequest="40"
+                                                HeightRequest="35"
                                                 TextColor="DodgerBlue"
                                                 CornerRadius="3"
                                                 Clicked="ButtonPagePrev_OnClicked"
@@ -163,7 +169,7 @@
                                                   ImageSource="next.png"
                                                   FontAttributes="Bold"
                                                   WidthRequest="60"
-                                                  HeightRequest="40"
+                                                  HeightRequest="35"
                                                   TextColor="DodgerBlue"
                                                   CornerRadius="3"
                                                   Clicked="ButtonPageNext_OnClicked"
@@ -179,7 +185,7 @@
                                       ItemsSource="{Binding SalesLines}"
                                       SelectedItem="{Binding SelectedSaleLine}"
                                       HasUnevenRows="True"
-                                      HeightRequest="360"
+                                      HeightRequest="450"
                                       SeparatorVisibility="None"
                                       IsEnabled="{Binding SelectedSale.IsNotTendered}">
                                 <ListView.Behaviors>
