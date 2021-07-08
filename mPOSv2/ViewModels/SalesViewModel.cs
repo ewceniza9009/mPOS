@@ -636,29 +636,14 @@ namespace mPOSv2.ViewModels
         {
             var result = 0m;
 
-            if (lineSelect)
+            if (SelectedTax.Code == "INCLUSIVE")
             {
-                if (SelectedTax.Code == "INCLUSIVE")
-                {
-                    result = Math.Round(SelectedSaleLine.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
-                }
-                else
-                {
-                    result = Math.Round(SelectedSaleLine.Price * (SelectedTax.Rate / 100), 2);
-                    SelectedSaleLine.Amount = Math.Round(SelectedSaleLine.Price + result, 2);
-                }
+                result = Math.Round(SelectedSaleLine.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
             }
             else
             {
-                if (SelectedTax.Code == "INCLUSIVE")
-                {
-                    result = Math.Round(SelectedSaleLine.Amount / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
-                }
-                else
-                {
-                    result = Math.Round(SelectedSaleLine.Amount * (SelectedTax.Rate / 100), 2);
-                    SelectedSaleLine.Amount = Math.Round(SelectedSaleLine.Amount + result, 2);
-                }
+                result = Math.Round(SelectedSaleLine.Price * (SelectedTax.Rate / 100), 2);
+                SelectedSaleLine.Amount = Math.Round(SelectedSaleLine.Price + result, 2);
             }
 
             return result;
