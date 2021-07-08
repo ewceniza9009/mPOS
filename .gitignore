@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-mPOS/
+mPOS/mPOSv2/App.xaml.cs
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
