@@ -76,6 +76,23 @@ namespace mPOSv2.Services
             return result;
         }
 
+        public static async Task<ObservableCollection<MstTerm>> GetTerms()
+        {
+            ObservableCollection<MstTerm> result;
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetTerms";
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler))
+            {
+                var response = await client.GetStringAsync(requestUri);
+                result = JsonConvert.DeserializeObject<ObservableCollection<MstTerm>>(response);
+            }
+
+            return result;
+        }
+
         public static async Task<ObservableCollection<MstDiscount>> GetDiscounts()
         {
             ObservableCollection<MstDiscount> result;

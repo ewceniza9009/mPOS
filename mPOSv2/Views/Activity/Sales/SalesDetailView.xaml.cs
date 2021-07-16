@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using mPOSv2.Models.Page;
 using mPOSv2.Services;
 using mPOSv2.ViewModels;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Mobile;
@@ -138,6 +139,11 @@ namespace mPOSv2.Views.Activity.Sales
             vm.ExecuteSelectCustomer(new object());
         }
 
+        private void CmdMore_Clicked(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PushAsync(new SalesCharge(vm));
+        }
+
         private void ButtonPagePrev_OnClicked(object sender, EventArgs e)
         {
             var hasChanges = false;
@@ -200,5 +206,7 @@ namespace mPOSv2.Views.Activity.Sales
             if (vm.SelectedSaleTracker?.ChangedProperties != null) vm.SelectedSaleTracker.ChangedProperties.Clear();
         }
         #endregion
+
+        
     }
 }

@@ -83,5 +83,12 @@ namespace mPOS.WebAPI.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetTerms()
+        {
+            var result = Repository.Common.GetTerms();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

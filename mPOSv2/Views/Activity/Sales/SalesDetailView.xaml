@@ -68,7 +68,8 @@
                                     WidthRequest="40"
                                     HeightRequest="40"
                                     BackgroundColor="Beige"
-                                    ImageSource="more.png"/>
+                                    ImageSource="more.png"
+                                    Clicked="CmdMore_Clicked"/>
                         </StackLayout>
 
                         <StackLayout Margin="5">

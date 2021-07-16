@@ -46,6 +46,7 @@ namespace mPOSv2.ViewModels
                     };
 
                 Customers = await APISalesRequest.GetCustomers();
+                Terms = await APISalesRequest.GetTerms();
 
                 Sales = await ApiRequest<TrnSalesFilter, ObservableCollection<TrnSales>>
                     .PostRead("TrnSales/BulkGet", salesFilter);
@@ -222,6 +223,20 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _Taxes, value);
         }
         private ObservableCollection<MstTax> _Taxes;
+
+        public MstTerm SelectedTerm
+        {
+            get => _SelectedTerm;
+            set => SetProperty(ref _SelectedTerm, value);
+        }
+        private MstTerm _SelectedTerm;
+
+        public ObservableCollection<MstTerm> Terms
+        {
+            get => _Terms;
+            set => SetProperty(ref _Terms, value);
+        }
+        private ObservableCollection<MstTerm> _Terms;
 
         public MstDiscount SelectedDiscount
         {
@@ -460,6 +475,7 @@ namespace mPOSv2.ViewModels
                 IsChanged = false;
                 SelectedSale = selectedSale;
                 SelectedCustomer = Customers.SingleOrDefault(y => y.Id == SelectedSale.CustomerId);
+                SelectedTerm = Terms.SingleOrDefault(y => y.Id == SelectedSale.TermId);
 
                 GlobalVariables.TempSearchSalesDate = SearchSaleDate;
 
