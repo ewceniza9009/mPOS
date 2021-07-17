@@ -28,40 +28,7 @@ namespace mPOSv2.Views.Activity.Sales
 
             vm.SelectedSale.IsNotTendered = isNotTendered;
 
-            if (EnableBackButtonOverride)
-            {
-                BackButtonAction = () =>
-                {
-                    //Please check error on debug, stepper cannot proceed in this area
-                    if (vm.IsBarcodeModalShown)
-                    {
-                        vm.IsBarcodeModalShown = false;
-                        Navigation.PopModalAsync();
-                    }
-                    else
-                    {
-                        var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
-
-                        if (isDirty)
-                        {
-                            Device.BeginInvokeOnMainThread(async () =>
-                                await Application.Current.MainPage.DisplayAlert(vm.Title, "Record has been changed.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
-                                {
-                                    if (x.Result)
-                                    {
-                                        Navigation.PopAsync(true);
-                                    }
-                                },
-                                TaskScheduler.FromCurrentSynchronizationContext())
-                            );
-                        }
-                        else
-                        {
-                            Navigation.PopAsync(true);
-                        }
-                    }
-                };
-            }
+            InitializeBackButtonAction(vm);
         }
         #endregion
 
@@ -134,13 +101,14 @@ namespace mPOSv2.Views.Activity.Sales
             vm.ExecuteShowItems();
         }
 
-        private void UnitComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CustomerComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             vm.ExecuteSelectCustomer(new object());
         }
 
         private void CmdMore_Clicked(object sender, EventArgs e)
         {
+            vm.IsSalesChargeModalShown = true;
             PopupNavigation.Instance.PushAsync(new SalesCharge(vm));
         }
 
@@ -200,6 +168,51 @@ namespace mPOSv2.Views.Activity.Sales
         #endregion
 
         #region Methods
+        private void InitializeBackButtonAction(SalesViewModel vm)
+        {
+            if (EnableBackButtonOverride)
+            {
+                BackButtonAction = OnBackButtonAction;
+            }
+        }
+
+        private void OnBackButtonAction() 
+        {
+            //Please check error on debug, stepper cannot proceed in this area
+            if (vm.IsBarcodeModalShown)
+            {
+                vm.IsBarcodeModalShown = false;
+                Navigation.PopModalAsync();
+            }
+            else if (vm.IsSalesChargeModalShown)
+            {
+                vm.IsSalesChargeModalShown = false;
+                if(PopupNavigation.Instance.PopupStack.Count > 0) PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                var isDirty = vm.IsCollectionChanged || (vm.SelectedSaleTracker?.ChangedProperties == null ? false : vm.SelectedSaleTracker.ChangedProperties.Count > 0);
+
+                if (isDirty)
+                {
+                    Device.BeginInvokeOnMainThread(async () =>
+                        await Application.Current.MainPage.DisplayAlert(vm.Title, "Record has been changed.  Proceed anyway?.", "Yes", "No").ContinueWith(x =>
+                        {
+                            if (x.Result)
+                            {
+                                Navigation.PopAsync(true);
+                            }
+                        },
+                        TaskScheduler.FromCurrentSynchronizationContext())
+                    );
+                }
+                else
+                {
+                    Navigation.PopAsync(true);
+                }
+            }
+        }
+
         public void ClearChangeTracker() 
         {
             vm.IsCollectionChanged = false;

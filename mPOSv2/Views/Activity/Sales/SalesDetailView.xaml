@@ -103,7 +103,7 @@
                                                      MaximumDropDownHeight="400"
                                                      ComboBoxMode="SuggestAppend"
                                                      HorizontalOptions="FillAndExpand"
-                                                     SelectionChanged="UnitComboBox_OnSelectionChanged"/>
+                                                     SelectionChanged="CustomerComboBox_OnSelectionChanged"/>
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>

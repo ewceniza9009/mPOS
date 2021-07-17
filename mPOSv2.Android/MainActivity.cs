@@ -71,9 +71,11 @@ namespace mPOSv2.Android
         {
             if (item.ItemId == 16908332)
             {
-                if (Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault() is SalesDetailView) 
+                var page = Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+
+                if (page is SalesDetailView salesDetailView) 
                 {
-                    var currentpage = (SalesDetailView)Xamarin.Forms.Application.Current.MainPage.Navigation. NavigationStack.LastOrDefault();
+                    var currentpage = salesDetailView;
 
                     if (currentpage?.BackButtonAction != null)
                     {
@@ -91,11 +93,13 @@ namespace mPOSv2.Android
 
         public override void OnBackPressed() 
         {
-            if(Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault() is SalesDetailView)
+            var page = Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+
+            if (page is SalesDetailView salesDetailView)
             {
                 try
                 {
-                    var currentpage = (SalesDetailView)Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+                    var currentpage = salesDetailView;
 
                     if (currentpage?.BackButtonAction != null)
                     {

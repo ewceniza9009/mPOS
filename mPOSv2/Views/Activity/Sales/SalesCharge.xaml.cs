@@ -29,5 +29,15 @@ namespace mPOSv2.Views.Activity.Sales
         {
 
         }
+
+        private void CmdOk_Clicked(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PopAsync();
+        }
+
+        private void PopupPage_Disappearing(object sender, EventArgs e)
+        {
+            vm.IsSalesChargeModalShown = false;
+        }
     }
 }

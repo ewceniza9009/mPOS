@@ -181,6 +181,7 @@ namespace mPOSv2.ViewModels
         public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
         public bool IsBarcodeModalShown = false;
+        public bool IsSalesChargeModalShown = false;
 
         public bool CanEditDiscount 
         {

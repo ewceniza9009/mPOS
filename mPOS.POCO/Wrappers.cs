@@ -570,12 +570,26 @@ namespace mPOS.POCO
         private int _CustomerId;
 
         public int AccountId { get; set; }
-        public int TermId { get; set; }
+
+        public int TermId 
+        { 
+            get => _TermId; 
+            set => SetProperty(ref _TermId, value); 
+        }
+        private int _TermId;
+
         public int? DiscountId { get; set; }
         public string SeniorCitizenId { get; set; }
         public string SeniorCitizenName { get; set; }
         public int? SeniorCitizenAge { get; set; }
-        public string Remarks { get; set; }
+
+        public string Remarks 
+        {
+            get => _Remarks;
+            set => SetProperty(ref _Remarks, value); 
+        }
+        private string _Remarks;
+
         public int SalesAgent { get; set; }
         public int TerminalId { get; set; }
         public int PreparedBy { get; set; }
