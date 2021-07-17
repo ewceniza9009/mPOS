@@ -46,7 +46,7 @@
             </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Label Text="Terms : "
-                       Padding="0,20,0,0"
+                       Padding="0,15,0,0"
                        WidthRequest="115"/>
                 <combobox:SfComboBox x:Name="TermComboBox"
                                      DataSource="{Binding Terms}"
@@ -56,8 +56,8 @@
                                      AllowFiltering="true" 
                                      Margin="0,-12,0,0"
                                      MaximumDropDownHeight="400"
+                                     WidthRequest="180"
                                      ComboBoxMode="SuggestAppend"
-                                     HorizontalOptions="FillAndExpand"
                                      SelectionChanged="Term_OnSelectionChanged"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
@@ -65,7 +65,7 @@
                        Padding="0,20,0,0"
                        WidthRequest="110"/>
                 <Entry Text="{Binding SelectedSale.Remarks}"
-                       HorizontalOptions="FillAndExpand"/>
+                       WidthRequest="190"/>
             </StackLayout>
         </StackLayout>
         <Button

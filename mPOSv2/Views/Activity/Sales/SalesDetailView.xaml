@@ -79,7 +79,6 @@
                                        WidthRequest="100"
                                        Margin="0,12,0,0"
                                        FontSize="15"
-                                       FontAttributes="Bold"
                                        TextColor="Black"/>
                                 <DatePicker Date="{Binding SelectedSale.SalesDate}"
                                         HeightRequest="40"
@@ -91,7 +90,6 @@
                                        WidthRequest="100"
                                        Margin="0,16,0,0"
                                        FontSize="15"
-                                       FontAttributes="Bold"
                                        TextColor="Black"/>
 
                                 <combobox:SfComboBox x:Name="CustomerComboBox"
