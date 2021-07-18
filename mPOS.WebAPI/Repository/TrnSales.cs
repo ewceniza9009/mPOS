@@ -106,8 +106,8 @@ namespace mPOS.WebAPI.Repository
                     t.PeriodId = 1;
                     t.SalesNumber = newSalesNumber;
                     t.ManualInvoiceNumber = newSalesNumber;
+                    if (t.TermId == 0) t.TermId = 7;
                     t.AccountId = 64;
-                    t.TermId = 7;
                     t.SalesAgent = 1;
                     t.TerminalId = 1;
                     t.PreparedBy = 1;
@@ -117,7 +117,6 @@ namespace mPOS.WebAPI.Repository
                     t.PaidAmount = 0;
                     t.CreditAmount = 0;
                     t.DebitAmount = 0;
-                    t.Remarks = "POS Mobile";
                     t.EntryUserId = 1;
                     t.EntryDateTime = DateTime.Now;
                     t.UpdateUserId = 1;

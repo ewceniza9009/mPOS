@@ -24,7 +24,8 @@
         Padding="24"
         BackgroundColor="WhiteSmoke"
         HorizontalOptions="Center"
-        VerticalOptions="Center">
+        VerticalOptions="Center"
+        IsEnabled="{Binding SelectedSale.IsNotTendered}">
         <StackLayout>
             <Label Text="Sales Charge" 
                    FontSize="20"
@@ -37,17 +38,18 @@
         </StackLayout>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Reward Available: "
-                       Padding="0,20,0,0"/>
+                <Label Text="Reward Available"
+                       Padding="0,20,0,0"
+                       WidthRequest="115"/>
                 <Entry Text="0.00"
                        HorizontalTextAlignment="End"
                        WidthRequest="190"
                        IsEnabled="False"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Terms : "
-                       Padding="0,15,0,0"
-                       WidthRequest="115"/>
+                <Label Text="Terms"
+                       Padding="0,20,0,0"
+                       WidthRequest="120"/>
                 <combobox:SfComboBox x:Name="TermComboBox"
                                      DataSource="{Binding Terms}"
                                      SelectedItem="{Binding SelectedTerm}"
@@ -61,9 +63,9 @@
                                      SelectionChanged="Term_OnSelectionChanged"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Remarks: "
+                <Label Text="Remarks"
                        Padding="0,20,0,0"
-                       WidthRequest="110"/>
+                       WidthRequest="115"/>
                 <Entry Text="{Binding SelectedSale.Remarks}"
                        WidthRequest="190"/>
             </StackLayout>

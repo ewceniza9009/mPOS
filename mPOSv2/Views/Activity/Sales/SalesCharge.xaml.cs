@@ -27,7 +27,7 @@ namespace mPOSv2.Views.Activity.Sales
 
         private void Term_OnSelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
         {
-
+            vm.SelectedSale.TermId = vm.SelectedTerm.Id;
         }
 
         private void CmdOk_Clicked(object sender, EventArgs e)

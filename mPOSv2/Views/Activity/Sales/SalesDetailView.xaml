@@ -50,7 +50,7 @@
 
                 <Frame CornerRadius="3"
                        Padding="0">
-                    <StackLayout IsEnabled="{Binding SelectedSale.IsNotTendered}">
+                    <StackLayout>
                         <StackLayout Orientation="Horizontal"
                                      BackgroundColor="Beige"
                                      HeightRequest="40">
@@ -72,10 +72,11 @@
                                     Clicked="CmdMore_Clicked"/>
                         </StackLayout>
 
-                        <StackLayout Margin="5">
+                        <StackLayout Margin="5" 
+                                     IsEnabled="{Binding SelectedSale.IsNotTendered}">
                             <StackLayout Orientation="Horizontal"
                                          Margin="0,-10,0,0">
-                                <Label Text="Sales Date: "
+                                <Label Text="Sales Date"
                                        WidthRequest="100"
                                        Margin="0,12,0,0"
                                        FontSize="15"
@@ -86,7 +87,7 @@
                             </StackLayout>
                             <StackLayout Orientation="Horizontal"
                                          Margin="0,-10,0,0">
-                                <Label Text="Customer: "
+                                <Label Text="Customer"
                                        WidthRequest="100"
                                        Margin="0,16,0,0"
                                        FontSize="15"
