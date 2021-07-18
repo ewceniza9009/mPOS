@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\TrnCollectionExt.cs" />
     <Compile Include="Extensions\TrnSalesExt.cs" />
     <Compile Include="Extensions\TrnSalesLineExt.cs" />
     <Compile Include="FilterMethods.cs" />

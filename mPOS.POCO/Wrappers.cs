@@ -365,7 +365,7 @@ namespace mPOS.POCO
         public int UserId { get; set; }
     }
 
-    public class TrnCollection
+    public partial class TrnCollection : INotifyPropertyChanged
     {
         public int Id { get; set; }
         public int PeriodId { get; set; }
@@ -389,6 +389,22 @@ namespace mPOS.POCO
         public DateTime EntryDateTime { get; set; }
         public int UpdateUserId { get; set; }
         public DateTime UpdateDateTime { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(storage, value)) return false;
+            storage = value;
+            OnPropertyChanged(propertyName);
+
+            return true;
+        }
     }
 
     public class TrnCollectionLine

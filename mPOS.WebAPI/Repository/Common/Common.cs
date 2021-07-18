@@ -5,6 +5,7 @@ using mPOS.WebAPI.Mapping;
 using MstTax = mPOS.POCO.MstTax;
 using MstUnit = mPOS.POCO.MstUnit;
 using MstTerm = mPOS.POCO.MstTerm;
+using MstPayType = mPOS.POCO.MstPayType;
 
 namespace mPOS.WebAPI.Repository
 {
@@ -85,6 +86,22 @@ namespace mPOS.WebAPI.Repository
                 var data = ctx.MstTerms;
 
                 result = mappingProfile.mapper.Map<IEnumerable<Data.MstTerm>, IEnumerable<MstTerm>>(data);
+            }
+
+            return result.ToList();
+        }
+
+        public static List<MstPayType> GetPayTypes()
+        {
+            IEnumerable<MstPayType> result;
+
+            var mappingProfile = new MappingProfile<Data.MstTerm, MstTerm>();
+
+            using (var ctx = new posDataContext())
+            {
+                var data = ctx.MstPayTypes;
+
+                result = mappingProfile.mapper.Map<IEnumerable<Data.MstPayType>, IEnumerable<MstPayType>>(data);
             }
 
             return result.ToList();

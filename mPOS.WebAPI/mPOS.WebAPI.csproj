@@ -206,6 +206,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\MappingProfile.cs" />
+    <Compile Include="Mapping\MappingProfileForTrnCollection.cs" />
     <Compile Include="Mapping\MappingProfileForTrnSales.cs" />
     <Compile Include="Migrations\202005160647101_asp-membership-migration.cs" />
     <Compile Include="Migrations\202005160647101_asp-membership-migration.Designer.cs">
