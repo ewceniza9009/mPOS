@@ -95,7 +95,7 @@ namespace mPOS.WebAPI.Repository
         {
             IEnumerable<MstPayType> result;
 
-            var mappingProfile = new MappingProfile<Data.MstTerm, MstTerm>();
+            var mappingProfile = new MappingProfile<Data.MstPayType, MstPayType>();
 
             using (var ctx = new posDataContext())
             {

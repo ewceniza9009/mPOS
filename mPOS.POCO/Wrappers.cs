@@ -407,7 +407,7 @@ namespace mPOS.POCO
         }
     }
 
-    public class TrnCollectionLine
+    public partial class TrnCollectionLine
     {
         public int Id { get; set; }
         public int CollectionId { get; set; }

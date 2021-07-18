@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="mPOSv2.Views.Activity.Sales.SalesTender"
+             xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
+             xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
+             Title="{Binding TenderTitle, Mode=TwoWay}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
+            <converters:DecimalConverter x:Key="decimalConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="CmdTender"
+                     Text="Tender"
+                     IconImageSource="tender.png"></ToolbarItem>
+        <ToolbarItem x:Name="CmdClose"
+                     Text="Close"
+                     IconImageSource="close.png"
+                     Clicked="CmdClose_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame HorizontalOptions="End"
+                   Padding="10"
+                   WidthRequest="1000">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="calculator.png" />
+                    <Label Text="{Binding SelectedSale.SalesAmount, StringFormat='₱{0:N2}'}"
+                       HorizontalTextAlignment="End"
+                       TextColor="DodgerBlue"
+                       FontSize="30"
+                       HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </Frame>
+            <StackLayout Margin="10,10,10,0">
+                <ListView x:Name="CollectionLineView"
+                          ItemsSource="{Binding NewTender.TrnCollectionLines}"
+                          SelectedItem="{Binding SelectedCollectionLine}"
+                          SelectionMode="None"
+                          HeightRequest="260">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout x:Name="PayTypeStack"
+                                                     Orientation="Horizontal"
+                                                     HorizontalOptions="End">
+                                            <Label Text="{Binding MstPayType.PayType}"
+                                                   TextColor="Black"
+                                                   FontSize="22"
+                                                   FontAttributes="Bold"
+                                                   WidthRequest="150"/>
+                                        </StackLayout>
+
+                                        <StackLayout x:Name="PayTypeInfo"
+                                                     Orientation="Vertical">
+                                            <Button ImageSource="moreinfo.png"
+                                                    WidthRequest="45"
+                                                    HeightRequest="45"
+                                                    Margin="0,-3,0,0"
+                                                    BackgroundColor="#fafafa"
+                                                    CornerRadius="10"/>
+                                        </StackLayout>
+
+                                        <StackLayout x:Name="ItemPrice"
+                                                     Orientation="Horizontal"
+                                                     HorizontalOptions="End">
+                                            <Entry Text="{Binding Amount, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
+                                                   TextColor="Black"
+                                                   FontSize="22"
+                                                   WidthRequest="180"
+                                                   HorizontalTextAlignment="End"
+                                                   FontAttributes="Bold"
+                                                   Keyboard="Numeric"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal"
+                         Margin="10,10,10,0">
+                <Label Text="Tendered Amount" 
+                       FontSize="20"
+                       WidthRequest="200"/>
+                <Label Text="{Binding NewTender.TenderAmount, StringFormat='₱{0:N2}'}" 
+                       WidthRequest="200"
+                       FontSize="22"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="End"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal"
+                         Margin="10,0,10,0">
+                <Label Text="Change Amount" 
+                       FontSize="20"
+                       WidthRequest="200"/>
+                <Label Text="{Binding NewTender.ChangeAmount, StringFormat='₱{0:N2}'}" 
+                       WidthRequest="200"
+                       FontSize="22"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="End"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

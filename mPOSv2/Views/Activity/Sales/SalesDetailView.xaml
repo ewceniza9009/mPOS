@@ -21,6 +21,10 @@
                      Text="Delete"
                      IconImageSource="delete.png"
                      Command="{Binding Delete}"></ToolbarItem>
+        <ToolbarItem x:Name="CmdTender"
+                     Text="Tender"
+                     IconImageSource="tender.png"
+                     Command="{Binding Tender}"></ToolbarItem>
         <ToolbarItem x:Name="CmdSave"
                      Text="Save"
                      IconImageSource="save.png"

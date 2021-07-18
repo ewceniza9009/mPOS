@@ -177,6 +177,8 @@ namespace mPOSv2.ViewModels
         public bool IsChanged { get; set; }
 
         public string Title => $"INV #: {SelectedSale.SalesNumber ?? "(New)"}";
+        
+        public string TenderTitle => $"Tender #: {SelectedSale.SalesNumber ?? "(New)"}";
 
         public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
@@ -253,6 +255,13 @@ namespace mPOSv2.ViewModels
         }
         private ObservableCollection<MstDiscount> _Discounts;
 
+        public ObservableCollection<MstPayType> PayTypes 
+        {
+            get => _PayTypes; 
+            set => SetProperty(ref _PayTypes, value);
+        }
+        private ObservableCollection<MstPayType> _PayTypes;
+
         public MstCustomer SelectedCustomer
         {
             get => _SelectedCustomer;
@@ -317,6 +326,20 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _SalesLines, value);
         }
         private ObservableCollection<TrnSalesLine> _SalesLines;
+
+        public TrnCollection NewTender
+        {
+            get => _NewTender;
+            set => SetProperty(ref _NewTender, value);
+        }
+        private TrnCollection _NewTender;
+
+        public TrnCollectionLine SelectedCollectionLine
+        {
+            get => _SelectedCollectionLine;
+            set => SetProperty(ref _SelectedCollectionLine, value);
+        }
+        private TrnCollectionLine _SelectedCollectionLine;
         #endregion
 
         #region Commands
@@ -411,6 +434,13 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _Delete, value);
         }
         private Command _Delete;
+
+        public Command Tender
+        {
+            get => _Tender ?? (_Tender = new Command(ExecuteTender, x => SelectedSale?.IsNotTendered ?? true));
+            set => SetProperty(ref _Tender, value);
+        }
+        private Command _Tender;
         #endregion
 
         #region Methods
@@ -634,6 +664,34 @@ namespace mPOSv2.ViewModels
                         TaskScheduler.FromCurrentSynchronizationContext())
             );
         }
+
+        public void ExecuteTender(object sender)
+        {
+            NewTender = new TrnCollection
+            {
+                CustomerId = SelectedSale.CustomerId,
+                SalesId = SelectedSale.Id,
+                SalesBalanceAmount = SelectedSale.Amount,
+                Amount = SelectedSale.Amount,
+                TenderAmount = 0,
+                ChangeAmount = SelectedSale.Amount * -1,
+                TrnCollectionLines = new List<TrnCollectionLine>()
+            };
+
+            foreach (var item in PayTypes) 
+            {
+                NewTender.TrnCollectionLines.Add(new TrnCollectionLine
+                {
+                    Amount = 0,
+                    PayTypeId = item.Id,
+                    MstPayType = item,
+                    AccountId = (int)item.AccountId
+                });
+            }
+
+            Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage.Navigation.PushAsync(new SalesTender(this)));
+        }
         #endregion
 
         private async Task InitializeControlLookUpSource()
@@ -642,6 +700,7 @@ namespace mPOSv2.ViewModels
             SaleUnits = await APISalesRequest.GetUnits();
             Taxes = await APISalesRequest.GetTaxes();
             Discounts = await APISalesRequest.GetDiscounts();
+            PayTypes = await APISalesRequest.GetPaytTypes();
         }
 
         public decimal ComputeAmount()

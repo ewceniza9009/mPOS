@@ -90,5 +90,12 @@ namespace mPOS.WebAPI.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetPayTypes()
+        {
+            var result = Repository.Common.GetPayTypes();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
