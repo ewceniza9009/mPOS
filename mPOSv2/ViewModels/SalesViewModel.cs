@@ -176,9 +176,9 @@ namespace mPOSv2.ViewModels
 
         public bool IsChanged { get; set; }
 
-        public string Title => $"INV #: {SelectedSale.SalesNumber ?? "(New)"}";
+        public string Title => $"SI #: {SelectedSale.SalesNumber ?? "(New)"}";
         
-        public string TenderTitle => $"Tender #: {SelectedSale.SalesNumber ?? "(New)"}";
+        public string TenderTitle => $"TENDER - {SelectedSale.SalesNumber ?? "(New)"}";
 
         public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
@@ -732,23 +732,30 @@ namespace mPOSv2.ViewModels
 
         private void ExecuteSaveTender(object obj)
         {
-            Task.Run(async () =>
+            if (NewTender.TenderAmount > 0)
             {
-                Thread.Sleep(1000);
+                Task.Run(async () =>
+                {
+                    Thread.Sleep(1000);
 
-                SelectedCollectionId = await ApiRequest<TrnCollection, TrnCollection>
-                    .Save("TrnSales/Tender", NewTender);
+                    SelectedCollectionId = await ApiRequest<TrnCollection, TrnCollection>
+                        .Save("TrnSales/Tender", NewTender);
 
-                SelectedSale.IsNotTendered = false;
+                    SelectedSale.IsNotTendered = false;
 
-                OnPropertyChanged(nameof(SelectedSale));
+                    OnPropertyChanged(nameof(SelectedSale));
 
-                IsCollectionChanged = false;
-                SelectedSaleTracker?.ChangedProperties?.Clear();
+                    IsCollectionChanged = false;
+                    SelectedSaleTracker?.ChangedProperties?.Clear();
 
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record tendered.", "Ok"));
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
-            });
+                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record tendered.", "Ok"));
+                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
+                });
+            }
+            else 
+            {
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Not applicable.", "Ok"));
+            }
         }
 
         private void ExecuteSelectPayType(object obj)
@@ -785,7 +792,7 @@ namespace mPOSv2.ViewModels
                 case "Exchange":
                     //SelectedCollectionLine.IsExchangeSelected = true;
                     //break;
-                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Cannot accept exchange right now", "Ok"));
+                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Cannot accept exchange right now.", "Ok"));
                     return;
                 case "Rewards":
                     SelectedCollectionLine.IsOtherSelected = true;

@@ -14665,106 +14665,109 @@ namespace mPOSv2.Android
 			public const int ok = 2131165378;
 			
 			// aapt resource value: 0x7F0700C3
-			public const int plus_math = 2131165379;
+			public const int ok2 = 2131165379;
 			
 			// aapt resource value: 0x7F0700C4
-			public const int popup_forms_android_close_icon = 2131165380;
+			public const int plus_math = 2131165380;
 			
 			// aapt resource value: 0x7F0700C5
-			public const int popup_forms_android_shadow = 2131165381;
+			public const int popup_forms_android_close_icon = 2131165381;
 			
 			// aapt resource value: 0x7F0700C6
-			public const int popup_forms_dark_theme_close_icon = 2131165382;
+			public const int popup_forms_android_shadow = 2131165382;
 			
 			// aapt resource value: 0x7F0700C7
-			public const int popup_forms_light_theme_close_icon = 2131165383;
+			public const int popup_forms_dark_theme_close_icon = 2131165383;
 			
 			// aapt resource value: 0x7F0700C8
-			public const int poslogo = 2131165384;
+			public const int popup_forms_light_theme_close_icon = 2131165384;
 			
 			// aapt resource value: 0x7F0700C9
-			public const int prev = 2131165385;
+			public const int poslogo = 2131165385;
 			
 			// aapt resource value: 0x7F0700CA
-			public const int product = 2131165386;
+			public const int prev = 2131165386;
 			
 			// aapt resource value: 0x7F0700CB
-			public const int purchase_order = 2131165387;
+			public const int product = 2131165387;
 			
 			// aapt resource value: 0x7F0700CC
-			public const int remove_item = 2131165388;
+			public const int purchase_order = 2131165388;
 			
 			// aapt resource value: 0x7F0700CD
-			public const int ripple = 2131165389;
+			public const int remove_item = 2131165389;
 			
 			// aapt resource value: 0x7F0700CE
-			public const int roundedcorner = 2131165390;
+			public const int ripple = 2131165390;
 			
 			// aapt resource value: 0x7F0700CF
-			public const int sales = 2131165391;
+			public const int roundedcorner = 2131165391;
 			
 			// aapt resource value: 0x7F0700D0
-			public const int sales2 = 2131165392;
+			public const int sales = 2131165392;
 			
 			// aapt resource value: 0x7F0700D1
-			public const int save = 2131165393;
+			public const int sales2 = 2131165393;
 			
 			// aapt resource value: 0x7F0700D2
-			public const int search = 2131165394;
+			public const int save = 2131165394;
 			
 			// aapt resource value: 0x7F0700D3
-			public const int setting = 2131165395;
+			public const int search = 2131165395;
 			
 			// aapt resource value: 0x7F0700D4
-			public const int sfclosebutton = 2131165396;
+			public const int setting = 2131165396;
 			
 			// aapt resource value: 0x7F0700D5
-			public const int sfprogressbar_determinate_linear = 2131165397;
+			public const int sfclosebutton = 2131165397;
 			
 			// aapt resource value: 0x7F0700D6
-			public const int sfprogressbar_indeterminate_circular = 2131165398;
+			public const int sfprogressbar_determinate_linear = 2131165398;
 			
 			// aapt resource value: 0x7F0700D7
-			public const int sfprogressbar_indeterminate_linear = 2131165399;
+			public const int sfprogressbar_indeterminate_circular = 2131165399;
 			
 			// aapt resource value: 0x7F0700D8
-			public const int shadow_effect = 2131165400;
+			public const int sfprogressbar_indeterminate_linear = 2131165400;
 			
 			// aapt resource value: 0x7F0700D9
-			public const int shopping_basket = 2131165401;
+			public const int shadow_effect = 2131165401;
 			
 			// aapt resource value: 0x7F0700DA
-			public const int sphere = 2131165402;
+			public const int shopping_basket = 2131165402;
 			
 			// aapt resource value: 0x7F0700DB
-			public const int splash = 2131165403;
+			public const int sphere = 2131165403;
 			
 			// aapt resource value: 0x7F0700DC
-			public const int splashscrn = 2131165404;
+			public const int splash = 2131165404;
 			
 			// aapt resource value: 0x7F0700DD
-			public const int styleinfo = 2131165405;
+			public const int splashscrn = 2131165405;
 			
 			// aapt resource value: 0x7F0700DE
-			public const int tender = 2131165406;
+			public const int styleinfo = 2131165406;
 			
 			// aapt resource value: 0x7F0700DF
-			public const int tooltip_frame_dark = 2131165407;
+			public const int tender = 2131165407;
 			
 			// aapt resource value: 0x7F0700E0
-			public const int tooltip_frame_light = 2131165408;
+			public const int tooltip_frame_dark = 2131165408;
 			
 			// aapt resource value: 0x7F0700E1
-			public const int UpButton = 2131165409;
+			public const int tooltip_frame_light = 2131165409;
 			
 			// aapt resource value: 0x7F0700E2
-			public const int user = 2131165410;
+			public const int UpButton = 2131165410;
 			
 			// aapt resource value: 0x7F0700E3
-			public const int view_more = 2131165411;
+			public const int user = 2131165411;
 			
 			// aapt resource value: 0x7F0700E4
-			public const int xamarin_logo = 2131165412;
+			public const int view_more = 2131165412;
+			
+			// aapt resource value: 0x7F0700E5
+			public const int xamarin_logo = 2131165413;
 			
 			static Drawable()
 			{
