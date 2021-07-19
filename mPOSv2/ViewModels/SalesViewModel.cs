@@ -182,8 +182,27 @@ namespace mPOSv2.ViewModels
 
         public bool ShowSalesLinesPagerButtons => (decimal)(SelectedSale?.TrnSalesLines?.Count ?? Pager.PageSize) / Pager.PageSize > 1m;
 
+        public List<string> CreditCardTypes 
+        {
+            get 
+            {
+                return new List<string>
+                {
+                    "American Express",
+                    "Diners Club",
+                    "Discover",
+                    "JCB",
+                    "Master Card",
+                    "Union Pay",
+                    "Visa",
+                    "Others"
+                };
+            }
+        }
+
         public bool IsBarcodeModalShown = false;
         public bool IsSalesChargeModalShown = false;
+        public bool IsSaved = false;
 
         public bool CanEditDiscount 
         {
@@ -192,7 +211,7 @@ namespace mPOSv2.ViewModels
         }
         private bool _IsDiscountAmountEnabled;
 
-        public long SelectedSaleId
+        public long SelectedCollectionId
         {
             get => _SelectedSaleId == 0 ? SelectedSale.Id : _SelectedSaleId;
             set => SetProperty(ref _SelectedSaleId, value);
@@ -441,6 +460,20 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _Tender, value);
         }
         private Command _Tender;
+
+        public Command SaveTender
+        {
+            get => _SaveTender ?? (_SaveTender = new Command(ExecuteSaveTender, x => true));
+            set => SetProperty(ref _SaveTender, value);
+        }
+        private Command _SaveTender;
+
+        public Command SelectPayType
+        {
+            get => _SelectPayType ?? (_SelectPayType = new Command(ExecuteSelectPayType, x => true));
+            set => SetProperty(ref _SelectPayType, value);
+        }
+        private Command _SelectPayType;
         #endregion
 
         #region Methods
@@ -504,6 +537,7 @@ namespace mPOSv2.ViewModels
             if (sender is TrnSales selectedSale)
             {
                 IsChanged = false;
+                IsSaved = true;
                 SelectedSale = selectedSale;
                 SelectedCustomer = Customers.SingleOrDefault(y => y.Id == SelectedSale.CustomerId);
                 SelectedTerm = Terms.SingleOrDefault(y => y.Id == SelectedSale.TermId);
@@ -597,15 +631,17 @@ namespace mPOSv2.ViewModels
 
                 RefreshSelectedSaleDuringSave();
 
-                SelectedSaleId = await ApiRequest<TrnSales, TrnSales>
+                SelectedCollectionId = await ApiRequest<TrnSales, TrnSales>
                     .Save("TrnSales/Save", SelectedSale);
 
                 if (SelectedSale.Id == 0)
                 {
                     var sale = await ApiRequest<TrnSales, TrnSales>
-                        .Read("TrnSales/Get", SelectedSaleId);
+                        .Read("TrnSales/Get", SelectedCollectionId);
 
                     SelectedSale = sale;
+
+                    IsSaved = true;
 
                     OnPropertyChanged(nameof(Title));
                 }
@@ -670,6 +706,7 @@ namespace mPOSv2.ViewModels
             NewTender = new TrnCollection
             {
                 CustomerId = SelectedSale.CustomerId,
+                CollectionDate = DateTime.Now.Date,
                 SalesId = SelectedSale.Id,
                 SalesBalanceAmount = SelectedSale.Amount,
                 Amount = SelectedSale.Amount,
@@ -691,6 +728,72 @@ namespace mPOSv2.ViewModels
 
             Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.Navigation.PushAsync(new SalesTender(this)));
+        }
+
+        private void ExecuteSaveTender(object obj)
+        {
+            Task.Run(async () =>
+            {
+                Thread.Sleep(1000);
+
+                SelectedCollectionId = await ApiRequest<TrnCollection, TrnCollection>
+                    .Save("TrnSales/Tender", NewTender);
+
+                SelectedSale.IsNotTendered = false;
+
+                OnPropertyChanged(nameof(SelectedSale));
+
+                IsCollectionChanged = false;
+                SelectedSaleTracker?.ChangedProperties?.Clear();
+
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record tendered.", "Ok"));
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
+            });
+        }
+
+        private void ExecuteSelectPayType(object obj)
+        {
+            SelectedCollectionLine = NewTender.TrnCollectionLines.FirstOrDefault(x => x.PayTypeId == (obj as MstPayType).Id);
+
+            SelectedCollectionLine.IsCheckSelected = false;
+            SelectedCollectionLine.IsCCSelected = false; 
+            SelectedCollectionLine.IsGCSelected = false;
+            SelectedCollectionLine.IsExchangeSelected = false;
+            SelectedCollectionLine.IsOtherSelected = false;
+
+            switch (SelectedCollectionLine.MstPayType.PayType)
+            {
+                case "Cash":
+                    return;
+                case "Check":
+                    SelectedCollectionLine.IsCheckSelected = true;
+                    SelectedCollectionLine.CheckNumber = "NA";
+                    SelectedCollectionLine.CheckDate = DateTime.Now.Date;
+                    SelectedCollectionLine.CheckBank = "NA";
+                    break;
+                case "Credit Card":
+                    SelectedCollectionLine.IsCCSelected = true;
+                    SelectedCollectionLine.CreditCardBank = "NA";
+                    SelectedCollectionLine.CreditCardNumber = "NA";
+                    SelectedCollectionLine.CreditCardType = "Master Card";
+                    SelectedCollectionLine.CreditCardVerificationCode = "NA";
+                    break;
+                case "Gift Certificate":
+                    SelectedCollectionLine.IsGCSelected = true;
+                    SelectedCollectionLine.GiftCertificateNumber = "NA";
+                    break;
+                case "Exchange":
+                    //SelectedCollectionLine.IsExchangeSelected = true;
+                    //break;
+                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Cannot accept exchange right now", "Ok"));
+                    return;
+                case "Rewards":
+                    SelectedCollectionLine.IsOtherSelected = true;
+                    SelectedCollectionLine.OtherInformation = "NA";
+                    break;
+            }
+
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderLine(this));
         }
         #endregion
 
@@ -929,6 +1032,11 @@ namespace mPOSv2.ViewModels
             SalesLines = GetSalesLines(Pager.Start, Pager.PageSize);
 
             OnPropertyChanged(nameof(ShowSalesLinesPagerButtons));
+        }
+
+        public void RefreshTender() 
+        {
+            OnPropertyChanged(nameof(NewTender));
         }
 
         public double GetEndPage()

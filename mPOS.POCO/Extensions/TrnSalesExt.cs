@@ -22,7 +22,12 @@ namespace mPOS.POCO
             get => TrnSalesLines.Sum(x => x.Amount);
         }
 
-        public bool IsNotTendered { get; set; } = true;
+        public bool IsNotTendered 
+        { 
+            get => _IsNotTendered; 
+            set => SetProperty(ref _IsNotTendered, value);
+        } 
+        private bool _IsNotTendered = true;
 
         public string InvColor
         {
@@ -47,7 +52,8 @@ namespace mPOS.POCO
 
                 if (!IsNotTendered)
                 {
-                    display = SalesNumber += "-T";
+                    //display = SalesNumber + "-T";
+                    display = SalesNumber;
                 }
 
                 return display;

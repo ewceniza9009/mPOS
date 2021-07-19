@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="mPOSv2.Views.Activity.Sales.SalesTenderLine"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    Disappearing="PopupPage_Disappearing">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <StackLayout
+        Margin="12"
+        Padding="24"
+        BackgroundColor="WhiteSmoke"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        IsEnabled="{Binding SelectedSale.IsNotTendered}">
+        <StackLayout>
+            <Label Text="Pay Type Information" 
+                   FontSize="20"
+                   TextColor="DodgerBlue"/>
+        </StackLayout>
+        <StackLayout WidthRequest="300">
+            <StackLayout x:Name="CheckStack"
+                         IsVisible="{Binding SelectedCollectionLine.IsCheckSelected}">
+                <StackLayout>
+                    <Label Text="Check No"/>
+                    <Entry Text="{Binding SelectedCollectionLine.CheckNumber}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Check No"/>
+                    <DatePicker Date="{Binding SelectedCollectionLine.CheckDate}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Check Bank"/>
+                    <Entry Text="{Binding SelectedCollectionLine.CheckBank}"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout x:Name="CreditCardStack"
+                         IsVisible="{Binding SelectedCollectionLine.IsCCSelected}">
+                <StackLayout>
+                    <Label Text="Verification No"/>
+                    <Entry Text="{Binding SelectedCollectionLine.CreditCardVerificationCode}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Credit Card No"/>
+                    <Entry Text="{Binding SelectedCollectionLine.CreditCardNumber}"/>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Credit Card Type:"/>
+                    <combobox:SfComboBox x:Name="CCComboBox"
+                                                 DataSource="{Binding CreditCardTypes}"
+                                                 SelectedValue="{Binding SelectedCollectionLine.CreditCardType}"
+                                                 IsEditableMode="false" 
+                                                 AllowFiltering="true" 
+                                                 MaximumDropDownHeight="300"
+                                                 ComboBoxMode="SuggestAppend"
+                                                 HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Credit Card Bank"/>
+                    <Entry Text="{Binding SelectedCollectionLine.CreditCardBank}"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout x:Name="GCStack"
+                         IsVisible="{Binding SelectedCollectionLine.IsGCSelected}">
+                <StackLayout>
+                    <Label Text="Gift Certification No"/>
+                    <Entry Text="{Binding SelectedCollectionLine.GiftCertificateNumber}"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout x:Name="ExchangeStack"
+                         IsVisible="{Binding SelectedCollectionLine.IsExchangeSelected}">
+                <Label Text="Exchange Stack"/>
+            </StackLayout>
+            <StackLayout x:Name="OtherInfoStack"
+                         IsVisible="{Binding SelectedCollectionLine.IsOtherSelected}">
+                <StackLayout>
+                    <Label Text="Information"/>
+                    <Entry Text="{Binding SelectedCollectionLine.OtherInformation}"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+        <Button
+            x:Name="CmdOk"
+            Text="OK"
+            Clicked="CmdOk_Clicked"/>
+    </StackLayout>
+</pages:PopupPage>

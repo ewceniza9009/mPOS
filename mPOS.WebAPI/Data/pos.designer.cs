@@ -7338,8 +7338,6 @@ namespace mPOS.WebAPI.Data
 		
 		private System.Nullable<int> _AccountId;
 		
-		private EntitySet<TrnCollectionLine> _TrnCollectionLines;
-		
 		private EntitySet<TrnDisbursement> _TrnDisbursements;
 		
 		private EntityRef<MstAccount> _MstAccount;
@@ -7358,7 +7356,6 @@ namespace mPOS.WebAPI.Data
 		
 		public MstPayType()
 		{
-			this._TrnCollectionLines = new EntitySet<TrnCollectionLine>(new Action<TrnCollectionLine>(this.attach_TrnCollectionLines), new Action<TrnCollectionLine>(this.detach_TrnCollectionLines));
 			this._TrnDisbursements = new EntitySet<TrnDisbursement>(new Action<TrnDisbursement>(this.attach_TrnDisbursements), new Action<TrnDisbursement>(this.detach_TrnDisbursements));
 			this._MstAccount = default(EntityRef<MstAccount>);
 			OnCreated();
@@ -7428,19 +7425,6 @@ namespace mPOS.WebAPI.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MstPayType_TrnCollectionLine", Storage="_TrnCollectionLines", ThisKey="Id", OtherKey="PayTypeId")]
-		public EntitySet<TrnCollectionLine> TrnCollectionLines
-		{
-			get
-			{
-				return this._TrnCollectionLines;
-			}
-			set
-			{
-				this._TrnCollectionLines.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MstPayType_TrnDisbursement", Storage="_TrnDisbursements", ThisKey="Id", OtherKey="PayTypeId")]
 		public EntitySet<TrnDisbursement> TrnDisbursements
 		{
@@ -7506,18 +7490,6 @@ namespace mPOS.WebAPI.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_TrnCollectionLines(TrnCollectionLine entity)
-		{
-			this.SendPropertyChanging();
-			entity.MstPayType = this;
-		}
-		
-		private void detach_TrnCollectionLines(TrnCollectionLine entity)
-		{
-			this.SendPropertyChanging();
-			entity.MstPayType = null;
 		}
 		
 		private void attach_TrnDisbursements(TrnDisbursement entity)
@@ -13676,26 +13648,10 @@ namespace mPOS.WebAPI.Data
 			}
 			set
 			{
-				MstPayType previousValue = this._MstPayType.Entity;
-				if (((previousValue != value) 
-							|| (this._MstPayType.HasLoadedOrAssignedValue == false)))
+				if ((this._MstPayType.Entity != value))
 				{
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._MstPayType.Entity = null;
-						previousValue.TrnCollectionLines.Remove(this);
-					}
 					this._MstPayType.Entity = value;
-					if ((value != null))
-					{
-						value.TrnCollectionLines.Add(this);
-						this._PayTypeId = value.Id;
-					}
-					else
-					{
-						this._PayTypeId = default(int);
-					}
 					this.SendPropertyChanged("MstPayType");
 				}
 			}

@@ -35,6 +35,15 @@ namespace mPOS.WebAPI.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult Tender(TrnCollection content)
+        {
+            var repos = new Repository.TrnCollection();
+            var result = repos.Save(content);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpDelete]
         public void Delete(int id)
         {

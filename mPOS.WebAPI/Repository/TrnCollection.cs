@@ -34,12 +34,12 @@ namespace mPOS.WebAPI.Repository
                 }
                 else
                 {
-                    var preORNumber = ctx.TrnCollections?.Max(x => x.CollectionNumber) ?? "0001-000000";
+                    var preORNumber = ctx.TrnCollections?.Where(x => x.CollectionNumber != "NA")?.Max(x => x.CollectionNumber) ?? "001-0001-000000";
                     var splitORNumber = preORNumber.Split('-');
-                    var maxORNumber = long.Parse(splitORNumber[1]);
+                    var maxORNumber = long.Parse(splitORNumber[2]);
                     var newORNumberLng = maxORNumber + 1000001;
 
-                    var newORNumber = $"0001-{newORNumberLng.ToString().Substring(1, 6)}";
+                    var newORNumber = $"001-0001-{newORNumberLng.ToString().Substring(1, 6)}";
 
                     t.PeriodId = 1;
                     t.CollectionNumber = newORNumber;

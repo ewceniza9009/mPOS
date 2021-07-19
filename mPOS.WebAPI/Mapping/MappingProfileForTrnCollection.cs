@@ -25,6 +25,8 @@ namespace mPOS.WebAPI.Mapping
                 .ForMember(dest => dest.TrnCollectionLines, conf => conf.MapFrom(value => value.TrnCollectionLines));
             CreateMap<POCO.TrnCollectionLine, Data.TrnCollectionLine>()
                 .IgnoreAllPropertiesWithAnInaccessibleSetter();
+            CreateMap<POCO.TrnCollectionLine, Data.TrnCollectionLine>()
+                .ForMember(dest => dest.MstPayType, conf => conf.Ignore());
         }
     }
 }

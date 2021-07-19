@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="mPOSv2.Views.Activity.Sales.SalesTender"
              xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
+             x:Name="SalesTenderPage"
              xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
              Title="{Binding TenderTitle, Mode=TwoWay}">
     <ContentPage.Resources>
@@ -14,7 +15,8 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="CmdTender"
                      Text="Tender"
-                     IconImageSource="tender.png"></ToolbarItem>
+                     IconImageSource="tender.png"
+                     Command="{Binding SaveTender}"></ToolbarItem>
         <ToolbarItem x:Name="CmdClose"
                      Text="Close"
                      IconImageSource="close.png"
@@ -38,8 +40,8 @@
                 <ListView x:Name="CollectionLineView"
                           ItemsSource="{Binding NewTender.TrnCollectionLines}"
                           SelectedItem="{Binding SelectedCollectionLine}"
-                          SelectionMode="None"
-                          HeightRequest="260">
+                          HeightRequest="260"
+                          SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -50,19 +52,22 @@
                                                      HorizontalOptions="End">
                                             <Label Text="{Binding MstPayType.PayType}"
                                                    TextColor="Black"
-                                                   FontSize="22"
+                                                   FontSize="20"
                                                    FontAttributes="Bold"
-                                                   WidthRequest="150"/>
+                                                   WidthRequest="170"/>
                                         </StackLayout>
 
                                         <StackLayout x:Name="PayTypeInfo"
                                                      Orientation="Vertical">
-                                            <Button ImageSource="moreinfo.png"
+                                            <Button x:Name="MoreInfo"
+                                                    ImageSource="moreinfo.png"
                                                     WidthRequest="45"
                                                     HeightRequest="45"
                                                     Margin="0,-3,0,0"
-                                                    BackgroundColor="#fafafa"
-                                                    CornerRadius="10"/>
+                                                    BackgroundColor="Transparent"
+                                                    CornerRadius="10"
+                                                    Command="{Binding BindingContext.SelectPayType, Source={x:Reference SalesTenderPage} }"
+                                                    CommandParameter="{Binding MstPayType}"/>
                                         </StackLayout>
 
                                         <StackLayout x:Name="ItemPrice"
@@ -70,11 +75,11 @@
                                                      HorizontalOptions="End">
                                             <Entry Text="{Binding Amount, Mode=TwoWay, Converter={StaticResource decimalConverter}}"
                                                    TextColor="Black"
-                                                   FontSize="22"
-                                                   WidthRequest="180"
+                                                   FontSize="20"
+                                                   WidthRequest="160"
                                                    HorizontalTextAlignment="End"
-                                                   FontAttributes="Bold"
-                                                   Keyboard="Numeric"/>
+                                                   Keyboard="Numeric"
+                                                   TextChanged="Entry_TextChanged"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>
@@ -84,26 +89,34 @@
                 </ListView>
             </StackLayout>
             <StackLayout Orientation="Horizontal"
-                         Margin="10,10,10,0">
+                         Padding="10,10,10,0"
+                         BackgroundColor="Beige"
+                         HeightRequest="30">
                 <Label Text="Tendered Amount" 
                        FontSize="20"
-                       WidthRequest="200"/>
+                       WidthRequest="200"
+                       TextColor="Black"/>
                 <Label Text="{Binding NewTender.TenderAmount, StringFormat='₱{0:N2}'}" 
                        WidthRequest="200"
                        FontSize="22"
                        HorizontalTextAlignment="End"
-                       VerticalTextAlignment="End"/>
+                       VerticalTextAlignment="End"
+                       TextColor="Black"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal"
-                         Margin="10,0,10,0">
+                         Padding="10,10,10,0"
+                         BackgroundColor="Beige"
+                         HeightRequest="30">
                 <Label Text="Change Amount" 
                        FontSize="20"
-                       WidthRequest="200"/>
+                       WidthRequest="200"
+                       TextColor="Black"/>
                 <Label Text="{Binding NewTender.ChangeAmount, StringFormat='₱{0:N2}'}" 
                        WidthRequest="200"
                        FontSize="22"
                        HorizontalTextAlignment="End"
-                       VerticalTextAlignment="End"/>
+                       VerticalTextAlignment="End"
+                       TextColor="Black"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
