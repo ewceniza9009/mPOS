@@ -10,7 +10,8 @@
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesDetailView"
              Title="{Binding Title, Mode=TwoWay}"
-             EnableBackButtonOverride="True">
+             EnableBackButtonOverride="True"
+             Appearing="ContentPage_Appearing">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />
@@ -24,8 +25,7 @@
         <ToolbarItem x:Name="CmdTender"
                      Text="Tender"
                      IconImageSource="tender.png"
-                     Command="{Binding Tender}"
-                     IsEnabled="{Binding IsSaved}"></ToolbarItem>
+                     Command="{Binding Tender}"></ToolbarItem>
         <ToolbarItem x:Name="CmdSave"
                      Text="Save"
                      IconImageSource="save.png"

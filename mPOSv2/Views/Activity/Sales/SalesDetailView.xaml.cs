@@ -165,6 +165,13 @@ namespace mPOSv2.Views.Activity.Sales
                 }
             }
         }
+
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            CmdSave.IsEnabled = vm.SelectedSale?.IsNotTendered ?? true;
+            CmdTender.IsEnabled = vm.SelectedSale?.IsNotTendered ?? true;
+            CmdDelete.IsEnabled = vm.SelectedSale?.IsNotTendered ?? true;
+        }
         #endregion
 
         #region Methods
@@ -218,8 +225,7 @@ namespace mPOSv2.Views.Activity.Sales
             vm.IsCollectionChanged = false;
             if (vm.SelectedSaleTracker?.ChangedProperties != null) vm.SelectedSaleTracker.ChangedProperties.Clear();
         }
-        #endregion
 
-        
+        #endregion
     }
 }

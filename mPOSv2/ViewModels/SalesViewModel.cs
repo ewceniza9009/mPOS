@@ -732,6 +732,12 @@ namespace mPOSv2.ViewModels
 
         private void ExecuteSaveTender(object obj)
         {
+            if (!IsSaved) 
+            {
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Please save the invoice.", "Ok"));
+                return;
+            }
+
             if (NewTender.TenderAmount > 0)
             {
                 Task.Run(async () =>
@@ -766,6 +772,7 @@ namespace mPOSv2.ViewModels
             SelectedCollectionLine.IsCCSelected = false; 
             SelectedCollectionLine.IsGCSelected = false;
             SelectedCollectionLine.IsExchangeSelected = false;
+
             SelectedCollectionLine.IsOtherSelected = false;
 
             switch (SelectedCollectionLine.MstPayType.PayType)
@@ -790,8 +797,7 @@ namespace mPOSv2.ViewModels
                     SelectedCollectionLine.GiftCertificateNumber = "NA";
                     break;
                 case "Exchange":
-                    //SelectedCollectionLine.IsExchangeSelected = true;
-                    //break;
+                    SelectedCollectionLine.IsExchangeSelected = true;
                     Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Cannot accept exchange right now.", "Ok"));
                     return;
                 case "Rewards":
