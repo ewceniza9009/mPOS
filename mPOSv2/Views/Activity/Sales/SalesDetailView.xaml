@@ -42,7 +42,11 @@
                        HorizontalTextAlignment="End"
                        TextColor="DodgerBlue"
                        FontSize="30"
-                       HorizontalOptions="EndAndExpand"/>
+                       HorizontalOptions="EndAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ReprintOR}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
                 
             </Frame>

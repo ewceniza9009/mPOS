@@ -1,0 +1,32 @@
+﻿<local:SampleView x:Class="mPOSv2.Views.Activity.Sales.SalesTenderPrint"
+                  xmlns:local="clr-namespace:SampleBrowser.Core;assembly=SampleBrowser.Core"
+                  xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  BackgroundColor="WhiteSmoke">
+
+    <local:SampleView.Content>
+        <StackLayout Padding="10"
+                     WidthRequest="300">
+            <StackLayout>
+                <Label Text="Print" 
+                   FontSize="20"
+                   TextColor="DodgerBlue"/>
+            </StackLayout>
+
+            <Label x:Name="Description" 
+                   Text="Is the printer ready?."
+                   FontSize="Medium"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   TextColor="Black">
+
+            </Label>
+
+            <Button x:Name="CmdPrint"  
+                    Text="Ok"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Clicked="OnButtonClicked" />
+        </StackLayout>
+    </local:SampleView.Content>
+</local:SampleView>

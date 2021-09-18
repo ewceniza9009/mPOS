@@ -57,6 +57,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveAndroid.cs" />
     <Compile Include="SplashActivity.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,13 +80,22 @@
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>2.0.0.12</Version>
     </PackageReference>
+    <PackageReference Include="SampleBrowser.Core">
+      <Version>19.2.0.44</Version>
+    </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.7.335</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Pdf">
+      <Version>19.2.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfChart">
       <Version>19.2.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfKanban">
+      <Version>19.2.0.44</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfPdfViewer">
       <Version>19.2.0.44</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
@@ -379,6 +389,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ok2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\provider_paths.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

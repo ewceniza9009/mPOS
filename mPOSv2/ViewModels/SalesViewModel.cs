@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Humanizer;
 using mPOS.POCO;
 using mPOSv2.Enums;
@@ -12,6 +14,7 @@ using mPOSv2.Services;
 using mPOSv2.Views.Activity.Sales;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+
 
 namespace mPOSv2.ViewModels
 {
@@ -456,7 +459,7 @@ namespace mPOSv2.ViewModels
 
         public Command Tender
         {
-            get => _Tender ?? (_Tender = new Command(ExecuteTender, x => SelectedSale?.IsNotTendered ?? true));
+            get => _Tender ?? (_Tender = new Command(ExecuteTender, x => true));
             set => SetProperty(ref _Tender, value);
         }
         private Command _Tender;
@@ -474,6 +477,8 @@ namespace mPOSv2.ViewModels
             set => SetProperty(ref _SelectPayType, value);
         }
         private Command _SelectPayType;
+
+        public ICommand ReprintOR => new Command(OnReprintOR);
         #endregion
 
         #region Methods
@@ -732,7 +737,7 @@ namespace mPOSv2.ViewModels
 
         private void ExecuteSaveTender(object obj)
         {
-            if (!IsSaved) 
+            if (!IsSaved)
             {
                 Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Please save the invoice.", "Ok"));
                 return;
@@ -758,10 +763,12 @@ namespace mPOSv2.ViewModels
                     Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
                 });
             }
-            else 
+            else
             {
                 Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Not applicable.", "Ok"));
             }
+
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(SelectedSale.Id));
         }
 
         private void ExecuteSelectPayType(object obj)
@@ -807,6 +814,11 @@ namespace mPOSv2.ViewModels
             }
 
             Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderLine(this));
+        }
+
+        private void OnReprintOR(object obj)
+        {
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(SelectedSale.Id));            
         }
         #endregion
 

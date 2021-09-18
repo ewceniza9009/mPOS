@@ -172,6 +172,11 @@ namespace mPOSv2.Views.Activity.Sales
             CmdTender.IsEnabled = vm.SelectedSale?.IsNotTendered ?? true;
             CmdDelete.IsEnabled = vm.SelectedSale?.IsNotTendered ?? true;
         }
+
+        private void btnCalc_Clicked(object sender, EventArgs e)
+        {
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(vm.SelectedSale.Id));
+        }
         #endregion
 
         #region Methods

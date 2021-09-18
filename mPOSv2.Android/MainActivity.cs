@@ -7,6 +7,7 @@ using Android.Runtime;
 using Android.Support.V7.Widget;
 using Android.Views;
 using mPOSv2.Views.Activity.Sales;
+using SampleBrowser.Core.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using ZXing.Net.Mobile.Android;
@@ -35,6 +36,8 @@ namespace mPOSv2.Android
             var dbFile = "settings_db.db3";
             var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             var dbFileCompletePath = Path.Combine(folderPath, dbFile);
+
+            CoreSampleBrowser.Init(Resources, this);
 
             LoadApplication(new App(dbFileCompletePath));
 
