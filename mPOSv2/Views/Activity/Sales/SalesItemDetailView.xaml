@@ -75,14 +75,14 @@
                                     <DataTemplate>
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="{Binding Discount}"
-                                           WidthRequest="150"
-                                           Margin="5,10,0,0"/>
+                                                   WidthRequest="200"
+                                                   Margin="5,10,0,0"/>      
                                             <Label Text="{Binding DiscountRate, StringFormat='{0:N2}'}"
-                                           WidthRequest="100"
-                                           FontAttributes="Bold"
-                                           TextColor="DodgerBlue"
-                                           HorizontalTextAlignment="End"
-                                           Margin="5,10,0,0"/>
+                                                   HorizontalOptions="EndAndExpand"
+                                                   FontAttributes="Bold"
+                                                   TextColor="DodgerBlue"
+                                                   HorizontalTextAlignment="End"
+                                                   Margin="0,10,10,0"/>
                                         </StackLayout>
                                     </DataTemplate>
                                 </comboBox:SfComboBox.ItemTemplate>

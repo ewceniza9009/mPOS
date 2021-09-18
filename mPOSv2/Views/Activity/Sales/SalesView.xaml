@@ -98,11 +98,11 @@
                                         
                                         <StackLayout x:Name="ItemPrice"
                                                      Orientation="Horizontal"
-                                                     HorizontalOptions="End">
+                                                     HorizontalOptions="EndAndExpand">
                                             <Label Text="{Binding SalesAmount, StringFormat='₱{0:N2}'}"
                                                    TextColor="DimGray"
                                                    FontSize="15"
-                                                   Margin="0,10,0,0"
+                                                   Margin="0,10,10,0"
                                                    HorizontalTextAlignment="End"
                                                    FontAttributes="Bold"/>
                                         </StackLayout>

@@ -9,44 +9,44 @@
 <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.12" />
 <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-<PackageReference Include="Syncfusion.Xamarin.SfChart" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfKanban" Version="18.1.0.59" />
+<PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfKanban" Version="19.2.0.44" />
 <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
 <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
 <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
 <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.52" />
 <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="18.1.0.59" />
+<PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.2.0.44" />
 <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
 <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.52" />
 <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfRichTextEditor" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="18.1.0.59" />
+<PackageReference Include="Syncfusion.Xamarin.SfRichTextEditor" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.2.0.44" />
 <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfNumericUpDown" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.59" />
+<PackageReference Include="Syncfusion.Xamarin.SfNumericUpDown" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfListView" Version="19.2.0.44" />
 <PackageReference Include="Syncfusion.Xamarin.Expander " Version="18.1.0.52" />
 <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.59" />
+<PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="19.2.0.44" />
 <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.52" />
 <PackageReference Include="Syncfusion.Xamarin.Cards" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.Cards" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfCalendar" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.1.0.59" />
+<PackageReference Include="Syncfusion.Xamarin.Cards" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfCalendar" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="19.2.0.44" />
 <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfBarcode" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.59" />
-<PackageReference Include="Syncfusion.Xamarin.SfAutoComplete" Version="18.1.0.59" />
+<PackageReference Include="Syncfusion.Xamarin.SfBarcode" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.Core" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfAutoComplete" Version="19.2.0.44" />
 <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
 <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
 
@@ -161,7 +161,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Syncfusion.Xamarin.Expander" Version="18.1.0.59" />
+    <PackageReference Update="Syncfusion.Xamarin.Expander" Version="19.2.0.44" />
   </ItemGroup>
 
   <ItemGroup>

@@ -64,10 +64,6 @@
                                 <ViewCell>
                                     <ViewCell.View>
                                         <StackLayout Orientation="Horizontal">
-                                            <StackLayout x:Name="ItemImagePlaceHolder"
-                                                     Orientation="Vertical">
-                                                <Image Source="product.png"></Image>
-                                            </StackLayout>
                                             <StackLayout x:Name="ItemInfo"
                                                      Orientation="Vertical">
                                                 <Label Text="{Binding ItemDescription}"
@@ -83,13 +79,14 @@
                                             </StackLayout>
                                             <StackLayout x:Name="ItemPrice"
                                                      Orientation="Horizontal"
-                                                     HorizontalOptions="End">
+                                                     HorizontalOptions="EndAndExpand">
                                                 <Label Text="{Binding Price, StringFormat='₱{0:N2}'}"
-                                                   TextColor="DimGray"
-                                                   FontSize="15"
-                                                   Margin="0,10,0,0"
-                                                   HorizontalTextAlignment="End"
-                                                   FontAttributes="Bold"/>
+                                                       TextColor="DodgerBlue"
+                                                       FontSize="15"
+                                                       Margin="0,10,10,0"
+                                                       HorizontalOptions="EndAndExpand"
+                                                       HorizontalTextAlignment="End"
+                                                       FontAttributes="Bold"/>
                                             </StackLayout>
                                         </StackLayout>
                                     </ViewCell.View>
