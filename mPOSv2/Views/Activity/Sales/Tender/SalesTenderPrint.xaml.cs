@@ -38,7 +38,7 @@ namespace mPOSv2.Views.Activity.Sales
 
                 Task.Run(async () =>
                 {
-                     or = await APIOfficialReceipt.GetOfficialReceipt(saleID);
+                    or = await APIOfficialReceipt.GetOfficialReceipt(saleID);
                     
                 }).Wait();
 
