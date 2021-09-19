@@ -20,6 +20,6 @@
     </pages:PopupPage.Animation>
     <StackLayout HorizontalOptions="Center"
                  VerticalOptions="Center">
-        <views:SalesTenderPrint/>
+        <views:SalesTenderPrint x:Name="MsgPrint"/>
     </StackLayout>
 </pages:PopupPage>

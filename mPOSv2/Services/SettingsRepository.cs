@@ -82,7 +82,19 @@ namespace mPOSv2.Services
                     ServerName = GlobalVariables.UriBase,
                     LoginDate = DateTime.Now,
                     ContinuesBarcode = false,
-                    SalesLinePageSize = Models.Page.Pager.PageSize
+                    SalesLinePageSize = Models.Page.Pager.PageSize,
+                    StoreName = "Acme Grocery",
+                    Address = "Mandaue City",
+                    OperatedBy = "Erwin Wilson Ceniza",
+                    TIN = "00-122-124-7000",
+                    PermitNo = "789-123-000",
+                    AccreditNo = "234-233-111",
+                    SerialNo = "123-456-000",
+                    TerminalNo = "001",
+                    ReceiptFooter = @"Not to be issued for Non-Vat/Exempt
+Sales of goods, properties, services. If
+issued, sales shall be subjected to VAT."
+
                 };
 
                 var tableExistsQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='Settings';";

@@ -759,16 +759,14 @@ namespace mPOSv2.ViewModels
                     IsCollectionChanged = false;
                     SelectedSaleTracker?.ChangedProperties?.Clear();
 
-                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Record tendered.", "Ok"));
-                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
                 });
+
+                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(SelectedSale.Id));
             }
             else
             {
                 Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Not applicable.", "Ok"));
             }
-
-            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(SelectedSale.Id));
         }
 
         private void ExecuteSelectPayType(object obj)

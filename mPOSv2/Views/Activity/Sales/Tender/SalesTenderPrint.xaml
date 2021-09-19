@@ -3,14 +3,14 @@
                   xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                   BackgroundColor="WhiteSmoke">
-
     <local:SampleView.Content>
         <StackLayout Padding="10"
                      WidthRequest="300">
             <StackLayout>
-                <Label Text="Print" 
-                   FontSize="20"
-                   TextColor="DodgerBlue"/>
+                <Label x:Name="lblPrint"
+                       Text="Print" 
+                       FontSize="20"
+                       TextColor="DodgerBlue"/>
             </StackLayout>
 
             <Label x:Name="Description" 
