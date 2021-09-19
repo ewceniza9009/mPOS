@@ -34,10 +34,12 @@ namespace mPOS.WebAPI.Repository
                 {
                     var saleHeader = ctx.TrnSales.FirstOrDefault(x => x.Id == salesId);
                     var collectionInfo = ctx.TrnCollections.FirstOrDefault(x => x.SalesId == salesId);
-                    var sales = ctx.TrnSalesLines.Where(x => x.SalesId == salesId);
+                    var saleLines = ctx.TrnSalesLines.Where(x => x.SalesId == salesId);
 
                     result.ORNumber = collectionInfo.CollectionNumber;
                     result.UpdateDateTime = collectionInfo.UpdateDateTime.ToString("MM/dd/yyyy hh:mm tt");
+                    result.Customer = saleHeader.MstCustomer.Customer;
+                    result.Terminal = saleHeader.MstTerminal.Terminal;
 
                     if (saleHeader.Remarks == "NA")
                     {
@@ -50,27 +52,30 @@ namespace mPOS.WebAPI.Repository
                     
                     result.LineItems = new List<LineItem>();
 
-                    foreach (var sale in sales) 
+                    foreach (var line in saleLines) 
                     {
                         var priceDescription = "";
 
-                        if ((sale.Price - sale.NetPrice) == 0)
+                        if ((line.Price - line.NetPrice) == 0)
                         {
-                            priceDescription = $"{sale.MstUnit.Unit} @ P{Math.Round(sale.Price, 2)}";
+                            priceDescription = $"{line.MstUnit.Unit} @ P{Math.Round(line.Price, 2)}";
                         }
                         else 
                         {
-                            priceDescription = $"{sale.MstUnit.Unit} @ P{Math.Round(sale.Price, 2)} Less: P{Math.Round(sale.Price - sale.NetPrice, 2)} - {sale.MstTax.Tax}";
+                            priceDescription = $"{line.MstUnit.Unit} @ P{Math.Round(line.Price, 2)} Less: P{Math.Round(line.Price - line.NetPrice, 2)} - {line.MstTax.Tax}";
                         }
 
                         result.LineItems.Add(new LineItem() 
                         {
-                            ItemDescription = sale.MstItem.ItemDescription,
-                            Quantity = Math.Round(sale.Quantity, 2),
-                            Amount = Math.Round(sale.Amount, 2),
+                            ItemDescription = line.MstItem.ItemDescription,
+                            Quantity = $"{string.Format("{0:N2}", Math.Round(line.Quantity, 2))}",
+                            Amount = $"{string.Format("{0:N2}", Math.Round(line.Amount, 2))}",
                             PriceDescription = priceDescription,
                         });
                     }
+
+                    result.TotalSales = $"₱{string.Format("{0:N2}", Math.Round(saleLines.Sum(x => x.Amount), 2))}";
+                    result.TotalDiscount = $"₱{string.Format("{0:N2}", Math.Round(saleLines.Sum(x => x.DiscountAmount), 2))}";
 
                     var collections = ctx.TrnCollectionLines.Where(x => x.CollectionId == ctx.TrnCollections.FirstOrDefault(y => y.SalesId == salesId).Id);
 
@@ -83,12 +88,14 @@ namespace mPOS.WebAPI.Repository
                             result.TenderLines.Add(new TenderLine()
                             {
                                 PayType = collection.MstPayType.PayType,
-                                Amount = Math.Round(collection.Amount, 2)
+                                Amount = $"{string.Format("{0:N2}", Math.Round(collection.Amount, 2))}"
                             });
                         }
                     }
 
-                    var taxes = sales.GroupBy(x => x.MstTax.Tax)
+                    result.ChangeAmount = $"₱{string.Format("{0:N2}", Math.Round(ctx.TrnCollections.FirstOrDefault(y => y.SalesId == salesId).ChangeAmount, 2))}";
+
+                    var taxes = saleLines.GroupBy(x => x.MstTax.Tax)
                         .Select(x => new 
                         {
                             Tax = x.Key, 
@@ -103,8 +110,8 @@ namespace mPOS.WebAPI.Repository
                         result.VatLines.Add(new VatLine() 
                         {
                             Tax = tax.Tax,
-                            AmountLessTax = Math.Round(tax.Amount, 2),
-                            TotalTaxAmount = Math.Round(tax.TaxAmount, 2)
+                            AmountLessTax = $"{string.Format("{0:N2}", Math.Round(tax.Amount, 2))}",
+                            TotalTaxAmount = $"{string.Format("{0:N2}", Math.Round(tax.TaxAmount, 2))}"
                         });
                     }
 

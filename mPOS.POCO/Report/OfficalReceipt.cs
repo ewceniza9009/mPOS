@@ -11,34 +11,37 @@ namespace mPOS.POCO.Report
         public string UpdateDateTime { get; set; }
         public string Remarks { get; set; }
         public List<LineItem> LineItems { get; set; }
-        public decimal TotalSales { get; set; }
-        public decimal TotalDiscount { get; set; }
+        public string TotalSales { get; set; }
+        public string TotalDiscount { get; set; }
         public List<TenderLine> TenderLines { get; set; }
+        public string ChangeAmount { get; set; }
         public List<VatLine> VatLines { get; set; }
         public SeniorCitizen SeniorCitizenDetail { get; set; }
+        public string Terminal { get; set; }
+        public string Customer { get; set; }
 
     }
 
     public class LineItem 
     {
         public string ItemDescription { get; set; }
-        public decimal Quantity { get; set; }
+        public string Quantity { get; set; }
         public string PriceDescription { get; set; }
-        public decimal Amount { get; set; }
+        public string Amount { get; set; }
     }
 
     public class TenderLine 
     {
         public string PayType { get; set; }
-        public decimal Amount { get; set; }
+        public string Amount { get; set; }
 
     }
 
     public class VatLine
     {
         public string Tax { get; set; }
-        public decimal AmountLessTax { get; set; }
-        public decimal TotalTaxAmount { get; set; }
+        public string AmountLessTax { get; set; }
+        public string TotalTaxAmount { get; set; }
     }
 
     public class SeniorCitizen 

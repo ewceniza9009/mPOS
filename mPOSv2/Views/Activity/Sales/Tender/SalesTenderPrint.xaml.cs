@@ -70,12 +70,14 @@ namespace mPOSv2.Views.Activity.Sales
                 headerMember1.StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Center, LineAlignment = PdfVerticalAlignment.Middle };
                 headerMember1.Style.Borders.All = PdfPens.Transparent;
                 orHeader.Rows[0].Height = ROW_HEIGHT;
+                orHeader.Rows[0].Style = new PdfGridRowStyle() { Font = new PdfStandardFont(PdfFontFamily.Helvetica, 8f, PdfFontStyle.Bold) };
 
                 var headerMember2 = orHeader.Rows[1].Cells[0];
                 headerMember2.ColumnSpan = 2;
                 headerMember2.StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Center, LineAlignment = PdfVerticalAlignment.Middle };
                 headerMember2.Style.Borders.All = PdfPens.Transparent;
                 orHeader.Rows[1].Height = ROW_HEIGHT;
+                orHeader.Rows[1].Style = new PdfGridRowStyle() { Font = new PdfStandardFont(PdfFontFamily.Helvetica, 8f, PdfFontStyle.Bold) };
 
                 var headerMember3 = orHeader.Rows[2].Cells[0];
                 headerMember3.ColumnSpan = 2;
@@ -99,7 +101,7 @@ namespace mPOSv2.Views.Activity.Sales
 
                 foreach (var line in or.LineItems) 
                 {
-                    orLineItemsData.Add(new { Col1 = line.ItemDescription, Col2 = $"₱{line.Amount}" });
+                    orLineItemsData.Add(new { Col1 = line.ItemDescription, Col2 = line.Amount });
                     orLineItemsData.Add(new { Col1 = line.Quantity + " " + line.PriceDescription, Col2 = "" });
                 }
 
@@ -131,10 +133,150 @@ namespace mPOSv2.Views.Activity.Sales
 
                     orLineItems.Rows[orLineItems.Rows.IndexOf(lineItemsMember)].Height = ROW_HEIGHT;
                 }
-
+                
                 orLineItems.Columns[0].Width = 90f;
 
-                orLineItems.Draw(page, new PointF(0, (orHeader.Rows.Count * ROW_HEIGHT) + 5));
+                orLineItems.Draw(page, new PointF(0, (orHeader.Rows.Count * ROW_HEIGHT) + 10));
+
+                page.Graphics.DrawLine(new PdfPen(PdfBrushes.Black),
+                    new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count) * ROW_HEIGHT) + 15),
+                    new PointF(150, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count) * ROW_HEIGHT) + 15));
+
+                //OR Line footer
+                var orORFooter = new PdfGrid();
+                var orORFooterData = new List<object>();
+
+                orORFooterData.Add(new { Col1 = "Total Sales", Col2 = or.TotalSales });
+                orORFooterData.Add(new { Col1 = "Total Discount", Col2 = or.TotalDiscount });
+
+                orORFooter.DataSource = orORFooterData;
+
+                orORFooter.Headers.Clear();
+
+                orORFooter.Rows[0].Cells[0].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Left, LineAlignment = PdfVerticalAlignment.Middle };
+                orORFooter.Rows[0].Cells[0].Style.Borders.All = PdfPens.Transparent;
+                orORFooter.Rows[0].Cells[1].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Right, LineAlignment = PdfVerticalAlignment.Middle };
+                orORFooter.Rows[0].Cells[1].Style.Borders.All = PdfPens.Transparent;
+                orORFooter.Rows[0].Height = ROW_HEIGHT;
+                orORFooter.Rows[0].Style = new PdfGridRowStyle() { Font = new PdfStandardFont(PdfFontFamily.Helvetica, 8f, PdfFontStyle.Bold) };
+
+                orORFooter.Rows[1].Cells[0].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Left, LineAlignment = PdfVerticalAlignment.Middle };
+                orORFooter.Rows[1].Cells[0].Style.Borders.All = PdfPens.Transparent;
+                orORFooter.Rows[1].Cells[1].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Right, LineAlignment = PdfVerticalAlignment.Middle };
+                orORFooter.Rows[1].Cells[1].Style.Borders.All = PdfPens.Transparent;
+                orORFooter.Rows[1].Height = ROW_HEIGHT;
+
+                orORFooter.Columns[0].Width = 90f;
+
+                orORFooter.Draw(page, new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count) * ROW_HEIGHT) + 15));
+
+
+                //OR Pay Lines
+                var orPayItems = new PdfGrid();
+                var orPayItemsData = new List<object>();
+
+                orPayItems.Columns.Add(2);
+
+                foreach (var line in or.TenderLines)
+                {
+                    orPayItemsData.Add(new { Col1 = line.PayType, Col2 = line.Amount });
+                }
+
+                orPayItemsData.Add(new { Col1 = "Change", Col2 = or.ChangeAmount });
+
+                orPayItems.DataSource = orPayItemsData;
+
+                orPayItems.Headers.Clear();
+
+                foreach (var payItemsMember in orPayItems.Rows) 
+                {
+                    payItemsMember.Cells[0].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Right, LineAlignment = PdfVerticalAlignment.Middle };
+                    payItemsMember.Cells[0].Style.Borders.All = PdfPens.Transparent;
+                    payItemsMember.Cells[1].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Right, LineAlignment = PdfVerticalAlignment.Middle };
+                    payItemsMember.Cells[1].Style.Borders.All = PdfPens.Transparent;
+
+                    orPayItems.Rows[orPayItems.Rows.IndexOf(payItemsMember)].Height = ROW_HEIGHT;
+                }
+
+                page.Graphics.DrawLine(new PdfPen(PdfBrushes.Black),
+                    new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count) * ROW_HEIGHT) + 15),
+                    new PointF(150, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count) * ROW_HEIGHT) + 15));
+
+
+                orPayItems.Columns[0].Width = 90f;
+
+                orPayItems.Draw(page, new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orORFooter.Rows.Count) * ROW_HEIGHT) + 15));
+
+                page.Graphics.DrawLine(new PdfPen(PdfBrushes.Black),
+                    new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count + orORFooter.Rows.Count) * ROW_HEIGHT) + 15),
+                    new PointF(150, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count + orORFooter.Rows.Count) * ROW_HEIGHT) + 15));
+
+                //Vat Header
+                var orVatHeader = new PdfGrid();
+                var orVatHeaderData = new List<object>();
+
+                orVatHeader.Columns.Add(3);
+
+                orVatHeaderData.Add(new { Col1 = "VAT Details", Col2 = "", Col3 = "" });
+                orVatHeaderData.Add(new { Col1 = "Amount", Col2 = "", Col3 = "VAT" });
+
+                orVatHeader.DataSource = orVatHeaderData;
+
+                orVatHeader.Headers.Clear();
+
+                var vatHeaderMember1 = orVatHeader.Rows[0].Cells[0];
+                vatHeaderMember1.ColumnSpan = 3;
+                vatHeaderMember1.StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Center, LineAlignment = PdfVerticalAlignment.Middle };
+                vatHeaderMember1.Style.Borders.All = PdfPens.Transparent;
+
+                orVatHeader.Rows[0].Height = ROW_HEIGHT;
+                orVatHeader.Rows[0].Style = new PdfGridRowStyle() { Font = new PdfStandardFont(PdfFontFamily.Helvetica, 8f, PdfFontStyle.Bold) };
+
+                var vatHeaderMember2 = orVatHeader.Rows[1].Cells[0];
+                vatHeaderMember2.ColumnSpan = 2;
+                vatHeaderMember2.StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Center, LineAlignment = PdfVerticalAlignment.Middle };
+                vatHeaderMember2.Style.Borders.All = PdfPens.Transparent;
+
+                var vatHeaderMember3 = orVatHeader.Rows[1].Cells[2];
+                vatHeaderMember3.StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Center, LineAlignment = PdfVerticalAlignment.Middle };
+                vatHeaderMember3.Style.Borders.All = PdfPens.Transparent;
+
+                orVatHeader.Rows[1].Height = ROW_HEIGHT;
+                orVatHeader.Rows[1].Style = new PdfGridRowStyle() { Font = new PdfStandardFont(PdfFontFamily.Helvetica, 8f, PdfFontStyle.Bold) };
+
+                orVatHeader.Draw(page, new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count + orORFooter.Rows.Count) * ROW_HEIGHT) + 20));
+
+                //Vat Detail
+                var orVatDetail = new PdfGrid();
+                var orVatDetailData = new List<object>();
+
+                orVatDetail.Columns.Add(3);
+
+                foreach (var vat in or.VatLines)
+                {
+                    orVatDetailData.Add(new { Col1 = vat.Tax, Col2 = vat.AmountLessTax, Col3 = vat.TotalTaxAmount });
+                }
+
+                orVatDetail.DataSource = orVatDetailData;
+
+                orVatDetail.Headers.Clear();
+
+                foreach (var vat in orVatDetail.Rows)
+                {
+                    vat.Cells[0].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Left, LineAlignment = PdfVerticalAlignment.Middle };
+                    vat.Cells[0].Style.Borders.All = PdfPens.Transparent;
+
+                    vat.Cells[1].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Right, LineAlignment = PdfVerticalAlignment.Middle };
+                    vat.Cells[1].Style.Borders.All = PdfPens.Transparent;
+
+                    vat.Cells[2].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Right, LineAlignment = PdfVerticalAlignment.Middle };
+                    vat.Cells[2].Style.Borders.All = PdfPens.Transparent;
+
+                    orVatDetail.Rows[orVatDetail.Rows.IndexOf(vat)].Height = ROW_HEIGHT;
+                }
+
+                orVatDetail.Draw(page, new PointF(0, 
+                    ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count + orORFooter.Rows.Count + orVatHeader.Rows.Count) * ROW_HEIGHT) + 20));
 
                 var stream = new MemoryStream();
 
