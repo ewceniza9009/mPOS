@@ -739,7 +739,11 @@ namespace mPOSv2.ViewModels
         {
             if (!IsSaved)
             {
-                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, "Please save the invoice.", "Ok"));
+                Device.BeginInvokeOnMainThread(async () =>
+                    await Application.Current.MainPage
+                        .DisplayAlert(Title, "Please save the invoice?", "OK")
+                );
+
                 return;
             }
 

@@ -75,7 +75,7 @@ namespace mPOS.WebAPI.Repository
                     }
 
                     result.TotalSales = $"₱{string.Format("{0:N2}", Math.Round(saleLines.Sum(x => x.Amount), 2))}";
-                    result.TotalDiscount = $"₱{string.Format("{0:N2}", Math.Round(saleLines.Sum(x => x.DiscountAmount), 2))}";
+                    result.TotalDiscount = $"₱{string.Format("{0:N2}", Math.Round(saleLines.Sum(x => x.DiscountAmount * x.Quantity), 2))}";
 
                     var collections = ctx.TrnCollectionLines.Where(x => x.CollectionId == ctx.TrnCollections.FirstOrDefault(y => y.SalesId == salesId).Id);
 

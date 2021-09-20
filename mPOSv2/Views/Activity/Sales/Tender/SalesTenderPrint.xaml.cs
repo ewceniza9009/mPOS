@@ -177,6 +177,10 @@ namespace mPOSv2.Views.Activity.Sales
                     orORFooter.Columns[0].Width = 90f;
 
                     orORFooter.Draw(page, new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count) * ROW_HEIGHT) + 15));
+
+                    page.Graphics.DrawLine(new PdfPen(PdfBrushes.Black),
+                        new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orORFooter.Rows.Count) * ROW_HEIGHT) + 15),
+                        new PointF(150, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orORFooter.Rows.Count) * ROW_HEIGHT) + 15));
                     #endregion
 
                     #region Pay types
@@ -206,11 +210,6 @@ namespace mPOSv2.Views.Activity.Sales
 
                         orPayItems.Rows[orPayItems.Rows.IndexOf(payItemsMember)].Height = ROW_HEIGHT;
                     }
-
-                    page.Graphics.DrawLine(new PdfPen(PdfBrushes.Black),
-                        new PointF(0, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count) * ROW_HEIGHT) + 15),
-                        new PointF(150, ((orHeader.Rows.Count + orLineItems.Headers.Count + orLineItems.Rows.Count + orPayItems.Rows.Count) * ROW_HEIGHT) + 15));
-
 
                     orPayItems.Columns[0].Width = 90f;
 

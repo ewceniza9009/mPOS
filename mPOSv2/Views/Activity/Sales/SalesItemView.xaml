@@ -65,7 +65,8 @@
                                     <ViewCell.View>
                                         <StackLayout Orientation="Horizontal">
                                             <StackLayout x:Name="ItemInfo"
-                                                     Orientation="Vertical">
+                                                     Orientation="Vertical"
+                                                         Padding="5">
                                                 <Label Text="{Binding ItemDescription}"
                                                    TextColor="Black"
                                                    FontSize="15"

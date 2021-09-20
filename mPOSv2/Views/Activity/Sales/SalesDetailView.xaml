@@ -205,10 +205,11 @@
                                         <ViewCell>
                                             <ViewCell.View>
                                                 <SwipeView BackgroundColor="Transparent">
-                                                    <StackLayout Orientation="Horizontal">
+                                                    <StackLayout Orientation="Horizontal"
+                                                                 Margin="1">
                                                         <StackLayout x:Name="ItemInfo"
                                                                      Orientation="Vertical"
-                                                                     Padding="10,0,0,0"
+                                                                     Padding="10,3,0,0"
                                                                      WidthRequest="170">
                                                             <Label Text="{Binding ItemDescriptionDisplay}"
                                                                    TextColor="Black"
@@ -268,7 +269,7 @@
                                                                    HorizontalTextAlignment="End"
                                                                    FontAttributes="Bold"
                                                                    TextDecorations="Underline"
-                                                                   Margin="0,0,30,0"/>
+                                                                   Margin="0,3,30,0"/>
                                                         </StackLayout>
                                                     </StackLayout>
                                                     <SwipeView.RightItems>

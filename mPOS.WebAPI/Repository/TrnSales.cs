@@ -74,12 +74,6 @@ namespace mPOS.WebAPI.Repository
                 {
                     foreach (var tLine in t.TrnSalesLines.Where(x => x.Id == 0))
                     {
-                        tLine.DiscountId = 2;
-                        tLine.DiscountRate = 0;
-                        tLine.DiscountAmount = 0;
-                        tLine.TaxId = 9;
-                        tLine.TaxRate = 0;
-                        tLine.TaxAmount = 0;
                         tLine.SalesAccountId = 159;
                         tLine.AssetAccountId = 74;
                         tLine.CostAccountId = 238;
@@ -124,9 +118,6 @@ namespace mPOS.WebAPI.Repository
 
                     foreach (var tLine in t.TrnSalesLines)
                     {
-                        tLine.DiscountId = 2;
-                        tLine.DiscountRate = 0;
-                        tLine.DiscountAmount = 0;
                         tLine.SalesAccountId = 159;
                         tLine.AssetAccountId = 74;
                         tLine.CostAccountId = 238;
