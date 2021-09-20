@@ -72,19 +72,20 @@ namespace mPOSv2.Views.Activity.Sales
 
                     #region Header
                     var orHeader = new PdfGrid();
-                    var orHeaderData = new List<object>();
-
-                    orHeaderData.Add(new { Col1 = SettingsRepository.GetSettings().StoreName, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = SettingsRepository.GetSettings().Address, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = "Operated By: " + SettingsRepository.GetSettings().OperatedBy, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = "TIN: " + SettingsRepository.GetSettings().TIN, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = "P No.: " + SettingsRepository.GetSettings().PermitNo, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = "A No.: " + SettingsRepository.GetSettings().AccreditNo, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = "S No.: " + SettingsRepository.GetSettings().SerialNo, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = "Official Receipt", Col2 = "" });
-                    orHeaderData.Add(new { Col1 = or.ORNumber, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = or.UpdateDateTime, Col2 = "" });
-                    orHeaderData.Add(new { Col1 = or.Remarks, Col2 = "" });
+                    var orHeaderData = new List<object>
+                    {
+                        new { Col1 = SettingsRepository.GetSettings().StoreName, Col2 = "" },
+                        new { Col1 = SettingsRepository.GetSettings().Address, Col2 = "" },
+                        new { Col1 = "Operated By: " + SettingsRepository.GetSettings().OperatedBy, Col2 = "" },
+                        new { Col1 = "TIN: " + SettingsRepository.GetSettings().TIN, Col2 = "" },
+                        new { Col1 = "P No.: " + SettingsRepository.GetSettings().PermitNo, Col2 = "" },
+                        new { Col1 = "A No.: " + SettingsRepository.GetSettings().AccreditNo, Col2 = "" },
+                        new { Col1 = "S No.: " + SettingsRepository.GetSettings().SerialNo, Col2 = "" },
+                        new { Col1 = "Official Receipt", Col2 = "" },
+                        new { Col1 = or.ORNumber, Col2 = "" },
+                        new { Col1 = or.UpdateDateTime, Col2 = "" },
+                        new { Col1 = or.Remarks, Col2 = "" }
+                    };
 
                     orHeader.DataSource = orHeaderData;
 
@@ -157,10 +158,11 @@ namespace mPOSv2.Views.Activity.Sales
 
                     //OR Line footer
                     var orORFooter = new PdfGrid();
-                    var orORFooterData = new List<object>();
-
-                    orORFooterData.Add(new { Col1 = "Total Sales", Col2 = or.TotalSales });
-                    orORFooterData.Add(new { Col1 = "Total Discount", Col2 = or.TotalDiscount });
+                    var orORFooterData = new List<object>
+                    {
+                        new { Col1 = "Total Sales", Col2 = or.TotalSales },
+                        new { Col1 = "Total Discount", Col2 = or.TotalDiscount }
+                    };
 
                     orORFooter.DataSource = orORFooterData;
 

@@ -15,18 +15,7 @@ namespace SampleBrowser.PDF.Droid
     {
         public void Save(string fileName, string contentType, MemoryStream stream)
         {
-            string exception = string.Empty;
-            string root = null;
-            //if (Android.OS.Environment.IsExternalStorageEmulated)
-            //{
-            //    root = Android.OS.Environment.ExternalStorageDirectory.ToString();
-            //}
-            //else
-            //{
-            //    root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            //}
-
-            root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             Java.IO.File myDir = new Java.IO.File(root + "/Syncfusion");
             myDir.Mkdir();
@@ -48,7 +37,7 @@ namespace SampleBrowser.PDF.Droid
             }
             catch (Exception e)
             {
-                exception = e.ToString();
+                _ = e.ToString();
             }
 
             if (file.Exists() && contentType != "application/html")
@@ -73,8 +62,7 @@ namespace SampleBrowser.PDF.Droid
 
         public void ComposeMail(string fileName, string[] recipients, string subject, string messagebody, MemoryStream filestream)
         {
-            string exception = string.Empty;
-            string root = null;
+            string root;
             if (Android.OS.Environment.IsExternalStorageEmulated)
             {
                 root = Android.OS.Environment.ExternalStorageDirectory.ToString();
@@ -104,7 +92,7 @@ namespace SampleBrowser.PDF.Droid
             }
             catch (Exception e)
             {
-                exception = e.ToString();
+                _ = e.ToString();
             }
 
             Intent email = new Intent(Android.Content.Intent.ActionSend);
