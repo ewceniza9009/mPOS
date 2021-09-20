@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:numericupdown="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms"
+             xmlns:numericupdown="clr-namespace:Syncfusion.SfNumericUpDown.XForms;assembly=Syncfusion.SfNumericUpDown.XForms" xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Start.Settings"
              Title="Settings">
@@ -66,6 +66,53 @@
                                                        FormatString="N0"
                                                        TextAlignment="End"
                                                        Minimum="0"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Store:"/>
+                        <Entry Text="{Binding Settings.StoreName, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Address:"/>
+                        <Entry Text="{Binding Settings.Address, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="OperatedBy:"/>
+                        <Entry Text="{Binding Settings.OperatedBy, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="TIN:"/>
+                        <Entry Text="{Binding Settings.TIN, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Accredit No:"/>
+                        <Entry Text="{Binding Settings.AccreditNo, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Serial No:"/>
+                        <Entry Text="{Binding Settings.SerialNo, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Permit No:"/>
+                        <Entry Text="{Binding Settings.PermitNo, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Terminal:"/>
+                        <Entry Text="{Binding Settings.TerminalNo, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="OR Footer:"/>
+                        <richTextEditor:SfRichTextEditor x:Name="RemarksRichText"
+                                                         HtmlText="{Binding Settings.ReceiptFooter, Mode=TwoWay}"
+                                                         HeightRequest="290"/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

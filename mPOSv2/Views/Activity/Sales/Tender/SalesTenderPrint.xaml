@@ -26,7 +26,7 @@
                     Text="Ok"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
-                    Clicked="OnButtonClicked" />
+                    Clicked="CmdPrint_Clicked" />
         </StackLayout>
     </local:SampleView.Content>
 </local:SampleView>

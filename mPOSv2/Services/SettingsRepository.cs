@@ -34,6 +34,15 @@ namespace mPOSv2.Services
                     _settings.ServerName = settings.ServerName;
                     _settings.ContinuesBarcode = settings.ContinuesBarcode;
                     _settings.SalesLinePageSize = settings.SalesLinePageSize;
+                    _settings.StoreName = settings.StoreName;
+                    _settings.Address = settings.Address;
+                    _settings.OperatedBy = settings.OperatedBy;
+                    _settings.TIN = settings.TIN;
+                    _settings.AccreditNo = settings.AccreditNo;
+                    _settings.SerialNo = settings.SerialNo;
+                    _settings.PermitNo = settings.PermitNo;
+                    _settings.TerminalNo = settings.TerminalNo;
+                    _settings.ReceiptFooter = settings.ReceiptFooter;
 
                     conn.RunInTransaction(() =>
                     {

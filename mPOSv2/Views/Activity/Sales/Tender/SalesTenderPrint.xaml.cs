@@ -12,6 +12,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -38,7 +39,12 @@ namespace mPOSv2.Views.Activity.Sales
             }
         }
 
-        private void OnButtonClicked(object sender, EventArgs e)
+        private void CmdPrint_Clicked(object sender, EventArgs e)
+        {
+            Print();
+        }
+
+        private void Print()
         {
             var saleID = ((Parent as StackLayout).Parent as SalesTenderPrintContainer).SaleId;
             
@@ -65,7 +71,6 @@ namespace mPOSv2.Views.Activity.Sales
                     var font = new PdfStandardFont(PdfFontFamily.Helvetica, 8f);
 
                     #region Header
-                    //OR Header
                     var orHeader = new PdfGrid();
                     var orHeaderData = new List<object>();
 
@@ -184,7 +189,6 @@ namespace mPOSv2.Views.Activity.Sales
                     #endregion
 
                     #region Pay types
-                    //OR Pay Lines
                     var orPayItems = new PdfGrid();
                     var orPayItemsData = new List<object>();
 
@@ -290,7 +294,6 @@ namespace mPOSv2.Views.Activity.Sales
                     #endregion
 
                     #region Footer
-                    //OR Footer
                     var orFooter = new PdfGrid();
                     var orFooterData = new List<object>();
 
@@ -299,7 +302,7 @@ namespace mPOSv2.Views.Activity.Sales
                     orFooterData.Add(new { Col1 = "Terminal: " + or.Terminal });
                     orFooterData.Add(new { Col1 = "Customer: " + or.Customer });
                     orFooterData.Add(new { Col1 = "Served By: " + SettingsRepository.GetSettings().UserFullName });
-                    orFooterData.Add(new { Col1 = SettingsRepository.GetSettings().ReceiptFooter });
+                    orFooterData.Add(new { Col1 = HtmlToPlainText(SettingsRepository.GetSettings().ReceiptFooter) });
 
                     orFooter.DataSource = orFooterData;
 
@@ -330,5 +333,23 @@ namespace mPOSv2.Views.Activity.Sales
                 }
             }            
         }
+
+        private static string HtmlToPlainText(string html)
+        {
+            const string tagWhiteSpace = @"(>|$)(\W|\n|\r)+<";
+            const string stripFormatting = @"<[^>]*(>|$)";
+            const string lineBreak = @"<(br|BR)\s{0,1}\/{0,1}>";
+            var lineBreakRegex = new Regex(lineBreak, RegexOptions.Multiline);
+            var stripFormattingRegex = new Regex(stripFormatting, RegexOptions.Multiline);
+            var tagWhiteSpaceRegex = new Regex(tagWhiteSpace, RegexOptions.Multiline);
+
+            var text = html;
+            text = System.Net.WebUtility.HtmlDecode(text);
+            text = tagWhiteSpaceRegex.Replace(text, "><");
+            text = lineBreakRegex.Replace(text, Environment.NewLine);
+            text = stripFormattingRegex.Replace(text, string.Empty);
+
+            return text;
+        }        
     }
 }
