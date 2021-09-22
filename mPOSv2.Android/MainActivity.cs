@@ -20,6 +20,8 @@ namespace mPOSv2.Android
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsAppCompatActivity
     {
+        internal static MainActivity Instance { get; private set; }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -54,6 +56,8 @@ namespace mPOSv2.Android
             Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
 
             Window.SetSoftInputMode(SoftInput.AdjustResize);
+
+            Instance = this;
         }
 
         protected override void OnResume()

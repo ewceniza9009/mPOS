@@ -27,5 +27,22 @@ namespace mPOSv2.Services
 
             return result;
         }
+
+        public static async Task<int> GetCollectionId(int param)
+        {
+            int result;
+            var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetCollectionId?salesId={param}";
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+
+            using (var client = new HttpClient(clientHandler)) 
+            {
+                var response = await client.GetStringAsync(requestUri);
+                result = JsonConvert.DeserializeObject<int>(response);
+            }
+
+            return result;
+        }
     }
 }

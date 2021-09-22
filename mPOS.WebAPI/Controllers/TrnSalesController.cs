@@ -69,6 +69,14 @@ namespace mPOS.WebAPI.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetCollectionId(int salesId) 
+        {
+            var repos = new Repository.TrnCollection();
+            var result = repos.GetCollectionId(salesId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetCustomers()
         {
             var repos = new Repository.TrnSales();

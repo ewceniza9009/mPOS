@@ -822,7 +822,24 @@ namespace mPOSv2.ViewModels
 
         private void OnReprintOR(object obj)
         {
-            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(SelectedSale.Id));            
+            int orId = 0;
+
+            Task.Run(async () =>
+            {
+                orId = await APIOfficialReceipt.GetCollectionId((int)SelectedSale?.Id);
+
+                if (orId > 0)
+                {
+                    await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(SelectedSale.Id));
+                }
+
+                if (orId == 0)
+                {
+                    Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.DisplayAlert(Title, $"Not applicable, {SelectedSale.SalesNumber} is not tendered.", "Ok"));
+                }
+            });
+
+            
         }
         #endregion
 

@@ -28,7 +28,7 @@ namespace mPOSv2.Views.Activity.Sales
 
             vm.SelectedSale.IsNotTendered = isNotTendered;
 
-            InitializeBackButtonAction(vm);
+            InitializeBackButtonAction();
         }
         #endregion
 
@@ -172,15 +172,10 @@ namespace mPOSv2.Views.Activity.Sales
             CmdTender.IsEnabled = vm.SelectedSale?.IsNotTendered ?? true;
             CmdDelete.IsEnabled = vm.SelectedSale?.IsNotTendered ?? true;
         }
-
-        private void btnCalc_Clicked(object sender, EventArgs e)
-        {
-            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(vm.SelectedSale.Id));
-        }
         #endregion
 
         #region Methods
-        private void InitializeBackButtonAction(SalesViewModel vm)
+        private void InitializeBackButtonAction()
         {
             if (EnableBackButtonOverride)
             {

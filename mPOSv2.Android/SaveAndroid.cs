@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Android.Support.V4.Content;
 using SampleBrowser.PDF.Droid;
 using mPOSv2.Services;
+using mPOSv2.Android;
 
 [assembly: Dependency(typeof(SaveAndroid))]
 [assembly: Dependency(typeof(MailService))]
@@ -15,6 +16,7 @@ namespace SampleBrowser.PDF.Droid
     {
         public void Save(string fileName, string contentType, MemoryStream stream)
         {
+            var context = MainActivity.Instance;
             string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             Java.IO.File myDir = new Java.IO.File(root + "/Syncfusion");
@@ -49,7 +51,8 @@ namespace SampleBrowser.PDF.Droid
                 Android.Net.Uri path = FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".provider", file);
                 intent.SetDataAndType(path, mimeType);
                 intent.AddFlags(ActivityFlags.GrantReadUriPermission);
-                Forms.Context.StartActivity(Intent.CreateChooser(intent, "Choose App"));
+
+                context.StartActivity(Intent.CreateChooser(intent, "Choose App"));
             }
         }
     }
@@ -62,6 +65,7 @@ namespace SampleBrowser.PDF.Droid
 
         public void ComposeMail(string fileName, string[] recipients, string subject, string messagebody, MemoryStream filestream)
         {
+            var context = MainActivity.Instance;
             string root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
 
             Java.IO.File myDir = new Java.IO.File(root + "/Syncfusion");
@@ -92,7 +96,7 @@ namespace SampleBrowser.PDF.Droid
             email.PutExtra(Android.Content.Intent.ExtraSubject, subject);
             email.PutExtra(Intent.ExtraStream, uri);
             email.SetType("application/pdf");
-            Forms.Context.StartActivity(email);
+            context.StartActivity(email);
         }
     }
 }

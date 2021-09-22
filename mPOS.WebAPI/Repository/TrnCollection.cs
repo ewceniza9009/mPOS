@@ -128,6 +128,18 @@ namespace mPOS.WebAPI.Repository
             return result;
         }
 
+        public int GetCollectionId(int salesId) 
+        {
+            int result;
+
+            using (var ctx = new posDataContext()) 
+            {
+                result = (int)ctx?.TrnCollections?.FirstOrDefault(x => x.SalesId == salesId)?.Id;
+            }
+
+            return result;
+        }
+
         public long Save(POCO.TrnCollection t)
         {
             Data.TrnCollection result = new Data.TrnCollection();
