@@ -17,9 +17,9 @@ namespace mPOS.WebAPI.Controllers
         public JsonResult BulkGet(MstItemFilter content)
         {
             var repos = new Repository.MstItem();
-            var result = content.filterMethods == null
+            var result = content.FilterMethods == null
                 ? repos.BulkRead()
-                : repos.BulkRead(content, content.filterMethods);
+                : repos.BulkRead(content, content.FilterMethods);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

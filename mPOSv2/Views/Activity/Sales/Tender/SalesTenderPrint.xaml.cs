@@ -143,6 +143,8 @@ namespace mPOSv2.Views.Activity.Sales
                             lineItemsMember.Cells[0].ColumnSpan = 2;
                             lineItemsMember.Cells[0].StringFormat = new PdfStringFormat() { Alignment = PdfTextAlignment.Center, LineAlignment = PdfVerticalAlignment.Middle };
                             lineItemsMember.Cells[0].Style.Borders.All = PdfPens.Transparent;
+
+                            orLineItems.Rows[orLineItems.Rows.IndexOf(lineItemsMember)].Style = new PdfGridRowStyle() { Font = new PdfStandardFont(PdfFontFamily.Helvetica, 6f, PdfFontStyle.Bold) };
                         }
 
                         orLineItems.Rows[orLineItems.Rows.IndexOf(lineItemsMember)].Height = ROW_HEIGHT;

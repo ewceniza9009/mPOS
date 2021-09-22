@@ -38,7 +38,7 @@ namespace mPOSv2.ViewModels
                     {
                         SalesNumber = search,
                         SalesDate = (DateTime)SearchSaleDate,
-                        filterMethods = new FilterMethods
+                        FilterMethods = new FilterMethods
                         {
                             Operations = new List<FilterOperation>
                             {
@@ -87,7 +87,7 @@ namespace mPOSv2.ViewModels
                     itemFilter = new MstItemFilter
                     {
                         ItemDescription = search,
-                        filterMethods = new FilterMethods
+                        FilterMethods = new FilterMethods
                         {
                             Operations = new List<FilterOperation>
                             {
@@ -490,7 +490,7 @@ namespace mPOSv2.ViewModels
             OnPropertyChanged(nameof(Title));
         }
 
-        public void ExecuteRefreshSelectedSaleLine(object sender)
+        public void ExecuteRefreshSelectedSaleLine()
         {
             OnPropertyChanged(nameof(SelectedSaleLine));
             OnPropertyChanged(nameof(SearchBarcode));
@@ -591,9 +591,9 @@ namespace mPOSv2.ViewModels
                     SalesLineTimeStamp = DateTime.Now
                 };
 
-                ComputeVatAmount(lineSelect: true);
+                ComputeVatAmount();
 
-                ExecuteRefreshSelectedSaleLine(new object());
+                ExecuteRefreshSelectedSaleLine();
 
                 Device.BeginInvokeOnMainThread( async () => await Application.Current.MainPage.Navigation.PopAsync());
                 Device.BeginInvokeOnMainThread(async () =>
@@ -607,7 +607,7 @@ namespace mPOSv2.ViewModels
                 SelectedTax = Taxes.SingleOrDefault(x => x.Id == SelectedSaleLine.TaxId);
                 SelectedDiscount = Discounts.SingleOrDefault(x => x.Id == SelectedSaleLine.DiscountId);
 
-                ExecuteRefreshSelectedSaleLine(new object());
+                ExecuteRefreshSelectedSaleLine();
 
                 Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
             }
@@ -765,6 +765,8 @@ namespace mPOSv2.ViewModels
 
                 });
 
+                Device.BeginInvokeOnMainThread(async () => await Application.Current.MainPage.Navigation.PopAsync());
+
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(new SalesTenderPrintContainer(SelectedSale.Id));
             }
             else
@@ -838,10 +840,9 @@ namespace mPOSv2.ViewModels
             return Math.Round(SelectedSaleLine.NetPrice, 2) * Math.Round(SelectedSaleLine.Quantity, 2);
         }
 
-        public decimal ComputeVatAmount(bool lineSelect = false) 
+        public decimal ComputeVatAmount() 
         {
-            var result = 0m;
-
+            decimal result;
             if (SelectedTax.Code == "INCLUSIVE")
             {
                 result = Math.Round(SelectedSaleLine.Price / (1 + SelectedTax.Rate / 100) * (SelectedTax.Rate / 100), 2);
@@ -906,7 +907,7 @@ namespace mPOSv2.ViewModels
                     SalesLineTimeStamp = DateTime.Now
                 };
 
-                ExecuteRefreshSelectedSaleLine(new object());
+                ExecuteRefreshSelectedSaleLine();
 
                 Device.BeginInvokeOnMainThread(async () =>
                     await Application.Current.MainPage.Navigation.PushAsync(new SalesItemDetailView(this)));
@@ -986,7 +987,7 @@ namespace mPOSv2.ViewModels
                     }
                 }
 
-                ExecuteRefreshSelectedSaleLine(new object());
+                ExecuteRefreshSelectedSaleLine();
                 ReloadSalesLines();
             }
         }

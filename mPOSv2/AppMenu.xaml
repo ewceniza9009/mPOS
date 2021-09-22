@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+<FlyoutPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,10 +8,7 @@
              x:Class="mPOSv2.AppMenu"
              NavigationPage.HasNavigationBar="False"
              Appearing="AppMenu_OnAppearing">
-    <MasterDetailPage.ToolbarItems>
-    </MasterDetailPage.ToolbarItems>
-
-    <MasterDetailPage.Master>
+    <FlyoutPage.Flyout>
         <ContentPage Title="Menu"
                      NavigationPage.HasNavigationBar="False">
             <Grid BackgroundColor="Transparent">
@@ -73,12 +70,12 @@
                 </StackLayout>
             </Grid>
         </ContentPage>
-    </MasterDetailPage.Master>
+    </FlyoutPage.Flyout>
 
-    <MasterDetailPage.Detail HasNavigationBar ="False">
+    <FlyoutPage.Detail HasNavigationBar ="False">
         <NavigationPage HasNavigationBar="False"
                         HasBackButton="False">
 
         </NavigationPage>
-    </MasterDetailPage.Detail>
-</MasterDetailPage>
+    </FlyoutPage.Detail>
+</FlyoutPage>

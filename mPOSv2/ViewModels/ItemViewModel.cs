@@ -28,7 +28,7 @@ namespace mPOSv2.ViewModels
                     itemFilter = new MstItemFilter
                     {
                         ItemDescription = search,
-                        filterMethods = new FilterMethods
+                        FilterMethods = new FilterMethods
                         {
                             Operations = new List<FilterOperation>
                             {

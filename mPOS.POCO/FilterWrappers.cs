@@ -7,7 +7,7 @@ namespace mPOS.POCO
 {
     public abstract class BaseFilter
     {
-        public FilterMethods filterMethods { get; set; }
+        public FilterMethods FilterMethods { get; set; }
     }
 
     public class MstUserFilter : BaseFilter

@@ -22,7 +22,7 @@ namespace mPOSv2.Views.Activity.Sales
 
         private void QuantityStepper_OnValueChanged(object sender, ValueEventArgs e)
         {
-            var taxAmount = 0m;
+            decimal taxAmount;
             var amount = Math.Round(vm.SelectedSaleLine.NetPrice * vm.SelectedSaleLine.Quantity, 2);
 
             if (vm.SelectedTax.Code == "INCLUSIVE")
@@ -37,7 +37,7 @@ namespace mPOSv2.Views.Activity.Sales
 
             vm.SelectedSaleLine.Amount = amount;
             vm.SelectedSaleLine.TaxAmount = taxAmount;
-            vm.ExecuteRefreshSelectedSaleLine(new object());
+            vm.ExecuteRefreshSelectedSaleLine();
         }     
 
         private void DiscountComboBox_SelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
@@ -48,8 +48,8 @@ namespace mPOSv2.Views.Activity.Sales
 
             if (discount.Discount == "Senior Citizen Discount")
             {
-                var price = 0m;
-                var discountAmount = 0m;
+                decimal price;
+                decimal discountAmount;
 
                 vm.SelectedSaleLine.DiscountRate = discount.DiscountRate;
 
@@ -99,7 +99,7 @@ namespace mPOSv2.Views.Activity.Sales
                 vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
             }
 
-            vm.ExecuteRefreshSelectedSaleLine(new object());
+            vm.ExecuteRefreshSelectedSaleLine();
         }
 
         private void DiscountAmount_Completed(object sender, EventArgs e)
@@ -127,7 +127,7 @@ namespace mPOSv2.Views.Activity.Sales
                                 vm.SelectedSaleLine.Amount = vm.ComputeAmount();
                                 vm.SelectedSaleLine.TaxAmount = vm.ComputeVatAmount();
 
-                                vm.ExecuteRefreshSelectedSaleLine(new object());
+                                vm.ExecuteRefreshSelectedSaleLine();
                             }
                         },
                         TaskScheduler.FromCurrentSynchronizationContext())
@@ -146,7 +146,7 @@ namespace mPOSv2.Views.Activity.Sales
                 vm.ComputeAmount();
             }
 
-            vm.ExecuteRefreshSelectedSaleLine(new object());
+            vm.ExecuteRefreshSelectedSaleLine();
         }
 
         private void CmdOK_OnClicked(object sender, EventArgs e)

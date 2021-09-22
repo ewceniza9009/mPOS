@@ -15,9 +15,9 @@ namespace mPOS.WebAPI.Controllers
         public JsonResult GetAccounts(MstAccountFilter filter)
         {
             var account = new MstAccount();
-            var result = filter.filterMethods == null
+            var result = filter.FilterMethods == null
                 ? account.BulkRead()
-                : account.BulkRead(filter, filter.filterMethods);
+                : account.BulkRead(filter, filter.FilterMethods);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

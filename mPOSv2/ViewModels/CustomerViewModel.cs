@@ -27,7 +27,7 @@ namespace mPOSv2.ViewModels
                     customerFilter = new MstCustomerFilter
                     {
                         Customer = search,
-                        filterMethods = new FilterMethods
+                        FilterMethods = new FilterMethods
                         {
                             Operations = new List<FilterOperation>
                             {

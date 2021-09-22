@@ -62,15 +62,7 @@ namespace SampleBrowser.PDF.Droid
 
         public void ComposeMail(string fileName, string[] recipients, string subject, string messagebody, MemoryStream filestream)
         {
-            string root;
-            if (Android.OS.Environment.IsExternalStorageEmulated)
-            {
-                root = Android.OS.Environment.ExternalStorageDirectory.ToString();
-            }
-            else
-            {
-                root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            }
+            string root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
 
             Java.IO.File myDir = new Java.IO.File(root + "/Syncfusion");
             myDir.Mkdir();
