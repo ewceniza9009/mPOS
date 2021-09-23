@@ -30,10 +30,10 @@
                              Text="LOGIN"
                              FontAttributes="Bold"
                              Margin="30,20,30,0"
-                             HeightRequest="50"
+                             HeightRequest="45"
                              TextColor="White"
                              ImageSource="enter_key.png"
-                             CornerRadius="3"
+                             CornerRadius="20"
                              ShowIcon="True"
                              Clicked="CmdLogin_Clicked"/>
 

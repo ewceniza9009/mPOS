@@ -2,6 +2,7 @@
 <pages:PopupPage
     x:Class="mPOSv2.Views.Activity.Sales.SalesCharge"
     xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
@@ -70,9 +71,13 @@
                        WidthRequest="190"/>
             </StackLayout>
         </StackLayout>
-        <Button
+        <button:SfButton
             x:Name="CmdOk"
             Text="OK"
+            HeightRequest="45"
+            WidthRequest="80"
+            TextColor="White"
+            CornerRadius="20"
             Clicked="CmdOk_Clicked"/>
     </StackLayout>
 </pages:PopupPage>

@@ -1,4 +1,5 @@
 ﻿<local:SampleView x:Class="mPOSv2.Views.Activity.Sales.SalesTenderPrint"
+                  xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                   xmlns:local="clr-namespace:SampleBrowser.Core;assembly=SampleBrowser.Core"
                   xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -22,10 +23,14 @@
 
             </Label>
 
-            <Button x:Name="CmdPrint"  
-                    Text="Ok"
+            <button:SfButton x:Name="CmdPrint"  
+                    Text="OK"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
+                    HeightRequest="45"
+                    WidthRequest="80"
+                    TextColor="White"
+                    CornerRadius="20"
                     Clicked="CmdPrint_Clicked" />
         </StackLayout>
     </local:SampleView.Content>
