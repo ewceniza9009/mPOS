@@ -19,7 +19,7 @@ namespace SampleBrowser.PDF.Droid
             var context = MainActivity.Instance;
             string root = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-            Java.IO.File myDir = new Java.IO.File(root + "/Syncfusion");
+            Java.IO.File myDir = new Java.IO.File(root + "/FileRepos");
             myDir.Mkdir();
 
             Java.IO.File file = new Java.IO.File(myDir, fileName);
@@ -68,7 +68,7 @@ namespace SampleBrowser.PDF.Droid
             var context = MainActivity.Instance;
             string root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
 
-            Java.IO.File myDir = new Java.IO.File(root + "/Syncfusion");
+            Java.IO.File myDir = new Java.IO.File(root + "/FileRepos");
             myDir.Mkdir();
 
             Java.IO.File file = new Java.IO.File(myDir, fileName);

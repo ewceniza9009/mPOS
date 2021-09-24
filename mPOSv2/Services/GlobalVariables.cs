@@ -6,7 +6,7 @@ namespace mPOSv2.Services
 {
     public static class GlobalVariables
     {
-        public static readonly string UriBase = "http://192.168.1.2/posserver";
+        public static readonly string UriBase = "http://192.168.1.5/posserver";
 
         public static string GetUriBase()
         {
