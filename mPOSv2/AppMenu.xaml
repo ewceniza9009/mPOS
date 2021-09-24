@@ -40,8 +40,9 @@
                         </StackLayout>
                     </Frame>
                     <xForms:SfListView x:Name="NavigationDrawerList"
-                                       ItemSize="60"
-                                       ItemTapped="NavigationDrawerList_OnItemTapped">
+                                       ItemSize="50"
+                                       ItemTapped="NavigationDrawerList_OnItemTapped"
+                                       SelectionBackgroundColor="#ADD8E6">
                         <xForms:SfListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -61,7 +62,6 @@
                                                    VerticalOptions="Center"
                                                    TextColor="Black"/>
                                         </StackLayout>
-                                        <BoxView HeightRequest="1" BackgroundColor="Gray"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>

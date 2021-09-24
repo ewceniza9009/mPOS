@@ -19,7 +19,8 @@
 
             <listview:SfListView x:Name="MenuItems" 
                                  ItemSize="120"
-                                 ItemTapped="MenuItems_OnItemTapped">
+                                 ItemTapped="MenuItems_OnItemTapped"
+                                 SelectionBackgroundColor="#ADD8E6">
                 <listview:SfListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

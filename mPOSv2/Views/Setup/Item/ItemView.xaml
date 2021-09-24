@@ -53,10 +53,10 @@
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Orientation="Horizontal">
-                                        <StackLayout x:Name="ItemImagePlaceHolder"
+                                        <!--<StackLayout x:Name="ItemImagePlaceHolder"
                                                      Orientation="Vertical">
                                             <Image Source="product.png"></Image>
-                                        </StackLayout>
+                                        </StackLayout>-->
                                         <StackLayout x:Name="ItemInfo"
                                                      Orientation="Vertical">
                                             <Label Text="{Binding ItemDescription}"
