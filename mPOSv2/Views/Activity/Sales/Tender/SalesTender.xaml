@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:numerictextbox="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="mPOSv2.Views.Activity.Sales.SalesTender"
              xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
@@ -40,8 +41,10 @@
                 <ListView x:Name="CollectionLineView"
                           ItemsSource="{Binding NewTender.TrnCollectionLines}"
                           SelectedItem="{Binding SelectedCollectionLine}"
-                          HeightRequest="260"
-                          SelectionMode="None">
+                          HeightRequest="280"
+                          SelectionMode="None"
+                          VerticalScrollBarVisibility="Never"
+                          HorizontalScrollBarVisibility="Never">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -80,6 +83,16 @@
                                                    HorizontalTextAlignment="End"
                                                    Keyboard="Numeric"
                                                    TextChanged="Entry_TextChanged"/>
+
+                                            <!--<numerictextbox:SfNumericTextBox x:Name="AmountField"
+                                                                             TextColor="Black"
+                                                                             FontSize="20"
+                                                                             WidthRequest="160"
+                                                                             TextAlignment="End"
+                                                                             Value="{Binding Amount, Mode=TwoWay}"
+                                                                             FormatString="n"
+                                                                             ValueChanged="AmountField_ValueChanged"
+                                                                             />-->
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>

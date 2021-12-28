@@ -39,7 +39,7 @@
                     <Entry Text="{Binding SelectedCollectionLine.CheckNumber}"/>
                 </StackLayout>
                 <StackLayout>
-                    <Label Text="Check No"/>
+                    <Label Text="Check Date"/>
                     <DatePicker Date="{Binding SelectedCollectionLine.CheckDate}"/>
                 </StackLayout>
                 <StackLayout>
