@@ -8,48 +8,37 @@
 <PackageReference Include="Humanizer" Version="2.11.10" />
 <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.12" />
-<PackageReference Include="SampleBrowser.Core" Version="19.2.0.44" />
+<PackageReference Include="SampleBrowser.Core" Version="20.2.0.43" />
 <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
-<PackageReference Include="Syncfusion.Xamarin.Pdf" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfChart" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfKanban" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfPdfViewer" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.Pdf" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfChart" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfKanban" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfPdfViewer" Version="20.2.0.43" />
 <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
 <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfRichTextEditor" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfNumericUpDown" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfListView" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.Expander " Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.Cards" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.Cards" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfCalendar" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.52" />
-<PackageReference Include="Syncfusion.Xamarin.SfBarcode" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.Core" Version="19.2.0.44" />
-<PackageReference Include="Syncfusion.Xamarin.SfAutoComplete" Version="19.2.0.44" />
+<PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.Core" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfRichTextEditor" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfNumericUpDown" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfListView" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.Cards" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfCalendar" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfBarcode" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="20.2.0.43" />
+<PackageReference Include="Syncfusion.Xamarin.SfAutoComplete" Version="20.2.0.43" />
 <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
 <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
 
@@ -170,7 +159,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Syncfusion.Xamarin.Expander" Version="19.2.0.44" />
+    <PackageReference Update="Syncfusion.Xamarin.Expander" Version="20.2.0.43" />
   </ItemGroup>
 
   <ItemGroup>
