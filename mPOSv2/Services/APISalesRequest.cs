@@ -93,7 +93,7 @@ namespace mPOSv2.Services
             return result;
         }
 
-        public static async Task<ObservableCollection<MstPayType>> GetPaytTypes()
+        public static async Task<ObservableCollection<MstPayType>> GetPayTypes()
         {
             ObservableCollection<MstPayType> result;
             var requestUri = $@"{GlobalVariables.GetUriBase()}/TrnSales/GetPayTypes";

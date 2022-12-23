@@ -849,7 +849,7 @@ namespace mPOSv2.ViewModels
             SaleUnits = await APISalesRequest.GetUnits();
             Taxes = await APISalesRequest.GetTaxes();
             Discounts = await APISalesRequest.GetDiscounts();
-            PayTypes = await APISalesRequest.GetPaytTypes();
+            PayTypes = await APISalesRequest.GetPayTypes();
         }
 
         public decimal ComputeAmount()
