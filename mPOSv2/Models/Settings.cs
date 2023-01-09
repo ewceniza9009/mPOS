@@ -14,7 +14,8 @@ namespace mPOSv2.Models
         public string ServerName { get; set; }
         public DateTime LoginDate { get; set; }
         public bool ContinuesBarcode { get; set; }
-        public int SalesLinePageSize { get; set; }
+        public bool IsPrint { get; set; }
+        public int SalesLinePageSize { get; set; }        
         public string StoreName { get; set; }
         public string Address { get; set; }
         public string OperatedBy { get; set; }

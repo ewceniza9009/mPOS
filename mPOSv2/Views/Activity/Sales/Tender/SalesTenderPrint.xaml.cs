@@ -331,8 +331,14 @@ namespace mPOSv2.Views.Activity.Sales
                     document.Save(stream);
                     document.Close(true);
 
-                    DependencyService.Get<IPrint>().Print("Official Receipt.pdf", stream);
-                    //DependencyService.Get<ISave>().Save("Official Receipt.pdf", "application/pdf", stream);
+                    if (SettingsRepository.GetSettings().IsPrint) 
+                    {
+                        DependencyService.Get<IPrint>().Print("Official Receipt.pdf", stream);
+                    }
+                    else 
+                    {
+                        DependencyService.Get<ISave>().Save("Official Receipt.pdf", "application/pdf", stream);
+                    }
 
                     Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
                 }

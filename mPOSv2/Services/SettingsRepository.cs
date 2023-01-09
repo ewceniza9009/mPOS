@@ -33,7 +33,8 @@ namespace mPOSv2.Services
                     _settings.UserFullName = settings.UserFullName;
                     _settings.ServerName = settings.ServerName;
                     _settings.ContinuesBarcode = settings.ContinuesBarcode;
-                    _settings.SalesLinePageSize = settings.SalesLinePageSize;
+                    _settings.IsPrint = settings.IsPrint;
+                    _settings.SalesLinePageSize = settings.SalesLinePageSize;                   
                     _settings.StoreName = settings.StoreName;
                     _settings.Address = settings.Address;
                     _settings.OperatedBy = settings.OperatedBy;
@@ -91,7 +92,8 @@ namespace mPOSv2.Services
                     ServerName = GlobalVariables.UriBase,
                     LoginDate = DateTime.Now,
                     ContinuesBarcode = false,
-                    SalesLinePageSize = Models.Page.Pager.PageSize,
+                    IsPrint = true,
+                    SalesLinePageSize = Models.Page.Pager.PageSize,                    
                     StoreName = "Acme Grocery",
                     Address = "Mandaue City",
                     OperatedBy = "Erwin Wilson Ceniza",

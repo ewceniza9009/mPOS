@@ -60,6 +60,12 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
+                        <Label Text="Is Print:"/>
+                        <Switch IsToggled="{Binding Settings.IsPrint, Mode=TwoWay}"
+                                HorizontalOptions="Start"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical">
                         <Label Text="Sales line page size:"/>
                         <numericupdown:SfNumericUpDown x:Name="SalesLinePageSize" 
                                                        Value="{Binding Settings.SalesLinePageSize}"
