@@ -23,7 +23,8 @@ namespace mPOSv2.Android
 {
     public class AutoSizableLabelRenderer : LabelRenderer
     {
-        private readonly int MAX_LINE_LENGTH = 18;
+        private const int MAX_LINE_COUNT = 3;
+        private const int MAX_LINE_LENGTH = 18;
 
         public AutoSizableLabelRenderer(Context context) : base(context)
         {
@@ -47,10 +48,10 @@ namespace mPOSv2.Android
 
             if (!string.IsNullOrEmpty(autoLabel.Text))
             {
-                double numberOfLines = Math.Ceiling((double)(autoLabel.Text.Length / MAX_LINE_LENGTH));
+                double numberOfLines = Math.Ceiling((double)((autoLabel.Text.Length < MAX_LINE_LENGTH ? MAX_LINE_LENGTH : autoLabel.Text.Length) / MAX_LINE_LENGTH));
 
-                autoLabel.MaxLines = 3;
-                autoLabel.HeightRequest = autoLabel.HeightRequest * (numberOfLines > 3 ? 3 : numberOfLines) ;
+                autoLabel.MaxLines = MAX_LINE_COUNT;
+                autoLabel.HeightRequest = autoLabel.HeightRequest * (numberOfLines > MAX_LINE_COUNT ? MAX_LINE_COUNT : numberOfLines) ;
             }                       
         }
     }
