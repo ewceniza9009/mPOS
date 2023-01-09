@@ -7,6 +7,7 @@
              xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
              xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:custom="clr-namespace:mPOSv2.Custom;assembly=mPOSv2"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesDetailView"
              Title="{Binding Title, Mode=TwoWay}"
@@ -211,10 +212,17 @@
                                                                      Orientation="Vertical"
                                                                      Padding="10,3,0,0"
                                                                      WidthRequest="170">
-                                                            <Label Text="{Binding ItemDescriptionDisplay}"
+                                                            <!--<Label Text="{Binding ItemDescriptionDisplay}"
                                                                    TextColor="Black"
                                                                    FontSize="15"
                                                                    HeightRequest="20"
+                                                                   WidthRequest="170"
+                                                                   FontAttributes="Bold"
+                                                                   Margin="0,0,0,-5"/>-->
+                                                            <custom:AutoSizableLabel Text="{Binding ItemDescriptionDisplay}"
+                                                                   LineBreakMode="WordWrap"
+                                                                   TextColor="Black"
+                                                                   FontSize="15"
                                                                    WidthRequest="170"
                                                                    FontAttributes="Bold"
                                                                    Margin="0,0,0,-5"/>

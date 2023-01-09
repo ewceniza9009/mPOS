@@ -21,14 +21,14 @@ namespace mPOSv2.Views.Activity.Sales
             var isNotTendered = vm.SelectedSale.IsNotTendered;
 
             InitializeComponent();
+            InitializeBackButtonAction();
 
             BindingContext = this.vm = vm;
 
             CmdSearchBarcode.Clicked += CmdSearchBarcode_Clicked;
 
             vm.SelectedSale.IsNotTendered = isNotTendered;
-
-            InitializeBackButtonAction();
+            vm.SelectedSaleTracker.ChangedProperties.Clear();
         }
         #endregion
 
