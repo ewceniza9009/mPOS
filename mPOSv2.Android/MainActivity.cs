@@ -30,6 +30,7 @@ namespace mPOSv2.Android
             base.OnCreate(savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
             Platform.Init();
 

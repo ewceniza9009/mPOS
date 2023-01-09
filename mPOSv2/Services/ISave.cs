@@ -7,11 +7,14 @@ namespace mPOSv2.Services
     {
         void Save(string filename, string contentType, MemoryStream stream);
     }
+    public interface IPrint
+    {
+        void Print(string fileName, Stream inputStream);
+    }
     public interface ISaveWindowsPhone
     {
         Task Save(string filename, string contentType, MemoryStream stream);
     }
-
     public interface IAndroidVersionDependencyService
     {
         int GetAndroidVersion();
