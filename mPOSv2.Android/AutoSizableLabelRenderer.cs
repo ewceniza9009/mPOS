@@ -8,7 +8,7 @@ using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using AndroidX.Core.Widget;
 using mPOSv2.Android;
-using mPOSv2.Custom;
+using mPOSv2.CustomControls;
 using Syncfusion.XForms.DataForm;
 using System;
 using System.Collections.Generic;
@@ -24,8 +24,8 @@ namespace mPOSv2.Android
     public class AutoSizableLabelRenderer : LabelRenderer
     {
         private const int MAX_LINE_COUNT = 2;
-        private const int MAX_LINE_LENGTH = 18;
-        private const int TEXT_HEIGHT = 15;
+        private const int MAX_LINE_LENGTH = 20;
+        private const int TEXT_HEIGHT = 18;
 
         public AutoSizableLabelRenderer(Context context) : base(context)
         {
@@ -45,7 +45,7 @@ namespace mPOSv2.Android
                 return; 
             }
 
-            Control.SetAutoSizeTextTypeWithDefaults(AutoSizeTextType.Uniform);
+            //Control.SetAutoSizeTextTypeWithDefaults(AutoSizeTextType.Uniform);
 
             if (!string.IsNullOrEmpty(autoLabel.Text))
             {

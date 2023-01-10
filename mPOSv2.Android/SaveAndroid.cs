@@ -91,11 +91,7 @@ namespace SampleBrowser.PDF.Droid
                 callback.OnWriteFinished(new Android.Print.PageRange[] { Android.Print.PageRange.AllPages });
 
             }
-            catch (Java.IO.FileNotFoundException ee)
-            {
-                //Catch exception
-            }
-            catch (Exception e)
+            catch
             {
                 //Catch exception
             }

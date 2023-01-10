@@ -7,7 +7,7 @@
              xmlns:commands="clr-namespace:mPOSv2.Commands;assembly=mPOSv2"
              xmlns:converters="clr-namespace:mPOSv2.Converters;assembly=mPOSv2"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:custom="clr-namespace:mPOSv2.Custom;assembly=mPOSv2"
+             xmlns:custom="clr-namespace:mPOSv2.CustomControls;assembly=mPOSv2"
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesDetailView"
              Title="{Binding Title, Mode=TwoWay}"
