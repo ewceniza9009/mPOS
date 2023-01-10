@@ -1050,7 +1050,7 @@ namespace mPOSv2.ViewModels
 
             data.ForEach(salesLine => 
             {
-                salesLine.ItemDescriptionDisplay = salesLine.ItemDescription.Truncate(30, "...");
+                salesLine.ItemDescriptionDisplay = salesLine.ItemDescription.Truncate(60, "...");
                 result.Add(salesLine);
             });
 
@@ -1066,7 +1066,7 @@ namespace mPOSv2.ViewModels
 
             saleLines.ForEach(line => 
             {
-                line.ItemDescription = line.ItemDescription.Truncate(30, "...");
+                line.ItemDescription = line.ItemDescription.Truncate(60, "...");
                 SelectedSale.TrnSalesLines.Add(line);
             });
 

@@ -69,7 +69,7 @@
                                                          Padding="5">
                                                 <Label Text="{Binding ItemDescription}"
                                                    TextColor="Black"
-                                                   FontSize="15"
+                                                   FontSize="12"
                                                    HeightRequest="20"
                                                    WidthRequest="210"
                                                    FontAttributes="Bold"
