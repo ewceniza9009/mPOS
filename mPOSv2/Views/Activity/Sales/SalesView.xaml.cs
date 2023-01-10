@@ -1,5 +1,6 @@
 ﻿using System;
 using mPOSv2.Models.Page;
+using mPOSv2.Services;
 using mPOSv2.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -32,6 +33,14 @@ namespace mPOSv2.Views.Activity.Sales
             vm.Load();
 
             Pager.CurrentPage = 1;
+        }
+
+        private void SalesView_Disappearing(object sender, EventArgs e)
+        {
+            var settings = SettingsRepository.GetSettings();
+            settings.TempSearchSalesDate = vm.SearchSaleDate;
+
+            SettingsRepository.Save(settings);
         }
 
         private void SearchSale_OnTextChanged(object sender, TextChangedEventArgs e)

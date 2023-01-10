@@ -8,7 +8,8 @@
              mc:Ignorable="d"
              x:Class="mPOSv2.Views.Activity.Sales.SalesView"
              Title="Sales"
-             Appearing="SalesView_OnAppearing">
+             Appearing="SalesView_OnAppearing"
+             Disappearing="SalesView_Disappearing">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemTappedEventArgsConverter x:Key="ItemTappedConverter" />

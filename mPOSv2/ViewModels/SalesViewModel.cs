@@ -27,7 +27,7 @@ namespace mPOSv2.ViewModels
 
             IsBusy = true;
 
-            SearchSaleDate = GlobalVariables.TempSearchSalesDate ?? DateTime.Now.Date;
+            SearchSaleDate = GlobalVariables.TempSearchSalesDate ?? SettingsRepository.GetSettings().TempSearchSalesDate ?? DateTime.Now.Date;
 
             Task.Run(async () =>
             {

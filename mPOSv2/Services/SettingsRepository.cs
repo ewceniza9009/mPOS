@@ -44,6 +44,7 @@ namespace mPOSv2.Services
                     _settings.PermitNo = settings.PermitNo;
                     _settings.TerminalNo = settings.TerminalNo;
                     _settings.ReceiptFooter = settings.ReceiptFooter;
+                    _settings.TempSearchSalesDate = settings.TempSearchSalesDate;
 
                     conn.RunInTransaction(() =>
                     {

@@ -25,5 +25,7 @@ namespace mPOSv2.Models
         public string PermitNo { get; set; }
         public string TerminalNo { get; set; }
         public string ReceiptFooter { get; set; }
+
+        public DateTime? TempSearchSalesDate { get; set; }
     }
 }
