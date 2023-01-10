@@ -20,7 +20,7 @@ namespace mPOSv2
         {
             Device.SetFlags(new[] {"SwipeView_Experimental"});
 
-            SyncfusionLicenseProvider.RegisterLicense("NDg5NEAzMTM5MmUzMjJlMzBVWjk0aEFxenQxZXJpZlRtQk9VbWQ0NTZEM3h3bXFHbERNWkxiTkswNHdnPQ==");
+            SyncfusionLicenseProvider.RegisterLicense("MzcxM0AzMjMwMkUzNDJFMzBpYnpCR0U4NjhVTjR2QWFIRkZHa2VHOGI3N1JRYlFKQ3dYbk5iTE9JTmdFPQ==");
 
             FilePath = filePath;
 

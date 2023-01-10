@@ -47,14 +47,36 @@ namespace mPOSv2.Android
             Toolbar toolbar = this.FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+            if (Window != null)
+            {
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
+                {
+                    IWindowInsetsController wicController = Window.InsetsController;
 
-            uiOptions |= (int)SystemUiFlags.LowProfile;
-            uiOptions |= (int)SystemUiFlags.Fullscreen;
-            uiOptions |= (int)SystemUiFlags.HideNavigation;
-            uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
 
-            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+                    Window.SetDecorFitsSystemWindows(false);
+                    Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+
+                    if (wicController != null)
+                    {
+                        wicController.Hide(WindowInsets.Type.Ime());
+                        wicController.Hide(WindowInsets.Type.NavigationBars());
+                    }
+                }
+            }
+            else 
+            {
+                #pragma warning disable CS0618
+                int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+
+                uiOptions |= (int)SystemUiFlags.LowProfile;
+                uiOptions |= (int)SystemUiFlags.Fullscreen;
+                uiOptions |= (int)SystemUiFlags.HideNavigation;
+                uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+
+                Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+                #pragma warning restore CS0618
+            }
 
             Window.SetSoftInputMode(SoftInput.AdjustResize);
 
@@ -65,14 +87,36 @@ namespace mPOSv2.Android
         {
             base.OnResume();
 
-            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+            if (Window != null)
+            {
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
+                {
+                    IWindowInsetsController wicController = Window.InsetsController;
 
-            uiOptions |= (int)SystemUiFlags.LowProfile;
-            uiOptions |= (int)SystemUiFlags.Fullscreen;
-            uiOptions |= (int)SystemUiFlags.HideNavigation;
-            uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
 
-            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+                    Window.SetDecorFitsSystemWindows(false);
+                    Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+
+                    if (wicController != null)
+                    {
+                        wicController.Hide(WindowInsets.Type.Ime());
+                        wicController.Hide(WindowInsets.Type.NavigationBars());
+                    }
+                }
+            }
+            else
+            {
+                #pragma warning disable CS0618
+                int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+
+                uiOptions |= (int)SystemUiFlags.LowProfile;
+                uiOptions |= (int)SystemUiFlags.Fullscreen;
+                uiOptions |= (int)SystemUiFlags.HideNavigation;
+                uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+
+                Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+                #pragma warning restore CS0618
+            }
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -133,14 +177,37 @@ namespace mPOSv2.Android
         {
             base.OnStart();
 
-            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+            if (Window != null)
+            {
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.R)
+                {
+                    IWindowInsetsController wicController = Window.InsetsController;
 
-            uiOptions |= (int)SystemUiFlags.LowProfile;
-            uiOptions |= (int)SystemUiFlags.Fullscreen;
-            uiOptions |= (int)SystemUiFlags.HideNavigation;
-            uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
 
-            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+                    Window.SetDecorFitsSystemWindows(false);
+                    Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
+
+                    if (wicController != null)
+                    {
+                        wicController.Hide(WindowInsets.Type.Ime());
+                        wicController.Hide(WindowInsets.Type.NavigationBars());
+                    }
+                }
+            }
+            else
+            {
+                #pragma warning disable CS0618
+                int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+
+                uiOptions |= (int)SystemUiFlags.LowProfile;
+                uiOptions |= (int)SystemUiFlags.Fullscreen;
+                uiOptions |= (int)SystemUiFlags.HideNavigation;
+                uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+
+                Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+                #pragma warning restore CS0618
+            }
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions,
             [GeneratedEnum] Permission[] grantResults)
