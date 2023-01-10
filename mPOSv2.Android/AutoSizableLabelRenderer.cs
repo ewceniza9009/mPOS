@@ -23,9 +23,12 @@ namespace mPOSv2.Android
 {
     public class AutoSizableLabelRenderer : LabelRenderer
     {
-        private const int MAX_LINE_COUNT = 2;
-        private const int MAX_LINE_LENGTH = 18 | 20;
+        private const int MAX_LINE_COUNT = 3;
         private const int TEXT_HEIGHT = 18;
+        private const float XIAOMI_DEVICE_WIDTH = 392.72f;
+
+        //private int MAX_LINE_LENGTH = 18;
+        private readonly double DEVICE_DISPLAY_WIDTH = Xamarin.Forms.Application.Current.MainPage.Width;
 
         public AutoSizableLabelRenderer(Context context) : base(context)
         {
@@ -47,9 +50,11 @@ namespace mPOSv2.Android
 
             //Control.SetAutoSizeTextTypeWithDefaults(AutoSizeTextType.Uniform);
 
+            var maxLineLength = DEVICE_DISPLAY_WIDTH > XIAOMI_DEVICE_WIDTH ? 26 : 18; 
+
             if (!string.IsNullOrEmpty(autoLabel.Text))
             {
-                double numberOfLines = Math.Ceiling((double)((double)(autoLabel.Text.Length < MAX_LINE_LENGTH ? MAX_LINE_LENGTH : autoLabel.Text.Length) / MAX_LINE_LENGTH));
+                double numberOfLines = Math.Ceiling((double)((double)(autoLabel.Text.Length < maxLineLength ? maxLineLength : autoLabel.Text.Length) / maxLineLength));
 
                 autoLabel.MaxLines = MAX_LINE_COUNT;
                 autoLabel.HeightRequest = TEXT_HEIGHT * (numberOfLines > MAX_LINE_COUNT ? MAX_LINE_COUNT : numberOfLines) ;
