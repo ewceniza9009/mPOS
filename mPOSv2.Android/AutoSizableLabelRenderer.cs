@@ -24,7 +24,7 @@ namespace mPOSv2.Android
     public class AutoSizableLabelRenderer : LabelRenderer
     {
         private const int MAX_LINE_COUNT = 2;
-        private const int MAX_LINE_LENGTH = 20;
+        private const int MAX_LINE_LENGTH = 18 | 20;
         private const int TEXT_HEIGHT = 18;
 
         public AutoSizableLabelRenderer(Context context) : base(context)
