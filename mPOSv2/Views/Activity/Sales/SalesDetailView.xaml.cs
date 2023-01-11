@@ -28,7 +28,7 @@ namespace mPOSv2.Views.Activity.Sales
             CmdSearchBarcode.Clicked += CmdSearchBarcode_Clicked;
 
             vm.SelectedSale.IsNotTendered = isNotTendered;
-            vm.SelectedSaleTracker.ChangedProperties.Clear();
+            vm.SelectedSaleTracker?.ChangedProperties?.Clear();
         }
         #endregion
 
