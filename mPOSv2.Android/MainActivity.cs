@@ -20,6 +20,8 @@ namespace mPOSv2.Android
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsAppCompatActivity
     {
+        private const int BACK_BUTTON_GUID = 16908332;
+
         internal static MainActivity Instance { get; private set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -121,7 +123,7 @@ namespace mPOSv2.Android
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            if (item.ItemId == 16908332)
+            if (item.ItemId == BACK_BUTTON_GUID)
             {
                 var page = Xamarin.Forms.Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
 
