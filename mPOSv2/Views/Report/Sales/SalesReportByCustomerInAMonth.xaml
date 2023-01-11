@@ -16,7 +16,7 @@
                                      DataSource="{Binding Years}"
                                      SelectedItem="{Binding SelectedYear}"
                                      DisplayMemberPath="Value"
-                                     IsEditableMode="False" 
+                                     IsEditableMode="True" 
                                      AllowFiltering="True" 
                                      SuggestionMode="Contains"
                                      MaximumDropDownHeight="300"

@@ -62,7 +62,7 @@
                     <combobox:SfComboBox x:Name="CCComboBox"
                                                  DataSource="{Binding CreditCardTypes}"
                                                  SelectedValue="{Binding SelectedCollectionLine.CreditCardType}"
-                                                 IsEditableMode="False" 
+                                                 IsEditableMode="True" 
                                                  AllowFiltering="True" 
                                                  MaximumDropDownHeight="300"
                                                  ComboBoxMode="SuggestAppend"

@@ -107,7 +107,7 @@
                                                      DataSource="{Binding Customers}"
                                                      SelectedItem="{Binding SelectedCustomer}"
                                                      DisplayMemberPath="Customer"
-                                                     IsEditableMode="False" 
+                                                     IsEditableMode="True" 
                                                      AllowFiltering="True" 
                                                      MaximumDropDownHeight="400"
                                                      ComboBoxMode="SuggestAppend"
