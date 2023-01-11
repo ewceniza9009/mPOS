@@ -137,12 +137,9 @@ namespace mPOSv2.Android
                         return false;
                     }
                 }
-                return base.OnOptionsItemSelected(item);
             }
-            else
-            {
-                return base.OnOptionsItemSelected(item);
-            }
+
+            return base.OnOptionsItemSelected(item);
         }
 
         public override void OnBackPressed() 
