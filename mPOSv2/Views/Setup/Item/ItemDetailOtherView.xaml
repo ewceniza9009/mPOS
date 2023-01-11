@@ -36,10 +36,11 @@ xmlns:richTextEditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Sy
                                              DataSource="{Binding ItemUnits}"
                                              SelectedItem="{Binding SelectedUnit}"
                                              DisplayMemberPath="Unit"
-                                             IsEditableMode="true" 
-                                             AllowFiltering="true" 
+                                             IsEditableMode="False" 
+                                             AllowFiltering="True" 
                                              MaximumDropDownHeight="300"
                                              ComboBoxMode="SuggestAppend"
+                                             SuggestionMode="Contains"
                                              SelectionChanged="UnitComboBox_OnSelectionChanged"/>
                     </StackLayout>
 

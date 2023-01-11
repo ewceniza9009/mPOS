@@ -90,10 +90,11 @@
                             <combobox:SfComboBox x:Name="CategoryComboBox"
                                                  DataSource="{Binding ItemCategories}"
                                                  SelectedItem="{Binding SelectedItem.Category}"
-                                                 IsEditableMode="true" 
-                                                 AllowFiltering="true" 
+                                                 IsEditableMode="False" 
+                                                 AllowFiltering="True" 
                                                  MaximumDropDownHeight="300"
                                                  ComboBoxMode="SuggestAppend"
+                                                 SuggestionMode="Contains"
                                                  HorizontalOptions="FillAndExpand"
                                                  SelectionChanged="CategoryComboBox_OnSelectionChanged" />
                             <Entry x:Name ="CategoryEntry" 
@@ -118,10 +119,11 @@
                                              DataSource="{Binding Taxes}"
                                              SelectedItem="{Binding SelectedTax}"
                                              DisplayMemberPath="Tax"
-                                             IsEditableMode="true" 
-                                             AllowFiltering="true" 
+                                             IsEditableMode="False" 
+                                             AllowFiltering="True" 
                                              MaximumDropDownHeight="200"
                                              ComboBoxMode="SuggestAppend"
+                                             SuggestionMode="Contains"
                                              SelectionChanged="OutputTaxComboBox_OnSelectionChanged">
                             <combobox:SfComboBox.ItemTemplate>
                                 <DataTemplate>

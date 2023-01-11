@@ -55,12 +55,13 @@
                                      DataSource="{Binding Terms}"
                                      SelectedItem="{Binding SelectedTerm}"
                                      DisplayMemberPath="Term"
-                                     IsEditableMode="true" 
-                                     AllowFiltering="true" 
+                                     IsEditableMode="False" 
+                                     AllowFiltering="True" 
                                      Margin="0,-12,0,0"
                                      MaximumDropDownHeight="400"
                                      WidthRequest="180"
                                      ComboBoxMode="SuggestAppend"
+                                     SuggestionMode="Contains"
                                      SelectionChanged="Term_OnSelectionChanged"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">

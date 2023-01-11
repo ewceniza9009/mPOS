@@ -107,10 +107,11 @@
                                                      DataSource="{Binding Customers}"
                                                      SelectedItem="{Binding SelectedCustomer}"
                                                      DisplayMemberPath="Customer"
-                                                     IsEditableMode="true" 
-                                                     AllowFiltering="true" 
+                                                     IsEditableMode="False" 
+                                                     AllowFiltering="True" 
                                                      MaximumDropDownHeight="400"
                                                      ComboBoxMode="SuggestAppend"
+                                                     SuggestionMode="Contains"
                                                      HorizontalOptions="FillAndExpand"
                                                      SelectionChanged="CustomerComboBox_OnSelectionChanged"/>
                             </StackLayout>

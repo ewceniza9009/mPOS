@@ -67,9 +67,10 @@
                                          SelectedItem="{Binding SelectedDiscount}"
                                          DisplayMemberPath="Discount"
                                          IsEditableMode="False" 
-                                         AllowFiltering="true" 
+                                         AllowFiltering="True" 
                                          MaximumDropDownHeight="300"
                                          ComboBoxMode="SuggestAppend"
+                                         SuggestionMode="Contains"
                                          SelectionChanged="DiscountComboBox_SelectionChanged">
                                 <comboBox:SfComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -128,8 +129,9 @@
                                      DataSource="{Binding Taxes}"
                                      SelectedItem="{Binding SelectedTax}"
                                      DisplayMemberPath="Tax"
-                                     IsEditableMode="true" 
-                                     AllowFiltering="true" 
+                                     IsEditableMode="False" 
+                                     AllowFiltering="True" 
+                                     SuggestionMode="Contains"
                                      MaximumDropDownHeight="300"
                                      ComboBoxMode="SuggestAppend"
                                      IsEnabled="false"/>
